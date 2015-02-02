@@ -37,7 +37,7 @@ class Enter(ErigoGui):
         self.elm_entry_password.password = True
 
         ecore_x_win = ecore_x.Window_from_xid(self.elm_win1.xwindow_xid)
-        ecore_x_win.keyboard_grab()
+        ecore_x_win.focus()
 
         self.greeter = LightDM.Greeter()
         # connect signal handlers to LightDM
