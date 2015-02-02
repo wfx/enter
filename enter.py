@@ -8,6 +8,7 @@ import sys
 #from gi.repository import GLib
 from gi.repository import LightDM
 
+from efl import ecore
 from efl import elementary
 from efl.utils.erigo import ErigoGui
 
@@ -98,5 +99,7 @@ class Enter(ErigoGui):
 if __name__ == '__main__':
     elementary.init()
     app = Enter(json_file, verbose=True)
+    ecore.main_loop_glib_integrate()
+    #ecore.main_loop_begin()
     elementary.run()
     elementary.shutdown()
