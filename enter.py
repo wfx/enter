@@ -86,10 +86,10 @@ class Enter(ErigoGui):
     # has to handle a successful login, in which case we start the session
     # or a failed login, in which case we tell the user
     def authentication_complete_cb(greeter):
-        if greeter.get_is_authenticated():
+        if self.greeter.get_is_authenticated():
             # For our simple example we always start Unity-2d.  The LightDM
             # API has ways to query available sessions, please see the docs.
-            if not greeter.start_session_sync("enlightenment"):
+            if not self.greeter.start_session_sync("enlightenment"):
                 self.msg("Failed to start enlightenment")
         else:
             self.msg("Login failed")
