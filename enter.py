@@ -65,7 +65,7 @@ class Enter(ErigoGui):
     # our example, we re-purpose the prompt and ask the user for the
     # password which is then sent the next time the user hits the Login
     # button or presses enter.
-    def show_prompt_cb(greeter, text, promptType):
+    def show_prompt_cb(self, greeter, text, promptType):
         self.msg(text + " " + str(promptType))
 
         # clear the text entry box so the user can enter the password
@@ -79,14 +79,14 @@ class Enter(ErigoGui):
 
     # If LightDM sends a message back to the greeter, for example, "Login
     # failed" or "invalid password" we display it in our message box.
-    def show_message_cb(text, message_type):
+    def show_message_cb(self, text, message_type):
         self.msg("get message: ", text)
 
 
     # Callback for after we send LightDM the password, this method
     # has to handle a successful login, in which case we start the session
     # or a failed login, in which case we tell the user
-    def authentication_complete_cb(greeter):
+    def authentication_complete_cb(self, greeter):
         if self.greeter.get_is_authenticated():
             # For our simple example we always start Unity-2d.  The LightDM
             # API has ways to query available sessions, please see the docs.
