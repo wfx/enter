@@ -62,7 +62,7 @@
         "Evas.Object.size":[0, 0],
         "Evas.Object.position":[0, 0]
       },
-      "Contains":["elm_box2"]
+      "Contains":["elm_label1", "elm_box2"]
     },
     "elm_box2":
     {
@@ -138,6 +138,23 @@
       "Callbacks":
       {
         "clicked":["Invoke", "elm_button_login_cb_alias", null]
+      }
+    },
+    "elm_label1":
+    {
+      "Desc":
+      {
+        "parent":"elm_box1",
+        "class":"Elm_Label",
+        "public":true
+      },
+      "Properties":
+      {
+        "Evas.Object.size_hint_weight":[1, 1],
+        "Evas.Object.visibility":[true],
+        "Elm_Widget.part_text":[null, "Label"],
+        "Evas.Object.size":[60, 30],
+        "Evas.Object.size_hint_align":[-1, 0.50]
       }
     }
   }
