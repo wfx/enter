@@ -65,12 +65,10 @@ class Enter(ErigoGui):
     # password which is then sent the next time the user hits the Login
     # button or presses enter.
     def show_prompt_cb(greeter, text, promptType):
-        self.msg(text)
+        self.msg(text + " " + str(promptType))
 
         # clear the text entry box so the user can enter the password
-        self.msg("clear the text entry box so the user can enter the password")
 
-        print(sys.stderr, "prompt type: " + str(promptType))
         # if this is a password prompt, we want to hide the characters
         if promptType == LightDM.PromptType.SECRET:
             self.msg("password promt")
