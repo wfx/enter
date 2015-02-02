@@ -30,6 +30,9 @@ class Enter(ErigoGui):
         # connect to greeter
         self.greeter.connect_sync()
 
+    def msg(self, txt):
+        self.elm_label1.text_set(txt)
+
 
     def elm_button_login_clicked_cb(self, btn):
         self._login_cb()
@@ -45,7 +48,6 @@ class Enter(ErigoGui):
     # 3) The username has been entered, but not passed in.  We pass it in
     #  and start the authentication process.
     def _login_cb(self):
-        print (sys.stderr, "login_cb")
         if self.greeter.get_is_authenticated():
             # user is already authenticated, starting session
             start_session()
@@ -63,23 +65,23 @@ class Enter(ErigoGui):
     # password which is then sent the next time the user hits the Login
     # button or presses enter.
     def show_prompt_cb(greeter, text, promptType):
-        print(sys.stderr, text)
+        self.msg(text)
 
         # clear the text entry box so the user can enter the password
-        print("clear the text entry box so the user can enter the password")
+        self.msg("clear the text entry box so the user can enter the password")
 
         print(sys.stderr, "prompt type: " + str(promptType))
         # if this is a password prompt, we want to hide the characters
         if promptType == LightDM.PromptType.SECRET:
-            print(sys.stderr, "password promt")
+            self.msg("password promt")
         else:
-            print(sys.stderr, "none password promt")
+            self.msg("none password promt")
 
 
     # If LightDM sends a message back to the greeter, for example, "Login
     # failed" or "invalid password" we display it in our message box.
     def show_message_cb(text, message_type):
-        print(sys.stderr, "get message: ", text)
+        self.msg("get message: ", text)
 
 
     # Callback for after we send LightDM the password, this method
@@ -90,9 +92,9 @@ class Enter(ErigoGui):
             # For our simple example we always start Unity-2d.  The LightDM
             # API has ways to query available sessions, please see the docs.
             if not greeter.start_session_sync("enlightenment"):
-                print(sys.stderr, "Failed to start enlightenment")
+                self.msg("Failed to start enlightenment")
         else:
-            print(sys.stderr, "Login failed")
+            self.msg("Login failed")
 
 
 if __name__ == '__main__':
