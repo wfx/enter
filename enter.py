@@ -23,6 +23,7 @@ import sys
 from gi.repository import LightDM
 
 from efl import ecore
+from efl import ecore_x
 from efl import elementary
 from efl.utils.erigo import ErigoGui
 
@@ -33,9 +34,10 @@ class Enter(ErigoGui):
     def __init__(self, *args, **kargs):
         ErigoGui.__init__(self, *args, **kargs)
         self.elm_win1.callback_delete_request_add(lambda o: elementary.exit())
-        self.elm_win1.activate()
-        self.elm_entry_username.focus = True
         self.elm_entry_password.password = True
+
+        ecore_x_win = ecore_x.Window_from_xid(self.elm_win1.xwindow_xid)
+        ecore_x_win.keyboard_grab()
 
         self.greeter = LightDM.Greeter()
         # connect signal handlers to LightDM
