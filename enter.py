@@ -18,7 +18,12 @@ class Enter(ErigoGui):
     def __init__(self, *args, **kargs):
         ErigoGui.__init__(self, *args, **kargs)
         self.elm_win1.callback_delete_request_add(lambda o: elementary.exit())
+        self.elm_win1.activate()
+        self.elm_entry_username.focus = True
+        self.elm_entry_password.password = True
+
         self.greeter = LightDM.Greeter()
+
 
 
     def elm_button_login_clicked_cb(self, btn):
