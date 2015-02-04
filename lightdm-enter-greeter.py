@@ -50,33 +50,27 @@ class Enter(ErigoGui):
         self.greeter.connect ("show-prompt", self.show_prompt_cb)
         self.greeter.connect_sync()
 
-        # get languages
-        available_languages = []
-        for lang in LightDM.get_languages():
-            available_languages.append(LightDM.Language.get_name(lang))
-
-        # get sessions
-        available_sessions = []
-        for sess in LightDM.get_sessions():
-            available_sessions.append(LightDM.Session.get_key(sess))
-
-        # get users
-        available_users = []
-        inst = LightDM.UserList.get_instance()
-        for user in LightDM.UserList.get_users(inst):
-            user_name = LightDM.User.get_name(user)
-            available_users.append(user_name)
-
-
-    def log(self, txt):
-        #debug helper
-        self.elm_label1.text_set(txt)
-        sys.stderr.write(txt)
+        # system informations
+        self.can_hibernate = LightDM.get_can_hibernate()
+        self.can_restart = LightDM.get_can_restart()
+        self.can_shutdown = LightDM.get_can_shutdown()
+        self.can_suspend = LightDM.get_can_suspend()
+        self.hostname = LightDM.get_hostname()
+        self.language = LightDM.get_language()
+        self.languages = []
+        for l in LightDM.get_languages():
+            self.languages.append(LightDM.Language.get_name(l))
+        self.sessions = []
+        for s in LightDM.get_sessions():
+            self.sessions.append(LightDM.Session.get_key(s))
+        self.users = []
+        i = LightDM.UserList.get_instance()
+        for u in LightDM.UserList.get_users(i):
+            self.users.append(LightDM.User.get_name(u))
 
 
     def elm_button_login_clicked_cb(self, btn):
-        self._login_cb()
-
+        self.login_cb()
 
     def get_username(self):
         return self.elm_entry_username.entry_get()
@@ -84,11 +78,31 @@ class Enter(ErigoGui):
     def get_password(self):
         return self.elm_entry_password.entry_get()
 
+    def system_hibernate(self):
+        if self.can_hibernate:
+            LightDM.hibernate()
+        else:
+            self.log("system cannot hibernate!")
 
-    def get_user_session(self,user):
-        return None
+    def system_restart(self):
+        if self.can_restart:
+            LightDM.restart()
+        else:
+            self.log("system cannot restart!")
 
-    def _login_cb(self):
+    def system_shutdown(self):
+        if self.can_shutdown:
+            LightDM.shutdown()
+        else:
+            self.log("system cannot shutdown!")
+
+    def system_suspend():
+        if self.can_suspend:
+            LightDM.suspend()
+        else:
+            self.log("system cannot suspend!")
+
+    def login_cb(self):
         self.log("login_cb: " + str(self.greeter.get_is_authenticated()))
 
         if self.greeter.get_is_authenticated():
@@ -101,7 +115,6 @@ class Enter(ErigoGui):
             self.log("Initial entry of username, send it to LightDM")
             self.greeter.authenticate(self.get_username())
 
-
     def show_prompt_cb(self, greeter, text, promptType):
         if promptType == LightDM.PromptType.SECRET:
             self.log("show_prompt_cb: please enter password.")
@@ -109,13 +122,10 @@ class Enter(ErigoGui):
         else:
             self.log("show_prompt_cb: none password promt")
 
-
-
     # If LightDM sends a message back to the greeter, for example, "Login
     # failed" or "invalid password" we display it in our message box.
     def show_message_cb(self, text, message_type):
         self.log("show_message_cb: " + str(message_type) + " -> " + text)
-
 
     def authentication_complete_cb(self, greeter):
         if self.greeter.get_is_authenticated():
@@ -128,6 +138,11 @@ class Enter(ErigoGui):
                 self.greeter.start_session_sync("enlightenment")
         else:
             self.log("authentication_complete_cb: login failed")
+
+    def log(self, txt):
+        #debug helper
+        self.elm_label1.text_set(txt)
+        sys.stderr.write(txt)
 
 
 if __name__ == '__main__':
