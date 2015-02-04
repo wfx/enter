@@ -57,9 +57,11 @@ class Enter(ErigoGui):
         self.can_suspend = LightDM.get_can_suspend()
         self.hostname = LightDM.get_hostname()
         self.language = LightDM.get_language()
-        self.languages = []
+        self.languages = {}
         for l in LightDM.get_languages():
-            self.languages.append(LightDM.Language.get_name(l))
+            #self.languages.append(LightDM.Language.get_name(l))
+            self.languages[LightDM.Language.get_code(l)] = \
+                [{'name':LightDM.Language.get_name(l)},{'territory':LightDM.Language.get_territory(l)}]
         self.sessions = []
         for s in LightDM.get_sessions():
             self.sessions.append(LightDM.Session.get_key(s))
@@ -69,8 +71,14 @@ class Enter(ErigoGui):
             self.users.append(LightDM.User.get_name(u))
 
 
-    def elm_button_login_clicked_cb(self, btn):
+    def bt_login_clicked_cb(self, bt):
         self.login_cb()
+
+    def tb_shutdown_cb(self, tb):
+        self.system_shutdown()
+
+    def tb_reboot_cb(self, tb):
+        self.system_restart()
 
     def get_username(self):
         return self.elm_entry_username.entry_get()
@@ -142,7 +150,7 @@ class Enter(ErigoGui):
     def log(self, txt):
         #debug helper
         self.elm_label1.text_set(txt)
-        sys.stderr.write(txt)
+        #sys.stderr.write(txt)
 
 
 if __name__ == '__main__':
