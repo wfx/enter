@@ -10,7 +10,9 @@
   {
     "Eo_Callbacks":
     {
-      "elm_button_login_cb_alias":"elm_button_login_clicked_cb"
+      "elm_button_login_cb_alias":"bt_login_clicked_cb",
+      "elm_toolbar_shutdown_cb_alias":"tb_shutdown_cb",
+      "elm_toolbar_reboot_cb_allias":"tb_reboot_cb"
     }
   },
   "Widgets":
@@ -62,7 +64,7 @@
         "Evas.Object.size":[0, 0],
         "Evas.Object.position":[0, 0]
       },
-      "Contains":["elm_box2", "elm_label1"]
+      "Contains":["elm_toolbar1", "elm_box2", "elm_label1"]
     },
     "elm_box2":
     {
@@ -156,6 +158,45 @@
         "Evas.Object.position":[0, 0],
         "Elm_Widget.part_text":[null, "..."],
         "Evas.Object.size_hint_align":[-1, 1]
+      }
+    },
+    "elm_toolbar1":
+    {
+      "Desc":
+      {
+        "parent":"elm_box1",
+        "class":"Elm_Toolbar"
+      },
+      "Properties":
+      {
+        "Evas.Object.size_hint_weight":[1, 1],
+        "Evas.Object.visibility":[true],
+        "Evas.Object.size":[60, 30],
+        "Evas.Object.size_hint_align":[-1, 0]
+      },
+      "Callbacks":
+      {
+        "clicked":["Invoke", "elm_toolbar_shutdown_cb_alias", null],
+        "clicked":["Invoke", "elm_toolbar_reboot_cb_allias", null]
+      },
+      "Items":
+      {
+        "elm_toolbar1_it0":
+        {
+          "type":"regular",
+          "public":true,
+          "icon":null,
+          "label":"Shutdown",
+          "callback":"elm_toolbar_shutdown_cb_alias"
+        },
+        "elm_toolbar1_it1":
+        {
+          "type":"regular",
+          "public":true,
+          "icon":null,
+          "label":"Reboot",
+          "callback":"elm_toolbar_reboot_cb_allias"
+        }
       }
     }
   }
