@@ -1,4 +1,6 @@
 Enter
 ===
+A lightdm elm greeter for e
 
-A lightdm greeter for e
+Realy experimental state!
+
