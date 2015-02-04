@@ -1,5 +1,0 @@
-[Desktop Entry]
-Name=Enter Greeter
-Comment=Enter efl greeter
-Exec=python /home/wfx/Projects/enter/enter.py
-Type=Application
