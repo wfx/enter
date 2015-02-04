@@ -95,6 +95,7 @@ class Enter(ErigoGui):
                 self.msg("authentication_complete_cb: Failed to start enlightenment")
             else:
                 # user is authenticated, starting session
+                self.msg("start session: " + str(self.greeter.start_session_sync("enlightenment")))
                 self.greeter.start_session_sync("enlightenment")
         else:
             self.msg("authentication_complete_cb: login failed")
