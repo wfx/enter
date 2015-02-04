@@ -78,13 +78,15 @@ class Enter(ErigoGui):
         self._login_cb()
 
 
-    def get_username(self)
+    def get_username(self):
         return self.elm_entry_username.entry_get()
 
-    def get_password(self)
+    def get_password(self):
         return self.elm_entry_password.entry_get()
 
 
+    def get_user_session(self,user):
+        return None
 
     def _login_cb(self):
         self.log("login_cb: " + str(self.greeter.get_is_authenticated()))
@@ -94,10 +96,10 @@ class Enter(ErigoGui):
             self.greeter.start_session_sync("enlightenment")
         elif self.greeter.get_in_authentication():
             self.log("username was passed in already, send password to LightDM")
-            self.greeter.respond(self.elm_entry_password.entry_get())
+            self.greeter.respond(self.get_password())
         else:
             self.log("Initial entry of username, send it to LightDM")
-            self.greeter.authenticate(self.elm_entry_username.entry_get())
+            self.greeter.authenticate(self.get_username())
 
 
     def show_prompt_cb(self, greeter, text, promptType):
