@@ -70,6 +70,9 @@ class Enter(ErigoGui):
         for u in LightDM.UserList.get_users(i):
             self.users.append(LightDM.User.get_name(u))
 
+        # user
+        self.user_session = 'enlightenment'
+        self.user_language = 'en'
 
     def bt_login_clicked_cb(self, bt):
         self.login_cb()
@@ -115,7 +118,7 @@ class Enter(ErigoGui):
 
         if self.greeter.get_is_authenticated():
             self.log("user is already authenticated, starting session")
-            self.greeter.start_session_sync("enlightenment")
+            self.greeter.start_session_sync(self.user_session)
         elif self.greeter.get_in_authentication():
             self.log("username was passed in already, send password to LightDM")
             self.greeter.respond(self.get_password())
@@ -139,11 +142,11 @@ class Enter(ErigoGui):
         if self.greeter.get_is_authenticated():
             # API has ways to query available sessions, please see the docs.
             if not self.greeter.start_session_sync("enlightenment"):
-                self.log("authentication_complete_cb: Failed to start enlightenment")
+                self.log("authentication_complete_cb: Failed to start " +self.user_session)
             else:
                 # user is authenticated, starting session
-                self.log("start session: " + str(self.greeter.start_session_sync("enlightenment")))
-                self.greeter.start_session_sync("enlightenment")
+                self.log("start session: " + str(self.greeter.start_session_sync(self.user_session)))
+                self.greeter.start_session_sync(self.user_session)
         else:
             self.log("authentication_complete_cb: login failed")
 
