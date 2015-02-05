@@ -60,7 +60,6 @@ class Enter(ErigoGui):
         self.language = LightDM.get_language()
         self.languages = {}
         for l in LightDM.get_languages():
-            #self.languages.append(LightDM.Language.get_name(l))
             self.languages[LightDM.Language.get_code(l)] = \
                 [{'name':LightDM.Language.get_name(l)},{'territory':LightDM.Language.get_territory(l)}]
         self.sessions = []
@@ -132,8 +131,7 @@ class Enter(ErigoGui):
             if len(self.get_password()) > 0:
                 self.greeter.respond(self.get_password())
             else:
-                #self.log("show_prompt_cb: please enter password.")
-                self.log("show_prompt_cb: " + self.get_password())
+                self.log("show_prompt_cb: please enter password.")
                 self.elm_entry_password.focus = True
         else:
             self.log("show_prompt_cb: none password promt")
