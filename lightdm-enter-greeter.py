@@ -129,8 +129,12 @@ class Enter(ErigoGui):
 
     def show_prompt_cb(self, greeter, text, promptType):
         if promptType == LightDM.PromptType.SECRET:
-            self.log("show_prompt_cb: please enter password.")
-            self.elm_entry_password.focus = True
+            if len(self.get_password()) > 0:
+                self.greeter.respond(self.get_password())
+            else:
+                #self.log("show_prompt_cb: please enter password.")
+                self.log("show_prompt_cb: " + self.get_password())
+                self.elm_entry_password.focus = True
         else:
             self.log("show_prompt_cb: none password promt")
 
