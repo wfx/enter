@@ -42,6 +42,7 @@ class Enter(ErigoGui):
 
         ecore_x_win = ecore_x.Window_from_xid(self.elm_win1.xwindow_xid)
         ecore_x_win.focus()
+        #ecore_x_icccm_state_set
         ecore_x_win.cursor_show()
 
         # connect: LightDM
