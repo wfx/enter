@@ -40,9 +40,10 @@ class Enter(ErigoGui):
         self.elm_entry_password.text = ""
         self.elm_entry_password.password = True
 
+        # fullscreen do not work :(
+        #self.elm_win1.fullscreen_set(True)
         ecore_x_win = ecore_x.Window_from_xid(self.elm_win1.xwindow_xid)
         ecore_x_win.focus()
-        #ecore_x_icccm_state_set
         ecore_x_win.cursor_show()
 
         # connect: LightDM
