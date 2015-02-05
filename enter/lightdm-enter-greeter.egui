@@ -1,13 +1,16 @@
 {
-  "JSON_Version":"2",
+  "JSON_Version":"3",
   "Settings":
   {
     "project":"Enter",
-    "images_prefix":"",
     "start_points":["elm_win1"]
   },
   "Resources":
   {
+    "Images":
+    {
+      "image_bg":"./bg_radgrad.png"
+    },
     "Eo_Callbacks":
     {
       "elm_button_login_cb_alias":"bt_login_clicked_cb",
@@ -27,11 +30,15 @@
       },
       "Properties":
       {
-        "Elm_Win.constructor":[null, "ELM_WIN_BASIC"],
         "Elm_Win.title":["elm_win1"],
         "Evas.Object.size_hint_weight":[1, 1],
         "Evas.Object.visibility":[true],
-        "Evas.Object.size":[597, 448]
+        "Evas.Object.size_hint_align":[-1, -1],
+        "Evas.Object.size":[800, 600]
+      },
+      "Constructors":
+      {
+        "Elm_Win.constructor":[null, "ELM_WIN_BASIC"]
       },
       "Contains":["elm_bg1", "elm_box1"]
     },
@@ -46,7 +53,9 @@
       {
         "Evas.Object.size_hint_weight":[1, 1],
         "Evas.Object.visibility":[true],
-        "Evas.Object.position":[241, 186]
+        "Evas.Object.position":[241, 186],
+        "Efl.File.file":["image_bg", null],
+        "Evas.Object.size_hint_align":[-1, -1]
       }
     },
     "elm_box1":
