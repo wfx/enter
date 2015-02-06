@@ -28,6 +28,10 @@
         "class":"Elm_Win",
         "public":true
       },
+      "Constructors":
+      {
+        "Elm_Win.constructor":[null, "ELM_WIN_BASIC"]
+      },
       "Properties":
       {
         "Elm_Win.title":["elm_win1"],
@@ -36,10 +40,6 @@
         "Evas.Object.size_hint_align":[-1, -1],
         "Evas.Object.size":[800, 600]
       },
-      "Constructors":
-      {
-        "Elm_Win.constructor":[null, "ELM_WIN_BASIC"]
-      },
       "Contains":["elm_bg1", "elm_box1"]
     },
     "elm_bg1":
@@ -47,7 +47,8 @@
       "Desc":
       {
         "parent":"elm_win1",
-        "class":"Elm_Bg"
+        "class":"Elm_Bg",
+        "public":true
       },
       "Properties":
       {

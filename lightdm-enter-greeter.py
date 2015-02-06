@@ -41,7 +41,7 @@ class Enter(ErigoGui):
         self.elm_win1.size = (w, h)
         ecore_x_win = ecore_x.Window_from_xid(self.elm_win1.xwindow_xid)
         ecore_x_win.focus()
-        ecore_x_win.cursor_show()
+        self.elm_bg1.cursor = "arrow"
 
         # widgets setup
         self.elm_entry_username.text = ""
