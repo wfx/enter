@@ -35,16 +35,19 @@ class Enter(ErigoGui):
     def __init__(self, *args, **kargs):
         ErigoGui.__init__(self, *args, **kargs)
         self.elm_win1.callback_delete_request_add(lambda o: elementary.exit())
+
+        # window setup
+        x, y, w, h = self.elm_win1.screen_size
+        self.elm_win1.size = (w, h)
+        ecore_x_win = ecore_x.Window_from_xid(self.elm_win1.xwindow_xid)
+        ecore_x_win.focus()
+        ecore_x_win.cursor_show()
+
+        # widgets setup
         self.elm_entry_username.text = ""
         self.elm_entry_username.focus = True
         self.elm_entry_password.text = ""
         self.elm_entry_password.password = True
-
-        # fullscreen do not work :(
-        #self.elm_win1.fullscreen_set(True)
-        ecore_x_win = ecore_x.Window_from_xid(self.elm_win1.xwindow_xid)
-        ecore_x_win.cursor_show()
-        ecore_x_win.focus()
 
         # connect: LightDM
         self.greeter = LightDM.Greeter()
