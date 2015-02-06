@@ -43,8 +43,8 @@ class Enter(ErigoGui):
         # fullscreen do not work :(
         #self.elm_win1.fullscreen_set(True)
         ecore_x_win = ecore_x.Window_from_xid(self.elm_win1.xwindow_xid)
-        ecore_x_win.focus()
         ecore_x_win.cursor_show()
+        ecore_x_win.focus()
 
         # connect: LightDM
         self.greeter = LightDM.Greeter()
