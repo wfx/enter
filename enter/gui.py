@@ -112,6 +112,8 @@ class MainWin(StandardWindow):
         # views the selected desktop logo
         session_image = Image(self)
         session_image.file_set("desktop_e.png")
+        w, h = session_image.object_size_get()
+        session_image.resize(w, h)
         box.pack_end(session_image)
         session_image.show()
 
