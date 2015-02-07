@@ -51,17 +51,16 @@ class MainWin(StandardWindow):
 
         # background win
         background = Background(self)
-        self.resize_object_add(background)
         background.file_set("bg_radgrad.png")
         background.size_hint_weight_set(evas.EVAS_HINT_EXPAND, evas.EVAS_HINT_EXPAND)
+        self.resize_object_add(background)
         background.show()
 
         # main box ----------------------------------------------------
         box = Box(self,
                       size_hint_weight=(1, 1),
-                      size_hint_align=(-1, -1),
+                      size_hint_align=(0, 0),
                       size_hint_min=(200, 52),
-                      size=(0, 0),
                       position=(0, 0)
                      )
         self.resize_object_add(box)
@@ -133,10 +132,10 @@ class MainWin(StandardWindow):
         username_en = Entry(self,
                             scrollable=True,
                             single_line=True,
-                            size=(0, 0),
+                            size=(100, 20),
                             size_hint_min=(100, 20),
                             size_hint_weight=(1, 1),
-                            size_hint_align=(-1, 0.50)
+                            size_hint_align=(0.50, 0.50)
                            )
         box.pack_end(username_en)
         username_en.show()
@@ -165,10 +164,10 @@ class MainWin(StandardWindow):
         password_en = Entry(self,
                             scrollable=True,
                             single_line=True,
-                            size=(0, 0),
+                            size=(100, 20),
                             size_hint_min=(100, 20),
                             size_hint_weight=(1, 1),
-                            size_hint_align=(-1, 0.50)
+                            size_hint_align=(0.50, 0.50)
                            )
         box.pack_end(password_en)
         password_en.show()
