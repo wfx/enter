@@ -26,21 +26,12 @@ from efl.evas import EXPAND_BOTH, EXPAND_HORIZ, EXPAND_VERT, FILL_BOTH, FILL_HOR
 from efl.elementary.background import Background
 from efl.elementary.window import StandardWindow, DialogWindow
 from efl.elementary.box import Box
-from efl.elementary.ctxpopup import Ctxpopup
 from efl.elementary.entry import Entry
 from efl.elementary.icon import Icon
 from efl.elementary.image import Image
 from efl.elementary.label import Label
-from efl.elementary.frame import Frame
-from efl.elementary.genlist import Genlist, GenlistItemClass, ELM_GENLIST_ITEM_TREE
 from efl.elementary.button import Button
-from efl.elementary.table import Table
-from efl.elementary.check import Check
-from efl.elementary.fileselector_button import FileselectorButton
-from efl.elementary.fileselector import Fileselector
-from efl.elementary.popup import Popup
 from efl.elementary.progressbar import Progressbar
-from efl.elementary.separator import Separator
 
 
 # session_image
@@ -56,7 +47,7 @@ class MainWin(StandardWindow):
         # the window
         StandardWindow.__init__(self, 'enter', 'Enter')
         self.autodel_set(True)
-        self.callback_delete_request_add(lambda o: self.exit())
+        self.callback_delete_request_add(lambda o: self.close())
 
         # background win
         background = Background(self)
@@ -78,9 +69,10 @@ class MainWin(StandardWindow):
 
         # interface box -----------------------------------------------
         interface = Box(self,
+                        size=(200, 320),
+                        size_hint_min=(200, 320),
                         size_hint_weight=(1, 1),
                         size_hint_align=(0.50, 0.50),
-                        size_hint_min=(200, 52),
                         padding=(0, 4)
                        )
         box.pack_end(interface)
@@ -122,7 +114,7 @@ class MainWin(StandardWindow):
                   size_hint_weight=(1, 1),
                   size_hint_align=(0.50, 0.50),
                   size_hint_min=(200, 52),
-                  padding=(0, 4)
+                  padding=(4, 0)
                  )
         box.horizontal_set(True)
         interface.pack_end(box)
@@ -139,10 +131,9 @@ class MainWin(StandardWindow):
         icon.show()
 
         username_en = Entry(self,
-                            editable=True,
                             scrollable=True,
                             single_line=True,
-                            size=(100, 20),
+                            size=(0, 0),
                             size_hint_min=(100, 20),
                             size_hint_weight=(1, 1),
                             size_hint_align=(-1, 0.50)
@@ -155,7 +146,7 @@ class MainWin(StandardWindow):
                   size_hint_weight=(1, 1),
                   size_hint_align=(0.50, 0.50),
                   size_hint_min=(200, 52),
-                  padding=(0, 4)
+                  padding=(4, 0)
                  )
         box.horizontal_set(True)
         interface.pack_end(box)
@@ -174,7 +165,7 @@ class MainWin(StandardWindow):
         password_en = Entry(self,
                             scrollable=True,
                             single_line=True,
-                            size=(100, 20),
+                            size=(0, 0),
                             size_hint_min=(100, 20),
                             size_hint_weight=(1, 1),
                             size_hint_align=(-1, 0.50)
