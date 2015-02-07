@@ -43,6 +43,13 @@ from efl.elementary.progressbar import Progressbar
 from efl.elementary.separator import Separator
 
 
+# session_image
+
+# users_bt : users_bt_clicked_cb
+# username_en : username_en_enter_cb
+
+# password_bt : password_bt_clicked_cb
+# password_en : password_en_enter_cb
 
 class MainWin(StandardWindow):
     def __init__(self):
@@ -51,89 +58,136 @@ class MainWin(StandardWindow):
         self.autodel_set(True)
         self.callback_delete_request_add(lambda o: self.exit())
 
-        # background
+        # background win
         background = Background(self)
         self.resize_object_add(background)
         background.file_set("bg_radgrad.png")
         background.size_hint_weight_set(evas.EVAS_HINT_EXPAND, evas.EVAS_HINT_EXPAND)
         background.show()
 
-        # main box
-        main_bx = Box(self, size_hint_weight=EXPAND_BOTH)
-        self.resize_object_add(main_bx)
-        main_bx.show()
+        # main box ----------------------------------------------------
+        box = Box(self,
+                      size_hint_weight=(1, 1),
+                      size_hint_align=(-1, -1),
+                      size_hint_min=(200, 52),
+                      size=(0, 0),
+                      position=(0, 0)
+                     )
+        self.resize_object_add(box)
+        box.show()
 
-        # settings box (horizontal)
-        settings_bx = Box(self, size_hint_weight=EXPAND_BOTH)
-        settings_bx.horizontal_set(True)
-        main_bx.pack_end(settings_bx)
-        settings_bx.show()
+        # interface box -----------------------------------------------
+        interface = Box(self,
+                        size_hint_weight=(1, 1),
+                        size_hint_align=(0.50, 0.50),
+                        size_hint_min=(200, 52),
+                        padding=(0, 4)
+                       )
+        box.pack_end(interface)
+        interface.show()
 
-        # desktop logo box
-        desktop_logo_bx = Box(self, size_hint_weight=EXPAND_BOTH)
-        main_bx.pack_end(desktop_logo_bx)
-        desktop_logo_bx.show()
+        # settings box (horizontal) -----------------------------------
+        box = Box(self,
+                  size_hint_weight=(1, 1),
+                  size_hint_align=(0.50, 0.50),
+                  size_hint_min=(200, 52),
+                  padding=(0, 4)
+                 )
+        box.horizontal_set(True)
+        interface.pack_end(box)
+        box.show()
 
-        # desktop logo image
+        # session & power button's(sub menu as inwin view)
+
+        # desktop logo box --------------------------------------------
+        box = Box(self,
+                  size_hint_weight=(1, 1),
+                  size_hint_align=(0.50, 0.50),
+                  size_hint_min=(200, 52),
+                  padding=(0, 4)
+                 )
+        interface.pack_end(box)
+        box.show()
+
+        # views the selected desktop logo
         session_image = Image(self)
         session_image.file_set("desktop_e.png")
-        w, h = session_image.object_size_get()
-        session_image.resize(w, h)
-        desktop_logo_bx.pack_end(session_image)
+        box.pack_end(session_image)
         session_image.show()
 
+        # username box (horizontal) -----------------------------------
+        box = Box(self,
+                  size_hint_weight=(1, 1),
+                  size_hint_align=(0.50, 0.50),
+                  size_hint_min=(200, 52),
+                  padding=(0, 4)
+                 )
+        box.horizontal_set(True)
+        interface.pack_end(box)
+        box.show()
 
-        # username box (horizontal)
-        username_bx = Box(self, size_hint_weight=EXPAND_BOTH)
-        username_bx.horizontal_set(True)
-        main_bx.pack_end(username_bx)
-        username_bx.show()
-
-        # button users
-        bt_users = Button(self, text=('Users'))
-        #bt_users.callback_clicked_add( show inwin list of users )
-        username_bx.pack_end(bt_users)
-        bt_users.show()
+        users_bt = Button(self)
+        users_bt.callback_clicked_add(self.users_bt_clicked_cb)
+        box.pack_end(users_bt)
+        users_bt.show()
 
         icon = Icon(self, size_hint_min=(24,24))
         icon.file_set("icon_system_users.png")
-        bt_users.content = icon
+        users_bt.content = icon
         icon.show()
 
-        # entry usersername
-        en_username = Entry(self,
-                            editable=True, scrollable=True,single_line=True,
-                            size_hint_min=(100, 20),size_hint_weight=EXPAND_BOTH, size_hint_align=FILL_BOTH)
-        username_bx.pack_end(en_username)
-        en_username.show()
+        username_en = Entry(self,
+                            editable=True,
+                            scrollable=True,
+                            single_line=True,
+                            size=(100, 20),
+                            size_hint_min=(100, 20),
+                            size_hint_weight=(1, 1),
+                            size_hint_align=(-1, 0.50)
+                           )
+        box.pack_end(username_en)
+        username_en.show()
 
-        # box pasword (horizontal)
-        bx_pasword = Box(self, size_hint_weight=EXPAND_BOTH)
-        bx_pasword.horizontal_set(True)
-        bx_pasword.pack_end(main_bx)
-        bx_pasword.show()
+        # pasword box (horizontal) ------------------------------------
+        box = Box(self,
+                  size_hint_weight=(1, 1),
+                  size_hint_align=(0.50, 0.50),
+                  size_hint_min=(200, 52),
+                  padding=(0, 4)
+                 )
+        box.horizontal_set(True)
+        interface.pack_end(box)
+        box.show()
 
-        # button password
-        bt_password = Button(self, text=('Login'))
-        #bt_password.callback_clicked_add( execute login )
-        bx_pasword.pack_end(bt_password)
-        bt_password.show()
+        password_bt = Button(self)
+        password_bt.callback_clicked_add(self.password_bt_clicked_cb)
+        box.pack_end(password_bt)
+        password_bt.show()
 
         icon = Icon(self, size_hint_min=(24,24))
         icon.file_set("icon_system_run.png")
-        bt_password.content = icon
+        password_bt.content = icon
         icon.show()
 
-        # entry password
-        en_password = Entry(self,
-                            editable=True, scrollable=True,single_line=True,
-                            size_hint_min=(100, 20),size_hint_weight=EXPAND_BOTH, size_hint_align=FILL_BOTH)
-        bx_pasword.pack_end(en_password)
-        en_password.show()
+        password_en = Entry(self,
+                            scrollable=True,
+                            single_line=True,
+                            size=(100, 20),
+                            size_hint_min=(100, 20),
+                            size_hint_weight=(1, 1),
+                            size_hint_align=(-1, 0.50)
+                           )
+        box.pack_end(password_en)
+        password_en.show()
 
         self.resize(600, 480)
         self.show()
 
+    def users_bt_clicked_cb(self, bt):
+        return True
+
+    def password_bt_clicked_cb(self, bt):
+        return True
 
 
 if __name__ == "__main__":
