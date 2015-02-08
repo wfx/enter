@@ -105,13 +105,21 @@ collections {
          }
          part { name: "sessions.swallow";  type: SWALLOW; /* API */
             description { state: "default" 0.0;
+               rel1 {
+                  to: "header";
+                  relative: -0.65 1.0;
+               }
                rel2 {
-                  relative: 0.0 1.0;
+                  relative: 0.0 0.45;
                }
             }
             description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               rel1 {
+                  relative: 0.0 1.0;
+               }
                rel2 {
-                  relative: 0.3 1.0;
+                  relative: 0.35 0.45;
                }
             }
          }
