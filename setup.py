@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from distutils.core import setup
-from efl.utils.setup import build_extra, build_i18n, build_fdo, uninstall
+from efl.utils.setup import build_extra, build_i18n, build_edc, uninstall
 
 
 setup(
@@ -18,8 +18,8 @@ setup(
     ],
     cmdclass = {
         'build': build_extra,
+        'build_edc': build_edc,
         # 'build_i18n': build_i18n,
-        # 'build_fdo': build_fdo,
         'uninstall': uninstall,
     },
     command_options={

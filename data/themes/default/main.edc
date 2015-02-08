@@ -1,0 +1,19 @@
+
+images {
+   image: "bg_radgrad.png" COMP;
+}
+
+collections {
+
+   group { name: "enter/main";
+      parts {
+         part { name: "bg"; type: IMAGE;
+            description { state: "default" 0.0;
+               image.normal: "bg_radgrad.png";
+            }
+         }
+      }
+   }
+
+}
+
