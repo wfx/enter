@@ -87,11 +87,16 @@ class MainWin(StandardWindow):
         li = List(self)
         li.callback_selected_add(self._sessions_list_selected_cb)
         self.layout.part_content_set('sessions.swallow', li)
+        self.sessions_list = li
+        self.select_session(self.app.session)
 
+    def select_session(self, key):
+        """ Select the given session in the session list and the label """
+        self.sessions_list.clear()
         for s in LightDM.get_sessions():
-            it = li.item_append(s.props.name)
+            it = self.sessions_list.item_append(s.props.name)
             it.data['key'] = s.props.key
-            if s.props.key == self.app.session:
+            if s.props.key == key:
                 it.selected = True
 
     def _sessions_list_selected_cb(self, li, item):
@@ -144,6 +149,13 @@ class EnterApplication(object):
         self.main_win.log(msg)
 
     def user_selected(self, username):
+        # get user default session
+        user_list = LightDM.UserList()
+        user_session = user_list.get_user_by_name(username).get_session()
+        if user_session:
+            self.main_win.select_session(user_session)
+
+        # start user auth process
         self.greeter.authenticate(username)
 
     def prompt_response(self, response):
