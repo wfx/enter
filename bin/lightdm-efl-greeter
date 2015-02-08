@@ -22,7 +22,9 @@ import os
 from efl import ecore_x
 from efl import elementary
 from efl.elementary.layout import Layout
+from efl.elementary.entry import Entry
 from efl.elementary.window import StandardWindow
+from efl.evas import EXPAND_BOTH
 
 
 # install the _() and ngettext() functions in the main namespace
@@ -46,16 +48,31 @@ class MainWin(StandardWindow):
         x, y, w, h = self.screen_size
         self.size = (w, h)
 
+        # edje layout (theme)
+        self.layout = Layout(self, file=(theme_file, 'enter/main'),
+                             size_hint_weight=EXPAND_BOTH)
+        self.resize_object_add(self.layout)
+        self.layout.show()
+
+        # create all the elm widgets and show the win
+        self.create_widgets()
+        self.show()
+
         # give focus to the window (without a wm)
         ecore_x_win = ecore_x.Window_from_xid(self.xwindow_xid)
         ecore_x_win.focus()
+        self.username_en.focus = True
 
-        # edje layout (theme)
-        ly = Layout(self, file=(theme_file, 'enter/main'))
-        self.resize_object_add(ly)
-        ly.show()
+    def create_widgets(self):
+        # username entry
+        self.username_en = Entry(self, scrollable=True, single_line=True)
+        self.username_en.part_text_set('guide', 'Username')
+        self.layout.part_content_set('username_entry', self.username_en)
 
-        self.show()
+        # password entry
+        self.password_en = Entry(self, scrollable=True, single_line=True)
+        self.password_en.part_text_set('guide', 'Password')
+        self.layout.part_content_set('password_entry', self.password_en)
 
 
 class EnterApplication(object):

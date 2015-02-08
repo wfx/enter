@@ -12,6 +12,28 @@ collections {
                image.normal: "bg_radgrad.png";
             }
          }
+         part { name: "username_entry"; type: SWALLOW;
+            description { state: "default" 0.0;
+               rel1 {
+                  relative: 0.3 0.5;
+               }
+               rel2 {
+                  relative: 0.7 0.5;
+               }
+            }
+         }
+         part { name: "password_entry"; type: SWALLOW;
+            description { state: "default" 0.0;
+               rel1 {
+                  to: "username_entry";
+                  relative: 0.0 1.0;
+               }
+               rel2 {
+                  to: "username_entry";
+                  relative: 1.0 2.0;
+               }
+            }
+         }
       }
    }
 
