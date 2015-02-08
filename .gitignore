@@ -1,2 +1,4 @@
 __pycache__/
 __foo__/
+build/
+installed_files.txt
