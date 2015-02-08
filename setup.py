@@ -23,7 +23,10 @@ setup(
         'uninstall': uninstall,
     },
     command_options={
-        'install': {'record': ('setup.py', 'installed_files.txt')}
+        'install': {
+            'record': ('setup.py', 'installed_files.txt'),
+            'prefix': ('setup.py', '/usr')
+        }
     },
 )
 
