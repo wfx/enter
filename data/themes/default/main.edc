@@ -1,6 +1,14 @@
 
+#define DBG_SHOW(_PART, _R, _G, _B) \
+   part { name: "dbg_show"_PART; \
+      type: RECT; mouse_events: 0; \
+      description { state: "default" 0.0; \
+         rel1.to: _PART; rel2.to: _PART; \
+         color: _R _G _B 50; } }
+
 images {
    image: "bg_radgrad.png" COMP;
+   image: "sessions_icon.png" COMP;
 }
 
 collections {
@@ -10,6 +18,48 @@ collections {
          part { name: "bg"; type: IMAGE;
             description { state: "default" 0.0;
                image.normal: "bg_radgrad.png";
+            }
+         }
+         part { name: "header";
+            type: RECT;
+            description { state: "default" 0.0;
+               color: 0 0 0 100;
+               rel2 {
+                  relative: 1.0 0.0;
+                  offset: -1 32;
+               }
+            }
+         }
+         part { name: "session.icon";
+            type: IMAGE;
+            description { state: "default" 0.0;
+               rel1.to: "header";
+               rel2.to: "header";
+               align: 0.0 0.0;
+               aspect: 1 1;
+               aspect_preference: BOTH;
+               image.normal: "sessions_icon.png";
+            }
+         }
+         part { name: "session.text"; type: TEXT;
+            description { state: "default" 0.0;
+               rel1 {
+                  to: "session.icon";
+                  relative: 1.0 0.0;
+                  offset: 6 0;
+               }
+               rel2 {
+                  to: "session.icon";
+                  relative: 1.0 1.0;
+                  offset: 6 0;
+               }
+               align: 0.0 0.5;
+               text {
+                  font: "Sans";
+                  size: 14;
+                  min: 1 1;
+                  ellipsis: -1;
+               }
             }
          }
          part { name: "prompt.swallow"; type: SWALLOW;  /* API */
@@ -53,6 +103,18 @@ collections {
                }
             }
          }
+         part { name: "sessions.swallow";  type: SWALLOW; /* API */
+            description { state: "default" 0.0;
+               rel2 {
+                  relative: 0.0 1.0;
+               }
+            }
+            description { state: "visible" 0.0;
+               rel2 {
+                  relative: 0.3 1.0;
+               }
+            }
+         }
          part { name: "debug.text"; type: TEXT;  /* API */
             description { state: "default" 0.0;
                color: 200 0 0 255;
@@ -76,6 +138,22 @@ collections {
             action: STATE_SET "default" 0.0;
             transition: LINEAR 0.2;
             target: "prompt.swallow";
+         }
+         program { name: "sessions_show";  /* API */
+            signal: "sessions,show"; source: "";
+            action: STATE_SET "visible" 0.0;
+            transition: LINEAR 0.3;
+            target: "sessions.swallow";
+         }
+         program { name: "sessions_hide";  /* API */
+            signal: "sessions,hide"; source: "";
+            action: STATE_SET "default" 0.0;
+            transition: LINEAR 0.3;
+            target: "sessions.swallow";
+         }
+         program { name: "session_click";
+            signal: "mouse,up,1"; source: "session.*";
+            action: SIGNAL_EMIT "sessions,show" "";
          }
       }
    }

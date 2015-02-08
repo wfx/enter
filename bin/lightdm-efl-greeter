@@ -23,6 +23,7 @@ from efl import ecore
 from efl import ecore_x
 from efl import elementary
 from efl.elementary.layout import Layout
+from efl.elementary.list import List
 from efl.elementary.entry import Entry
 from efl.elementary.window import StandardWindow
 from efl.evas import EXPAND_BOTH
@@ -82,6 +83,22 @@ class MainWin(StandardWindow):
         self.layout.part_content_set('prompt.swallow', en)
         self.prompt_entry = en
 
+        # session list
+        li = List(self)
+        li.callback_selected_add(self._sessions_list_selected_cb)
+        self.layout.part_content_set('sessions.swallow', li)
+
+        for s in LightDM.get_sessions():
+            it = li.item_append(s.props.name)
+            it.data['key'] = s.props.key
+            if s.props.key == self.app.session:
+                it.selected = True
+
+    def _sessions_list_selected_cb(self, li, item):
+        self.app.session = item.data['key']
+        self.layout.signal_emit('sessions,hide', '')
+        self.layout.part_text_set('session.text', item.text)
+
     def _username_en_activated_cb(self, en):
         self.app.user_selected(en.text)
 
@@ -102,17 +119,11 @@ class MainWin(StandardWindow):
         self.layout.part_text_set('message.text', msg)
 
     def log(self, msg):
-        self.layout.part_text_set('debug.text', msg)
-
+        self.layout.part_text_set('debug.text', str(msg))
 
 
 class EnterApplication(object):
     def __init__(self):
-        # main window
-        self.main_win = MainWin(self)
-        self.log('debug label')
-        self.main_win.message_show('message label')
-
         # LightDM greeter
         self.greeter = LightDM.Greeter()
         self.greeter.connect('authentication-complete',
@@ -120,6 +131,14 @@ class EnterApplication(object):
         self.greeter.connect('show-message', self.greeter_show_message_cb)
         self.greeter.connect('show-prompt', self.greeter_show_prompt_cb)
         self.greeter.connect_sync()
+
+        # get info from the greeter
+        self.session = self.greeter.get_default_session_hint() or "enlightenment"
+
+        # main window
+        self.main_win = MainWin(self)
+        self.log('debug label') # TODO removeme
+        self.main_win.message_show('message label') # TODO removeme
 
     def log(self, msg):
         self.main_win.log(msg)
@@ -146,7 +165,7 @@ class EnterApplication(object):
     def greeter_authentication_complete_cb(self, greeter):
         """ called by LDM when auth is completed """
         if self.greeter.get_is_authenticated():
-            if not self.greeter.start_session_sync('enlightenment'):
+            if not self.greeter.start_session_sync(self.session):
                 self.main_win.message_show('Failed to start session')
         else:
             self.main_win.message_show('Login failed')

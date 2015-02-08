@@ -32,6 +32,7 @@ setup(
 
 
 # Reference:
+# https://lazka.github.io/pgi-docs/#LightDM-1
 # http://www.mattfischer.com/blog/?p=5
 # http://people.ubuntu.com/~robert-ancell/lightdm/reference/
 # https://wiki.ubuntu.com/LightDM
