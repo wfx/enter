@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=LightDM Elementary Greeter
 Comment=This runs the elementary greeter, it should only be run from LightDM
-Exec=lightdm-enter-greeter.py
+Exec=lightdm-efl-greeter
 Type=Application
 # bodhi
 X-Ubuntu-Gettext-Domain=lightdm
