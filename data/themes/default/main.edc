@@ -12,13 +12,13 @@ collections {
                image.normal: "bg_radgrad.png";
             }
          }
-         part { name: "prompt_entry"; type: SWALLOW;
+         part { name: "prompt.swallow"; type: SWALLOW;  /* API */
             description { state: "default" 0.0;
                rel1 {
-                  to: "username_entry";
+                  to: "username.swallow";
                }
                rel2 {
-                  to: "username_entry";
+                  to: "username.swallow";
                }
             }
             description { state: "visible" 0.0;
@@ -31,7 +31,7 @@ collections {
                }
             }
          }
-         part { name: "username_entry"; type: SWALLOW;
+         part { name: "username.swallow"; type: SWALLOW;  /* API */
             description { state: "default" 0.0;
                rel1 {
                   relative: 0.3 0.5;
@@ -41,31 +41,41 @@ collections {
                }
             }
          }
-         part { name: "debug"; type: TEXT;
+         part { name: "message.text"; type: TEXT;  /* API */
             description { state: "default" 0.0;
                rel1 {
-                  relative: 0.0 0.7;
+                  relative: 0.0 0.6;
                }
                text {
                   font: "Sans";
                   size: 10;
-                  text: "debug";
+                  align: 0.5 0.0;
+               }
+            }
+         }
+         part { name: "debug.text"; type: TEXT;  /* API */
+            description { state: "default" 0.0;
+               color: 200 0 0 255;
+               text {
+                  font: "Sans";
+                  size: 10;
+                  align: 0.5 1.0;
                }
             }
          }
       }
       programs {
-         program { name: "prompt_show";
+         program { name: "prompt_show";  /* API */
             signal: "prompt,show"; source: "";
             action: STATE_SET "visible" 0.0;
             transition: LINEAR 0.2;
-            target: "prompt_entry";
+            target: "prompt.swallow";
          }
-         program { name: "prompt_hide";
+         program { name: "prompt_hide";  /* API */
             signal: "prompt,hide"; source: "";
             action: STATE_SET "default" 0.0;
             transition: LINEAR 0.2;
-            target: "prompt_entry";
+            target: "prompt.swallow";
          }
       }
    }
