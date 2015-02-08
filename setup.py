@@ -26,3 +26,9 @@ setup(
         'install': {'record': ('setup.py', 'installed_files.txt')}
     },
 )
+
+
+# Reference:
+# http://www.mattfischer.com/blog/?p=5
+# http://people.ubuntu.com/~robert-ancell/lightdm/reference/
+# https://wiki.ubuntu.com/LightDM

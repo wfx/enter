@@ -19,12 +19,15 @@ from __future__ import absolute_import, print_function, unicode_literals
 
 import os
 
+from efl import ecore
 from efl import ecore_x
 from efl import elementary
 from efl.elementary.layout import Layout
 from efl.elementary.entry import Entry
 from efl.elementary.window import StandardWindow
 from efl.evas import EXPAND_BOTH
+
+from gi.repository import LightDM
 
 
 # install the _() and ngettext() functions in the main namespace
@@ -38,7 +41,9 @@ theme_file = os.path.join(install_prefix, 'share', 'lightdm-efl-greeter', 'theme
 
 
 class MainWin(StandardWindow):
-    def __init__(self):
+    def __init__(self, app):
+        self.app = app
+
         # window setup
         StandardWindow.__init__(self, 'lightdm-efl-greeter', 'Enter',
                                 autodel=True, size=(400,400))
@@ -61,28 +66,88 @@ class MainWin(StandardWindow):
         # give focus to the window (without a wm)
         ecore_x_win = ecore_x.Window_from_xid(self.xwindow_xid)
         ecore_x_win.focus()
-        self.username_en.focus = True
+        self.username_entry.focus = True
 
     def create_widgets(self):
         # username entry
-        self.username_en = Entry(self, scrollable=True, single_line=True)
-        self.username_en.part_text_set('guide', 'Username')
-        self.layout.part_content_set('username_entry', self.username_en)
+        en = Entry(self, scrollable=True, single_line=True)
+        en.callback_activated_add(self._username_en_activated_cb)
+        en.part_text_set('guide', 'Username')
+        self.layout.part_content_set('username_entry', en)
+        self.username_entry = en
 
-        # password entry
-        self.password_en = Entry(self, scrollable=True, single_line=True)
-        self.password_en.part_text_set('guide', 'Password')
-        self.layout.part_content_set('password_entry', self.password_en)
+        # prompt entry
+        en = Entry(self, scrollable=True, single_line=True)
+        en.callback_activated_add(self._prompt_en_activated_cb)
+        self.layout.part_content_set('prompt_entry', en)
+        self.prompt_entry = en
+
+    def _username_en_activated_cb(self, en):
+        self.app.user_selected(en.text)
+
+    def _prompt_en_activated_cb(self, en):
+        self.app.prompt_response(en.text)
+
+    def prompt_show(self, text='', password=False):
+        self.layout.signal_emit('prompt,show', '')
+        self.prompt_entry.password = password
+        self.prompt_entry.part_text_set('guide', text)
+        self.prompt_entry.focus = True
+
+    def prompt_hide(self):
+        self.layout.signal_emit('prompt,hide', '')
+        self.username_entry.focus = True
+
+    def log(self, msg):
+        self.layout.part_text_set('debug', msg)
+
 
 
 class EnterApplication(object):
     def __init__(self):
-        self.main_win = MainWin()
+        self.main_win = MainWin(self)
+        self.log("startup")
 
-   
+        # LightDM greeter
+        self.greeter = LightDM.Greeter()
+        self.greeter.connect("authentication-complete",
+                             self.greeter_authentication_complete_cb)
+        self.greeter.connect("show-message", self.greeter_show_message_cb)
+        self.greeter.connect("show-prompt", self.greeter_show_prompt_cb)
+        self.greeter.connect_sync()
+
+    def log(self, msg):
+        self.main_win.log(msg)
+
+    def user_selected(self, username):
+        self.greeter.authenticate(username)
+
+    def prompt_response(self, response):
+        self.greeter.respond(response)
+
+    def greeter_show_prompt_cb(self, greeter, text, promptType):
+        self.log("show_prompt_cb: %s - %s" % (text, promptType))
+        if promptType == LightDM.PromptType.SECRET:
+            self.main_win.prompt_show(text, password=True)
+        else:
+            self.main_win.prompt_show(text, password=False)
+
+    def greeter_show_message_cb(self, text, message_type):
+        self.log("show_message_cb: " + str(message_type) + " -> " + text)
+
+    def greeter_authentication_complete_cb(self, greeter):
+        self.main_win.prompt_hide()
+        if self.greeter.get_is_authenticated():
+            self.log("authentication_complete_cb: OK")
+            if not self.greeter.start_session_sync("enlightenment"):
+                self.log("Failed to start session")
+        else:
+            self.log("authentication_complete_cb: login failed")
+
+
 if __name__ == "__main__":
-
     elementary.init()
     app = EnterApplication()
+    ecore.main_loop_glib_integrate()
     elementary.run()
     elementary.shutdown()

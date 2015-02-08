@@ -12,6 +12,25 @@ collections {
                image.normal: "bg_radgrad.png";
             }
          }
+         part { name: "prompt_entry"; type: SWALLOW;
+            description { state: "default" 0.0;
+               rel1 {
+                  to: "username_entry";
+               }
+               rel2 {
+                  to: "username_entry";
+               }
+            }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               rel1 {
+                  relative: 0.0 1.0;
+               }
+               rel2 {
+                  relative: 1.0 2.0;
+               }
+            }
+         }
          part { name: "username_entry"; type: SWALLOW;
             description { state: "default" 0.0;
                rel1 {
@@ -22,17 +41,31 @@ collections {
                }
             }
          }
-         part { name: "password_entry"; type: SWALLOW;
+         part { name: "debug"; type: TEXT;
             description { state: "default" 0.0;
                rel1 {
-                  to: "username_entry";
-                  relative: 0.0 1.0;
+                  relative: 0.0 0.7;
                }
-               rel2 {
-                  to: "username_entry";
-                  relative: 1.0 2.0;
+               text {
+                  font: "Sans";
+                  size: 10;
+                  text: "debug";
                }
             }
+         }
+      }
+      programs {
+         program { name: "prompt_show";
+            signal: "prompt,show"; source: "";
+            action: STATE_SET "visible" 0.0;
+            transition: LINEAR 0.2;
+            target: "prompt_entry";
+         }
+         program { name: "prompt_hide";
+            signal: "prompt,hide"; source: "";
+            action: STATE_SET "default" 0.0;
+            transition: LINEAR 0.2;
+            target: "prompt_entry";
          }
       }
    }
