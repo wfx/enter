@@ -108,16 +108,17 @@ class MainWin(StandardWindow):
 
 class EnterApplication(object):
     def __init__(self):
+        # main window
         self.main_win = MainWin(self)
-        self.log("debug label")
-        self.main_win.message_show("message label")
+        self.log('debug label')
+        self.main_win.message_show('message label')
 
         # LightDM greeter
         self.greeter = LightDM.Greeter()
-        self.greeter.connect("authentication-complete",
+        self.greeter.connect('authentication-complete',
                              self.greeter_authentication_complete_cb)
-        self.greeter.connect("show-message", self.greeter_show_message_cb)
-        self.greeter.connect("show-prompt", self.greeter_show_prompt_cb)
+        self.greeter.connect('show-message', self.greeter_show_message_cb)
+        self.greeter.connect('show-prompt', self.greeter_show_prompt_cb)
         self.greeter.connect_sync()
 
     def log(self, msg):
@@ -128,27 +129,30 @@ class EnterApplication(object):
 
     def prompt_response(self, response):
         self.main_win.prompt_hide()
-        self.main_win.message_show("Login in progress...")
+        self.main_win.message_show('Login in progress...')
         self.greeter.respond(response)
 
     def greeter_show_prompt_cb(self, greeter, text, promptType):
+        """ called by LDM when need a prompt """
         if promptType == LightDM.PromptType.SECRET:
             self.main_win.prompt_show(text, password=True)
         else:
             self.main_win.prompt_show(text, password=False)
 
     def greeter_show_message_cb(self, text, message_type):
+        """ called by LDM when we must show a message """
         self.main_win.message_show(text)
 
     def greeter_authentication_complete_cb(self, greeter):
+        """ called by LDM when auth is completed """
         if self.greeter.get_is_authenticated():
-            if not self.greeter.start_session_sync("enlightenment"):
-                self.main_win.message_show("Failed to start session")
+            if not self.greeter.start_session_sync('enlightenment'):
+                self.main_win.message_show('Failed to start session')
         else:
-            self.main_win.message_show("Login failed")
+            self.main_win.message_show('Login failed')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     elementary.init()
     app = EnterApplication()
     ecore.main_loop_glib_integrate()
