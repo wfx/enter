@@ -138,7 +138,15 @@ class MainWin(StandardWindow):
     def _power_list_selected_cb(self, li, item):
         self.app.power = item.data['key']
         self.layout.signal_emit('power,hide', '')
-        self.layout.part_text_set('power.text', item.text)
+        if self.app.power == 'hibernate':
+            self.system_hibernate()
+        if self.app.power == 'restart':
+            self.system_restart()
+        if self.app.power == 'shutdown':
+            self.system_shutdown()
+        if self.app.power == 'suspend':
+            self.system_suspend()
+        self.layout.part_text_set('message.text', item.data['key'])
         
     def _username_en_activated_cb(self, en):
         self.app.user_selected(en.text)
@@ -178,14 +186,6 @@ class EnterApplication(object):
         
         # ... power info
         self.power = list()
-        if LightDM.get_can_hibernate():
-            self.power.append('hibernate')
-        if LightDM.get_can_restart():
-            self.power.append('restart')
-        if LightDM.get_can_shutdown():
-            self.power.append('shutdown')
-        if LightDM.get_can_suspend():
-            self.power.append('suspend')
 
         # main window
         self.main_win = MainWin(self)
