@@ -75,27 +75,7 @@ collections {
                image.normal: "power_icon.png";
             }
          }
-         part { name: "power.text"; type: TEXT;
-            description { state: "default" 0.0;
-               rel1 {
-                  to: "power.icon";
-                  relative: 1.0 0.0;
-                  offset: 6 0;
-               }
-               rel2 {
-                  to: "power.icon";
-                  relative: 1.0 1.0;
-                  offset: 6 0;
-               }
-               align: 0.0 0.5;
-               text {
-                  font: "Sans";
-                  size: 14;
-                  min: 1 1;
-                  ellipsis: -1;
-               }
-            }
-         }
+
          part { name: "prompt.swallow"; type: SWALLOW;  /* API */
             description { state: "default" 0.0;
                rel1 {

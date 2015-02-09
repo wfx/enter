@@ -18,6 +18,7 @@
 from __future__ import absolute_import, print_function, unicode_literals
 
 import os
+import sys
 
 from efl import ecore
 from efl import ecore_x
@@ -139,17 +140,13 @@ class MainWin(StandardWindow):
         self.app.power = item.data['key']
         self.layout.signal_emit('power,hide', '')
         if self.app.power == 'hibernate':
-            #self.system_hibernate()
-            self.layout.part_text_set('message.text', self.app.power)
+            self.system_hibernate()
         if self.app.power == 'restart':
-            #self.system_restart()
-            self.layout.part_text_set('message.text', self.app.power)
+            self.system_restart()
         if self.app.power == 'shutdown':
-            #self.system_shutdown()
-            self.layout.part_text_set('message.text', self.app.power)
+            self.system_shutdown()
         if self.app.power == 'suspend':
-            #self.system_suspend()
-            self.layout.part_text_set('message.text', self.app.power)
+            self.system_suspend()
         
     def _username_en_activated_cb(self, en):
         self.app.user_selected(en.text)
