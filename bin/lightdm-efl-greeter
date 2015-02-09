@@ -140,13 +140,13 @@ class MainWin(StandardWindow):
         self.app.power = item.data['key']
         self.layout.signal_emit('power,hide', '')
         if self.app.power == 'hibernate':
-            self.system_hibernate()
+            LightDM.hibernate()
         if self.app.power == 'restart':
-            self.system_restart()
+            LightDM.restart()
         if self.app.power == 'shutdown':
-            self.system_shutdown()
+            LightDM.shutdown()
         if self.app.power == 'suspend':
-            self.system_suspend()
+            LightDM.suspend()
         
     def _username_en_activated_cb(self, en):
         self.app.user_selected(en.text)
