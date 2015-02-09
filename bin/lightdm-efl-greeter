@@ -34,7 +34,7 @@ from gi.repository import LightDM
 # install the _() and ngettext() functions in the main namespace
 install_prefix = os.path.dirname(os.path.dirname(__file__))
 # locale_dir = os.path.join(install_prefix, 'share', 'locale')
-# gettext.install('epack', names='ngettext', localedir=locale_dir)
+# gettext.install('enter', names='ngettext', localedir=locale_dir)
 
 
 theme = 'default.edj'
@@ -90,6 +90,13 @@ class MainWin(StandardWindow):
         self.sessions_list = li
         self.select_session(self.app.session)
 
+        # power action list
+        li = List(self)
+        li.callback_selected_add(self._power_list_selected_cb)
+        self.layout.part_content_set('power.swallow', li)
+        self.power_list = li
+        self.select_power(self.app.power)
+
     def select_session(self, key):
         """ Select the given session in the session list and the label """
         self.sessions_list.clear()
@@ -104,6 +111,35 @@ class MainWin(StandardWindow):
         self.layout.signal_emit('sessions,hide', '')
         self.layout.part_text_set('session.text', item.text)
 
+    def select_power(self, key):
+        """ Select the given power action in the power list and the label """
+        self.power_list.clear()
+        if LightDM.get_can_hibernate():
+            it = self.power_list.item_append('hibernate')
+            it.data['key'] = 'hibernate'
+            if it.data['key'] == key:
+                it.selected = True
+        if LightDM.get_can_restart():
+            it = self.power_list.item_append('restart')
+            it.data['key'] = 'restart'
+            if it.data['key'] == key:
+                it.selected = True
+        if LightDM.get_can_shutdown():
+            it = self.power_list.item_append('shutdown')
+            it.data['key'] = 'shutdown'
+            if it.data['key'] == key:
+                it.selected = True
+        if LightDM.get_can_suspend():
+            it = self.power_list.item_append('suspend')
+            it.data['key'] = 'suspend'
+            if it.data['key'] == key:
+                it.selected = True
+
+    def _power_list_selected_cb(self, li, item):
+        self.app.power = item.data['key']
+        self.layout.signal_emit('power,hide', '')
+        self.layout.part_text_set('power.text', item.text)
+        
     def _username_en_activated_cb(self, en):
         self.app.user_selected(en.text)
 
@@ -139,6 +175,17 @@ class EnterApplication(object):
 
         # get info from the greeter
         self.session = self.greeter.get_default_session_hint() or "enlightenment"
+        
+        # ... power info
+        self.power = list()
+        if LightDM.get_can_hibernate():
+            self.power.append('hibernate')
+        if LightDM.get_can_restart():
+            self.power.append('restart')
+        if LightDM.get_can_shutdown():
+            self.power.append('shutdown')
+        if LightDM.get_can_suspend():
+            self.power.append('suspend')
 
         # main window
         self.main_win = MainWin(self)
