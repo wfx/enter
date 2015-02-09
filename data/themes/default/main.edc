@@ -165,7 +165,7 @@ collections {
                   relative: 1.0 0.0;
                }
                rel2 {
-                  relative: 1.0 1.0;
+                  relative: 1.65 0.45;
                }
             }
             description { state: "visible" 0.0;
@@ -174,7 +174,7 @@ collections {
                   relative: 0.65 0.0;
                }
                rel2 {
-                  relative: 0.65 1.0;
+                  relative: 1.0 0.45;
                }
             }
          }
