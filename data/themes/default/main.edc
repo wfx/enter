@@ -9,6 +9,7 @@
 images {
    image: "bg_radgrad.png" COMP;
    image: "sessions_icon.png" COMP;
+   image: "power_icon.png" COMP;
 }
 
 collections {
@@ -26,7 +27,7 @@ collections {
                color: 0 0 0 100;
                rel2 {
                   relative: 1.0 0.0;
-                  offset: -1 32;
+                  offset: -1 24;
                }
             }
          }
@@ -50,6 +51,39 @@ collections {
                }
                rel2 {
                   to: "session.icon";
+                  relative: 1.0 1.0;
+                  offset: 6 0;
+               }
+               align: 0.0 0.5;
+               text {
+                  font: "Sans";
+                  size: 14;
+                  min: 1 1;
+                  ellipsis: -1;
+               }
+            }
+         }
+ 
+          part { name: "power.icon";
+            type: IMAGE;
+            description { state: "default" 0.0;
+               rel1.to: "header";
+               rel2.to: "header";
+               align: 1.0 0.0;
+               aspect: 1 1;
+               aspect_preference: BOTH;
+               image.normal: "power_icon.png";
+            }
+         }
+         part { name: "power.text"; type: TEXT;
+            description { state: "default" 0.0;
+               rel1 {
+                  to: "power.icon";
+                  relative: 1.0 0.0;
+                  offset: 6 0;
+               }
+               rel2 {
+                  to: "power.icon";
                   relative: 1.0 1.0;
                   offset: 6 0;
                }
@@ -123,6 +157,28 @@ collections {
                }
             }
          }
+         
+         part { name: "power.swallow";  type: SWALLOW; /* API */
+            description { state: "default" 0.0;
+               rel1 {
+                  to: "header";
+                  relative: 1.0 0.0;
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+               }
+            }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               rel1 {
+                  relative: 0.65 0.0;
+               }
+               rel2 {
+                  relative: 0.65 1.0;
+               }
+            }
+         }
+         
          part { name: "debug.text"; type: TEXT;  /* API */
             description { state: "default" 0.0;
                color: 200 0 0 255;
@@ -162,6 +218,22 @@ collections {
          program { name: "session_click";
             signal: "mouse,up,1"; source: "session.*";
             action: SIGNAL_EMIT "sessions,show" "";
+         }
+         program { name: "power_show";  /* API */
+            signal: "power,show"; source: "";
+            action: STATE_SET "visible" 0.0;
+            transition: LINEAR 0.3;
+            target: "power.swallow";
+         }
+         program { name: "power_hide";  /* API */
+            signal: "power,hide"; source: "";
+            action: STATE_SET "default" 0.0;
+            transition: LINEAR 0.3;
+            target: "power.swallow";
+         }
+         program { name: "power_click";
+            signal: "mouse,up,1"; source: "power.*";
+            action: SIGNAL_EMIT "power,show" "";
          }
       }
    }
