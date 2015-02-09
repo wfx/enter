@@ -1,5 +1,5 @@
 {
-  "JSON_Version":"3",
+  "JSON_Version":"1",
   "Settings":
   {
     "project":"Enter",
@@ -28,17 +28,14 @@
         "class":"Elm_Win",
         "public":true
       },
-      "Constructors":
-      {
-        "Elm_Win.constructor":[null, "ELM_WIN_BASIC"]
-      },
       "Properties":
       {
         "Elm_Win.title":["elm_win1"],
         "Evas.Object.size_hint_weight":[1, 1],
         "Evas.Object.visibility":[true],
         "Evas.Object.size_hint_align":[-1, -1],
-        "Evas.Object.size":[800, 600]
+        "Evas.Object.size":[800, 600],
+        "Elm_Win.autodel":[true]
       },
       "Contains":["elm_bg1", "elm_box1"]
     },
