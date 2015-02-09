@@ -142,7 +142,7 @@ collections {
             description { state: "default" 0.0;
                rel1 {
                   to: "header";
-                  relative: 1.0 0.0;
+                  relative: 1.0 1.0;
                }
                rel2 {
                   relative: 1.65 0.45;
@@ -151,7 +151,7 @@ collections {
             description { state: "visible" 0.0;
                inherit: "default" 0.0;
                rel1 {
-                  relative: 0.65 0.0;
+                  relative: 0.65 1.0;
                }
                rel2 {
                   relative: 1.0 0.45;
