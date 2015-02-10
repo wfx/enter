@@ -2,6 +2,8 @@ Enter
 ===
 A lightdm elm greeter for e
 
-Realy experimental state!<br>
-API: https://lazka.github.io/pgi-docs/#LightDM-1
+![Screenshot](https://github.com/wfx/enter/blob/master/data/shot.png)
+
+Works now but have not all planed feature's implemented.<br>
+
 
