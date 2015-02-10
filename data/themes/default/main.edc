@@ -98,10 +98,10 @@ collections {
          part { name: "username.swallow"; type: SWALLOW;  /* API */
             description { state: "default" 0.0;
                rel1 {
-                  relative: 0.3 0.5;
+                  relative: 0.45 0.5;
                }
                rel2 {
-                  relative: 0.7 0.5;
+                  relative: 0.55 0.5;
                }
             }
          }
