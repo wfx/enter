@@ -48,7 +48,7 @@ class MainWin(StandardWindow):
 
         # window setup
         StandardWindow.__init__(self, 'lightdm-efl-greeter', 'Enter',
-                                autodel=True, size=(400,400))
+                                autodel=True, size=(600,400))
         self.callback_delete_request_add(lambda o: elementary.exit())
 
         # make the window fullscreen (without a wm)
