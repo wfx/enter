@@ -1,0 +1,222 @@
+
+#define DBG_SHOW(_PART, _R, _G, _B) \
+   part { name: "dbg_show"_PART; \
+      type: RECT; mouse_events: 0; \
+      description { state: "default" 0.0; \
+         rel1.to: _PART; rel2.to: _PART; \
+         color: _R _G _B 50; } }
+
+images {
+   image: "bg_radgrad.png" COMP;
+   image: "sessions_icon.png" COMP;
+   image: "power_icon.png" COMP;
+}
+
+collections {
+
+   group { name: "enter/main";
+      parts {
+         part { name: "bg"; type: IMAGE;
+            description { state: "default" 0.0;
+               image.normal: "bg_radgrad.png";
+            }
+         }
+         part { name: "header";
+            type: RECT;
+            description { state: "default" 0.0;
+               color: 0 0 0 100;
+               rel2 {
+                  relative: 1.0 0.0;
+                  offset: -1 24;
+               }
+            }
+         }
+         part { name: "session.icon";
+            type: IMAGE;
+            description { state: "default" 0.0;
+               rel1.to: "header";
+               rel2.to: "header";
+               align: 0.0 0.0;
+               aspect: 1 1;
+               aspect_preference: BOTH;
+               image.normal: "sessions_icon.png";
+            }
+         }
+         part { name: "session.text"; type: TEXT;
+            description { state: "default" 0.0;
+               rel1 {
+                  to: "session.icon";
+                  relative: 1.0 0.0;
+                  offset: 6 0;
+               }
+               rel2 {
+                  to: "session.icon";
+                  relative: 1.0 1.0;
+                  offset: 6 0;
+               }
+               align: 0.0 0.5;
+               text {
+                  font: "Sans";
+                  size: 14;
+                  min: 1 1;
+                  ellipsis: -1;
+               }
+            }
+         }
+ 
+          part { name: "power.icon";
+            type: IMAGE;
+            description { state: "default" 0.0;
+               rel1.to: "header";
+               rel2.to: "header";
+               align: 1.0 0.0;
+               aspect: 1 1;
+               aspect_preference: BOTH;
+               image.normal: "power_icon.png";
+            }
+         }
+
+         part { name: "prompt.swallow"; type: SWALLOW;  /* API */
+            description { state: "default" 0.0;
+               rel1 {
+                  to: "username.swallow";
+               }
+               rel2 {
+                  to: "username.swallow";
+               }
+            }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               rel1 {
+                  relative: 0.0 1.0;
+               }
+               rel2 {
+                  relative: 1.0 2.0;
+               }
+            }
+         }
+         part { name: "username.swallow"; type: SWALLOW;  /* API */
+            description { state: "default" 0.0;
+               rel1 {
+                  relative: 0.45 0.5;
+               }
+               rel2 {
+                  relative: 0.55 0.5;
+               }
+            }
+         }
+         part { name: "message.text"; type: TEXT;  /* API */
+            description { state: "default" 0.0;
+               rel1 {
+                  relative: 0.0 0.6;
+               }
+               text {
+                  font: "Sans";
+                  size: 10;
+                  align: 0.5 0.0;
+               }
+            }
+         }
+         part { name: "sessions.swallow";  type: SWALLOW; /* API */
+            description { state: "default" 0.0;
+               rel1 {
+                  to: "header";
+                  relative: -0.65 1.0;
+               }
+               rel2 {
+                  relative: 0.0 0.45;
+               }
+            }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               rel1 {
+                  relative: 0.0 1.0;
+               }
+               rel2 {
+                  relative: 0.35 0.45;
+               }
+            }
+         }
+         
+         part { name: "power.swallow";  type: SWALLOW; /* API */
+            description { state: "default" 0.0;
+               rel1 {
+                  to: "header";
+                  relative: 1.0 1.0;
+               }
+               rel2 {
+                  relative: 1.65 0.45;
+               }
+            }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               rel1 {
+                  relative: 0.65 1.0;
+               }
+               rel2 {
+                  relative: 1.0 0.45;
+               }
+            }
+         }
+         
+         part { name: "debug.text"; type: TEXT;  /* API */
+            description { state: "default" 0.0;
+               color: 200 0 0 255;
+               text {
+                  font: "Sans";
+                  size: 10;
+                  align: 0.5 1.0;
+               }
+            }
+         }
+      }
+      programs {
+         program { name: "prompt_show";  /* API */
+            signal: "prompt,show"; source: "";
+            action: STATE_SET "visible" 0.0;
+            transition: LINEAR 0.2;
+            target: "prompt.swallow";
+         }
+         program { name: "prompt_hide";  /* API */
+            signal: "prompt,hide"; source: "";
+            action: STATE_SET "default" 0.0;
+            transition: LINEAR 0.2;
+            target: "prompt.swallow";
+         }
+         program { name: "sessions_show";  /* API */
+            signal: "sessions,show"; source: "";
+            action: STATE_SET "visible" 0.0;
+            transition: LINEAR 0.3;
+            target: "sessions.swallow";
+         }
+         program { name: "sessions_hide";  /* API */
+            signal: "sessions,hide"; source: "";
+            action: STATE_SET "default" 0.0;
+            transition: LINEAR 0.3;
+            target: "sessions.swallow";
+         }
+         program { name: "session_click";
+            signal: "mouse,up,1"; source: "session.*";
+            action: SIGNAL_EMIT "sessions,show" "";
+         }
+         program { name: "power_show";  /* API */
+            signal: "power,show"; source: "";
+            action: STATE_SET "visible" 0.0;
+            transition: LINEAR 0.3;
+            target: "power.swallow";
+         }
+         program { name: "power_hide";  /* API */
+            signal: "power,hide"; source: "";
+            action: STATE_SET "default" 0.0;
+            transition: LINEAR 0.3;
+            target: "power.swallow";
+         }
+         program { name: "power_click";
+            signal: "mouse,up,1"; source: "power.*";
+            action: SIGNAL_EMIT "power,show" "";
+         }
+      }
+   }
+
+}
+
