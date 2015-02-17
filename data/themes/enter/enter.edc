@@ -11,6 +11,9 @@ collections {
                 type: RECT;
                 description { state: "default" 0.0;
                     color:  100 0 0 80;
+                    rel1 {
+                        relative: 0.0 0.0;
+                    }
                     rel2 {
                         relative: 1.0 0.0;
                         offset: -1 128;
@@ -21,18 +24,26 @@ collections {
                 type: RECT;
                 description { state: "default" 0.0;
                     color:  0 100 0 80;
-                    rel1.to: "sysinfo";
-                    rel2.to: "setting";
-                    align:  0.0 0.0;
+                    rel1 {
+                        to_y: "sysinfo";
+                        offset:  -1 128;
+                    }
+                    rel2 {
+                        to_y: "setting";
+                        offset:  -1 -128;
+                    }
                 }
             }
             part { name: "setting";
                 type: RECT;
                 description { state: "default" 0.0;
                     color:  0 0 100 80;
+                    rel1 {
+                        relative: 0.0 1.0;
+                        offset: -1 -128;
+                    }
                     rel2 {
-                        relative: 1.0 0.0;
-                        offset: -1 128;
+                        relative: 1.0 1.0;
                     }
                 }
             }
