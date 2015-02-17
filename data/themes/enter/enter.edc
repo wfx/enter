@@ -5,48 +5,63 @@ images {
 }
 
 collections {
-    group { name: "enter/main";
-        parts {
-            part { name: "sysinfo";
-                type: RECT;
-                description { state: "default" 0.0;
-                    color:  100 0 0 80;
-                    rel1 {
-                        relative: 0.0 0.0;
-                    }
-                    rel2 {
-                        relative: 1.0 0.0;
-                        offset: -1 128;
-                    }
-                }
+   group { name: "enter/main";
+      parts {
+         part { name: "sysinfo";
+            part { name: "sysinfo_bg"; type: IMAGE;
+               description { state: "default" 0.0;
+                  image.normal: "top_bg.png";
+               }
             }
-            part { name: "session";
-                type: RECT;
-                description { state: "default" 0.0;
-                    color:  0 100 0 80;
-                    rel1 {
-                        to_y: "sysinfo";
-                        offset:  -1 128;
-                    }
-                    rel2 {
-                        to_y: "setting";
-                        offset:  -1 -128;
-                    }
-                }
+            type: RECT;
+            description { state: "default" 0.0;
+               color:  100 0 0 80;
+               rel1 {
+                  relative: 0.0 0.0;
+               }
+               rel2 {
+                  relative: 1.0 0.0;
+                  offset: -1 128;
+               }
             }
-            part { name: "setting";
-                type: RECT;
-                description { state: "default" 0.0;
-                    color:  0 0 100 80;
-                    rel1 {
-                        relative: 0.0 1.0;
-                        offset: -1 -128;
-                    }
-                    rel2 {
-                        relative: 1.0 1.0;
-                    }
-                }
+         }
+         part { name: "session";
+            part { name: "session_bg"; type: IMAGE;
+               description { state: "default" 0.0;
+                  image.normal: "main_bg.png";
+               }
             }
-        }
-    }
+            type: RECT;
+            description { state: "default" 0.0;
+               color:  0 100 0 80;
+               rel1 {
+                  to_y: "sysinfo";
+                  offset:  -1 128;
+               }
+               rel2 {
+                  to_y: "setting";
+                  offset:  -1 -128;
+               }
+            }
+         }
+         part { name: "setting";
+            part { name: "setting_bg"; type: IMAGE;
+               description { state: "default" 0.0;
+                  image.normal: "bottom_bg.png";
+               }
+            }
+            type: RECT;
+            description { state: "default" 0.0;
+               color:  0 0 100 80;
+               rel1 {
+                  relative: 0.0 1.0;
+                  offset: -1 -128;
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+               }
+            }
+         }
+      }
+   }
 }
