@@ -156,16 +156,17 @@ collections {
                description { state: "default" 0.0;
                   rel1 {
                      to: "use_account";
-                     offset:  8 8;
                   }
                   rel2 {
                      to: "use_account";
-                     offset:  -10 -10;
                   }
                   align: 1.0 0.0;
                   aspect: 1 1;
                   aspect_preference: BOTH;
-                  image.normal: "account_frame.png";
+                  image {
+                     normal: "account_frame.png";
+                     border: 2 2 2 2;
+                  }
                }
             }         
             part { name: "sel_account";
