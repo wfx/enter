@@ -94,6 +94,10 @@ class MainWin(StandardWindow):
         self.power_list = li
         self.select_power(self.app.power)
 
+    # hostname
+    def hostname_set(self, hostname):
+        self.layout.part_text_set('hostname.text', hostname)
+
     # sessions
     def _sig_sessions_show(self, ly, signal, source):
         """ Signal from the theme to show the sessions menu """
@@ -199,6 +203,9 @@ class EnterApplication(object):
         self.main_win = MainWin(self)
         self.log('debug label') # TODO removeme
         self.main_win.message_show('message label') # TODO removeme
+
+        # set hostname in the gui
+        self.main_win.hostname_set(LightDM.get_hostname())
 
     def log(self, msg):
         self.main_win.log(msg)

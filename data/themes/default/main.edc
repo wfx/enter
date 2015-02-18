@@ -63,8 +63,25 @@ collections {
                }
             }
          }
- 
-          part { name: "power.icon";
+         part { name: "hostname.text"; type: TEXT;
+            description { state: "default" 0.0;
+               rel1 {
+                  to_y: "header";
+                  relative: 0.0 1.0;
+               }
+               rel2 {
+                  to_y: "header";
+                  relative: 1.0 2.0;
+               }
+               text {
+                  font: "Sans";
+                  size: 14;
+                  min: 1 1;
+                  ellipsis: -1;
+               }
+            }
+         }
+         part { name: "power.icon";
             type: IMAGE;
             description { state: "default" 0.0;
                rel1.to: "header";
