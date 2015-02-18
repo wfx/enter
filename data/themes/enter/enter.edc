@@ -2,12 +2,9 @@ images {
     image: "header_bg.png" COMP;
     image: "main_bg.png" COMP;
     image: "footer_bg.png" COMP;
-    image: "accounts_frame.png" COMP;
+    image: "account_frame.png" COMP;
     image: "icon_user_default.png" COMP;
-   image: "corner_tl" COMP;
-   image: "corner_tr" COMP;
-   image: "corner_br" COMP;
-   image: "corner_bl" COMP;
+   image: "corner.png" COMP;
 }
 
 collections {
@@ -25,7 +22,7 @@ collections {
                align: 0.0 0.0;
                aspect: 1 1;
                aspect_preference: BOTH;
-               image.normal: "power_icon.png";
+               image.normal: "corner.png";
             }
          }
          part { name: "header";
@@ -168,7 +165,7 @@ collections {
                   align: 1.0 0.0;
                   aspect: 1 1;
                   aspect_preference: BOTH;
-                  image.normal: "accounts_frame.png";
+                  image.normal: "account_frame.png";
                }
             }         
             part { name: "sel_account";
