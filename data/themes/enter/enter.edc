@@ -15,7 +15,6 @@ collections {
             }
             type: RECT;
             description { state: "default" 0.0;
-               color:  100 0 0 80;
                rel1 {
                   relative: 0.0 0.0;
                }
@@ -33,7 +32,6 @@ collections {
             }
             type: RECT;
             description { state: "default" 0.0;
-               color:  0 100 0 80;
                rel1 {
                   to_y: "header";
                   offset:  -1 128;
@@ -41,6 +39,18 @@ collections {
                rel2 {
                   to_y: "footer";
                   offset:  -1 -128;
+               }
+            }
+            part { name: "main/use_session";
+               type: RECT;
+               description { state: "default" 0.0;
+                  color:  0 0 100 80;
+                  rel1 {
+                     relative: 0.1 0.2;
+                  }
+                  rel2 {
+                     relative: 0.4 0.6;          
+                  }
                }
             }
          }
@@ -52,7 +62,6 @@ collections {
             }
             type: RECT;
             description { state: "default" 0.0;
-               color:  0 0 100 80;
                rel1 {
                   relative: 0.0 1.0;
                   offset: -1 -128;
