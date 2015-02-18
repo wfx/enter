@@ -88,10 +88,23 @@ collections {
                      relative: 1.0 0.0;
                   }
                   rel2 {
-                     relative: 1.0 0.42;
+                     relative: 0.94 0.42;
                   }
                }
             }
+            part { name: "more_session";
+               type: RECT;
+               description { state: "default" 0.0;
+                  color:  0 100 0 80;
+                  rel1 {
+                     to: "sel_session";
+                     relative: 1.0 0.0;
+                  }
+                  rel2 {
+                     relative: 1.0 0.42;
+                  }
+               }
+            }            
             part { name: "use_account";
                type: RECT;
                description { state: "default" 0.0;
@@ -108,20 +121,56 @@ collections {
             part { name: "avatar.icon";
                type: IMAGE;
                description { state: "default" 0.0;
-                  rel1.to: "use_account";
-                  rel2.to: "use_account";
+                  rel1 {
+                     to: "use_account";
+                     offset:  10 10;
+                  }
+                  rel2 {
+                     to: "use_account";
+                     offset:  -12 -12;
+                  }
                   align: 1.0 0.0;
                   aspect: 1 1;
                   aspect_preference: BOTH;
                   image.normal: "icon_user_default.png";
                }
             }
+            part { name: "avatar_frame";
+               type: IMAGE;
+               description { state: "default" 0.0;
+                  rel1 {
+                     to: "use_account";
+                     offset:  8 8;
+                  }
+                  rel2 {
+                     to: "use_account";
+                     offset:  -10 -10;
+                  }
+                  align: 1.0 0.0;
+                  aspect: 1 1;
+                  aspect_preference: BOTH;
+                  image.normal: "accounts_frame.png";
+               }
+            }         
             part { name: "sel_account";
                type: RECT;
                description { state: "default" 0.0;
                   color:  100 0 0 80;
                   rel1 {
                      to: "use_account";
+                     relative: 1.0 0.0;
+                  }
+                  rel2 {
+                     relative: 0.94 0.88;
+                  }
+               }
+            }
+            part { name: "more_account";
+               type: RECT;
+               description { state: "default" 0.0;
+                  color:  0 100 0 80;
+                  rel1 {
+                     to: "sel_account";
                      relative: 1.0 0.0;
                   }
                   rel2 {
