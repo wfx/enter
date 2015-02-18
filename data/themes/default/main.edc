@@ -117,27 +117,6 @@ collections {
                }
             }
          }
-         part { name: "sessions.swallow";  type: SWALLOW; /* API */
-            description { state: "default" 0.0;
-               rel1 {
-                  to: "header";
-                  relative: -0.65 1.0;
-               }
-               rel2 {
-                  relative: 0.0 0.45;
-               }
-            }
-            description { state: "visible" 0.0;
-               inherit: "default" 0.0;
-               rel1 {
-                  relative: 0.0 1.0;
-               }
-               rel2 {
-                  relative: 0.35 0.45;
-               }
-            }
-         }
-         
          part { name: "power.swallow";  type: SWALLOW; /* API */
             description { state: "default" 0.0;
                rel1 {
@@ -184,18 +163,6 @@ collections {
             target: "prompt.swallow";
          }
          program { name: "sessions_show";  /* API */
-            signal: "sessions,show"; source: "";
-            action: STATE_SET "visible" 0.0;
-            transition: LINEAR 0.3;
-            target: "sessions.swallow";
-         }
-         program { name: "sessions_hide";  /* API */
-            signal: "sessions,hide"; source: "";
-            action: STATE_SET "default" 0.0;
-            transition: LINEAR 0.3;
-            target: "sessions.swallow";
-         }
-         program { name: "session_click";
             signal: "mouse,up,1"; source: "session.*";
             action: SIGNAL_EMIT "sessions,show" "";
          }
