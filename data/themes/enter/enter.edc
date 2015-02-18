@@ -2,6 +2,8 @@ images {
     image: "header_bg.png" COMP;
     image: "main_bg.png" COMP;
     image: "footer_bg.png" COMP;
+    image: "accounts_frame.png" COMP;
+    image: "icon_user_default.png" COMP;
 }
 
 collections {
@@ -23,6 +25,30 @@ collections {
                   offset: -1 128;
                }
             }
+            part { name: "info_system";
+               type: RECT;
+               description { state: "default" 0.0;
+                  color:  0 0 100 80;
+                  rel1 {
+                     relative: 0.142 0.1;
+                  }
+                  rel2 {
+                     relative: 0.64 0.9;
+                  }
+               }
+            }
+            part { name: "info_date";
+               type: RECT;
+               description { state: "default" 0.0;
+                  color:  100 0 0 80;
+                  rel1 {
+                     relative: 0.64 0.1;
+                  }
+                  rel2 {
+                     relative: 1.0 0.9;
+                  }
+               }
+            }
          }
          part { name: "main";
             part { name: "main_bg"; type: IMAGE;
@@ -41,15 +67,65 @@ collections {
                   offset:  -1 -128;
                }
             }
-            part { name: "main/use_session";
+            part { name: "use_session";
                type: RECT;
                description { state: "default" 0.0;
                   color:  0 0 100 80;
                   rel1 {
-                     relative: 0.1 0.2;
+                     relative: 0.142 0.148;
                   }
                   rel2 {
-                     relative: 0.4 0.6;          
+                     relative: 0.42 0.42;
+                  }
+               }
+            }
+            part { name: "sel_session";
+               type: RECT;
+               description { state: "default" 0.0;
+                  color:  100 0 0 80;
+                  rel1 {
+                     to: "use_session";
+                     relative: 1.0 0.0;
+                  }
+                  rel2 {
+                     relative: 1.0 0.42;
+                  }
+               }
+            }
+            part { name: "use_account";
+               type: RECT;
+               description { state: "default" 0.0;
+                  color:  0 0 100 80;
+                  rel1 {
+                     to: "use_session";
+                     relative: 0.0 1.76;
+                  }
+                  rel2 {
+                     relative: 0.42 0.88;
+                  }
+               }
+            }
+            part { name: "avatar.icon";
+               type: IMAGE;
+               description { state: "default" 0.0;
+                  rel1.to: "use_account";
+                  rel2.to: "use_account";
+                  align: 1.0 0.0;
+                  aspect: 1 1;
+                  aspect_preference: BOTH;
+                  image.normal: "icon_user_default.png";
+               }
+            }
+            part { name: "sel_account";
+               type: RECT;
+               description { state: "default" 0.0;
+                  color:  100 0 0 80;
+                  rel1 {
+                     to: "use_account";
+                     relative: 1.0 0.0;
+                  }
+                  rel2 {
+                     relative: 1.0 0.88;
                   }
                }
             }
@@ -68,6 +144,30 @@ collections {
                }
                rel2 {
                   relative: 1.0 1.0;
+               }
+            }
+            part { name: "use_language";
+               type: RECT;
+               description { state: "default" 0.0;
+                  color:  0 0 100 80;
+                  rel1 {
+                     relative: 0.142 0.25;
+                  }
+                  rel2 {
+                     relative: 0.42 0.75;
+                  }
+               }
+            }
+            part { name: "power_action";
+               type: RECT;
+               description { state: "default" 0.0;
+                  color:  100 0 0 80;
+                  rel1 {
+                     relative: 0.5 0.25;
+                  }
+                  rel2 {
+                     relative: 1.0 0.75;
+                  }
                }
             }
          }
