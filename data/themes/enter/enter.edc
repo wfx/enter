@@ -1,16 +1,16 @@
 images {
-    image: "top_bg.png" COMP;
+    image: "header_bg.png" COMP;
     image: "main_bg.png" COMP;
-    image: "bottom_bg.png" COMP;
+    image: "footer_bg.png" COMP;
 }
 
 collections {
    group { name: "enter/main";
       parts {
-         part { name: "sysinfo";
-            part { name: "sysinfo_bg"; type: IMAGE;
+         part { name: "header";
+            part { name: "head_bg"; type: IMAGE;
                description { state: "default" 0.0;
-                  image.normal: "top_bg.png";
+                  image.normal: "header_bg.png";
                }
             }
             type: RECT;
@@ -25,8 +25,8 @@ collections {
                }
             }
          }
-         part { name: "session";
-            part { name: "session_bg"; type: IMAGE;
+         part { name: "main";
+            part { name: "main_bg"; type: IMAGE;
                description { state: "default" 0.0;
                   image.normal: "main_bg.png";
                }
@@ -35,19 +35,19 @@ collections {
             description { state: "default" 0.0;
                color:  0 100 0 80;
                rel1 {
-                  to_y: "sysinfo";
+                  to_y: "header";
                   offset:  -1 128;
                }
                rel2 {
-                  to_y: "setting";
+                  to_y: "footer";
                   offset:  -1 -128;
                }
             }
          }
-         part { name: "setting";
-            part { name: "setting_bg"; type: IMAGE;
+         part { name: "footer";
+            part { name: "footer_bg"; type: IMAGE;
                description { state: "default" 0.0;
-                  image.normal: "bottom_bg.png";
+                  image.normal: "footer_bg.png";
                }
             }
             type: RECT;
