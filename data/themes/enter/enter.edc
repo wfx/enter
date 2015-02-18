@@ -4,11 +4,30 @@ images {
     image: "footer_bg.png" COMP;
     image: "accounts_frame.png" COMP;
     image: "icon_user_default.png" COMP;
+   image: "corner_tl" COMP;
+   image: "corner_tr" COMP;
+   image: "corner_br" COMP;
+   image: "corner_bl" COMP;
 }
 
 collections {
    group { name: "enter/main";
       parts {
+         part { name: "mouse_over";
+            type: IMAGE;
+            description { state: "default" 0.0;
+               rel1 {
+                  relative: 0.0 0.0;
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+               }
+               align: 0.0 0.0;
+               aspect: 1 1;
+               aspect_preference: BOTH;
+               image.normal: "power_icon.png";
+            }
+         }
          part { name: "header";
             part { name: "head_bg"; type: IMAGE;
                description { state: "default" 0.0;
