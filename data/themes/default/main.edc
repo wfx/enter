@@ -183,21 +183,9 @@ collections {
             signal: "mouse,up,1"; source: "session.*";
             action: SIGNAL_EMIT "sessions,show" "";
          }
-         program { name: "power_show";  /* API */
-            signal: "power,show"; source: "";
-            action: STATE_SET "visible" 0.0;
-            transition: LINEAR 0.3;
-            target: "power.swallow";
-         }
-         program { name: "power_hide";  /* API */
-            signal: "power,hide"; source: "";
-            action: STATE_SET "default" 0.0;
-            transition: LINEAR 0.3;
-            target: "power.swallow";
-         }
-         program { name: "power_click";
-            signal: "mouse,up,1"; source: "power.*";
-            action: SIGNAL_EMIT "power,show" "";
+         program { name: "powers_show";  /* API */
+            signal: "mouse,up,1"; source: "power.icon";
+            action: SIGNAL_EMIT "powers,show" "";
          }
       }
    }

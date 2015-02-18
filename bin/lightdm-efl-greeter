@@ -49,7 +49,8 @@ class MainWin(StandardWindow):
 
         # window setup
         StandardWindow.__init__(self, 'lightdm-efl-greeter', 'Enter',
-                                autodel=True, size=(600,400))
+                                autodel=True, size=(600,400),
+                                cursor='arrow')
         self.callback_delete_request_add(lambda o: elementary.exit())
 
         # make the window fullscreen (without a wm)
@@ -61,6 +62,8 @@ class MainWin(StandardWindow):
                              size_hint_weight=EXPAND_BOTH)
         self.layout.signal_callback_add('sessions,show', '',
                                         self._sig_sessions_show)
+        self.layout.signal_callback_add('powers,show', '',
+                                        self._sig_powers_show)
         self.resize_object_add(self.layout)
         self.layout.show()
 
@@ -71,6 +74,7 @@ class MainWin(StandardWindow):
         # give focus to the window (without a wm)
         ecore_x_win = ecore_x.Window_from_xid(self.xwindow_xid)
         ecore_x_win.focus()
+        ecore_x_win.cursor_show()
         self.username_entry.focus = True
 
     def create_widgets(self):
@@ -86,13 +90,6 @@ class MainWin(StandardWindow):
         en.callback_activated_add(self._prompt_en_activated_cb)
         self.layout.part_content_set('prompt.swallow', en)
         self.prompt_entry = en
-
-        # power action list
-        li = List(self)
-        li.callback_selected_add(self._power_list_selected_cb)
-        self.layout.part_content_set('power.swallow', li)
-        self.power_list = li
-        self.select_power(self.app.power)
 
     # hostname
     def hostname_set(self, hostname):
@@ -118,42 +115,22 @@ class MainWin(StandardWindow):
         """ Mark the given Session as selected """
         self.layout.part_text_set('session.text', session.props.name)
 
-    # power
-    def select_power(self, key):
-        """ Select the given power action in the power list and the label """
-        self.power_list.clear()
-        if LightDM.get_can_hibernate():
-            it = self.power_list.item_append('hibernate')
-            it.data['key'] = 'hibernate'
-            if it.data['key'] == key:
-                it.selected = True
-        if LightDM.get_can_restart():
-            it = self.power_list.item_append('restart')
-            it.data['key'] = 'restart'
-            if it.data['key'] == key:
-                it.selected = True
-        if LightDM.get_can_shutdown():
-            it = self.power_list.item_append('shutdown')
-            it.data['key'] = 'shutdown'
-            if it.data['key'] == key:
-                it.selected = True
-        if LightDM.get_can_suspend():
-            it = self.power_list.item_append('suspend')
-            it.data['key'] = 'suspend'
-            if it.data['key'] == key:
-                it.selected = True
+    # powers
+    def _sig_powers_show(self, ly, signal, source):
+        """ Signal from the theme to show the powers menu """
+        m = Menu(self)
+        it = m.item_add(None, 'Shutdown', None, lambda m,i: LightDM.shutdown())
+        it.disabled = not LightDM.get_can_shutdown()
+        it = m.item_add(None, 'Restart', None, lambda m,i: LightDM.restart())
+        it.disabled = not LightDM.get_can_restart()
+        it = m.item_add(None, 'Suspend', None, lambda m,i: LightDM.suspend())
+        it.disabled = not LightDM.get_can_suspend()
+        it = m.item_add(None, 'Hibernate', None, lambda m,i: LightDM.hibernate())
+        it.disabled = not LightDM.get_can_hibernate()
 
-    def _power_list_selected_cb(self, li, item):
-        self.app.power = item.data['key']
-        self.layout.signal_emit('power,hide', '')
-        if self.app.power == 'hibernate':
-            LightDM.hibernate()
-        if self.app.power == 'restart':
-            LightDM.restart()
-        if self.app.power == 'shutdown':
-            LightDM.shutdown()
-        if self.app.power == 'suspend':
-            LightDM.suspend()
+        x, y = self.evas.pointer_canvas_xy_get()
+        m.move(x, y)
+        m.show()
 
     # username entry
     def _username_en_activated_cb(self, en):
@@ -195,9 +172,6 @@ class EnterApplication(object):
         for session in LightDM.get_sessions():
             self.sessions[session.props.key] = session
         self.selected_session = None
-
-        # ... power info
-        self.power = list()
 
         # main window
         self.main_win = MainWin(self)
