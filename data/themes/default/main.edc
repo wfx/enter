@@ -10,6 +10,7 @@ images {
    image: "bg_radgrad.png" COMP;
    image: "sessions_icon.png" COMP;
    image: "power_icon.png" COMP;
+   image: "lang_icon.png" COMP;
 }
 
 collections {
@@ -44,6 +45,13 @@ collections {
                   aspect: 1 1; aspect_preference: BOTH;
                   align: 1.0 0.0;
                   image.normal: "power_icon.png";
+               }
+            }
+            part { name: "lang_icon"; type: IMAGE;
+               description { state: "default" 0.0;
+                  aspect: 1 1; aspect_preference: BOTH;
+                  align: 0.0 0.0;
+                  image.normal: "lang_icon.png";
                }
             }
          }
@@ -166,6 +174,10 @@ collections {
          program { name: "powers_show";  /* API */
             signal: "mouse,up,1"; source: "power_icon";
             action: SIGNAL_EMIT "powers,show" "";
+         }
+         program { name: "langs_show";  /* API */
+            signal: "mouse,up,1"; source: "lang_icon";
+            action: SIGNAL_EMIT "langs,show" "";
          }
       }
    }

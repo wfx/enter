@@ -64,6 +64,8 @@ class MainWin(StandardWindow):
                                         self._sig_sessions_show)
         self.layout.signal_callback_add('powers,show', '',
                                         self._sig_powers_show)
+        self.layout.signal_callback_add('langs,show', '',
+                                        self._sig_langs_show)
         self.resize_object_add(self.layout)
         self.layout.show()
 
@@ -132,6 +134,22 @@ class MainWin(StandardWindow):
         m.move(x, y)
         m.show()
 
+    # langs
+    def _sig_langs_show(self, ly, signal, source):
+        """ Signal from the theme to show the languages menu """
+        m = Menu(self)
+        for code, lang in app.languages.items():
+            txt = '{} - {}'.format(lang.props.name, lang.props.territory)
+            m.item_add(None, txt, None, self._lang_clicked_cb, lang)
+
+        x, y = self.evas.pointer_canvas_xy_get()
+        m.move(x, y)
+        m.show()
+
+    def _lang_clicked_cb(self, menu, item, lang):
+        self.app.selected_lang = lang.props.code
+        # TODO how to apply ??
+
     # username entry
     def _username_en_activated_cb(self, en):
         self.app.user_selected(en.text)
@@ -172,6 +190,12 @@ class EnterApplication(object):
         for session in LightDM.get_sessions():
             self.sessions[session.props.key] = session
         self.selected_session = None
+
+        # get available languages
+        self.languages = dict() # key: lang_code  data: Language instance
+        for lang in LightDM.get_languages():
+            self.languages[lang.props.code] = lang
+        self.selected_lang = None
 
         # main window
         self.main_win = MainWin(self)
