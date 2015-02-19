@@ -16,13 +16,14 @@ collections {
 
    group { name: "enter/main";
       parts {
+
          part { name: "bg"; type: IMAGE;
             description { state: "default" 0.0;
                image.normal: "bg_radgrad.png";
             }
          }
-         part { name: "header";
-            type: RECT;
+
+         part { name: "header"; type: RECT;
             description { state: "default" 0.0;
                color: 0 0 0 100;
                rel2 {
@@ -30,59 +31,37 @@ collections {
                   offset: -1 24;
                }
             }
-         }
-         part { name: "hostname.text"; type: TEXT;
-            description { state: "default" 0.0;
-               rel1 {
-                  to_y: "header";
-                  relative: 0.0 1.0;
-               }
-               rel2 {
-                  to_y: "header";
-                  relative: 1.0 2.0;
-               }
-               text {
-                  font: "Sans";
-                  size: 14;
-                  min: 1 1;
-                  ellipsis: -1;
+
+            part { name: "hostname.text"; type: TEXT;  /* API */
+               description { state: "default" 0.0;
+                  text {
+                     font: "Sans"; size: 14;
+                  }
                }
             }
-         }
-         part { name: "power.icon";
-            type: IMAGE;
-            description { state: "default" 0.0;
-               rel1.to: "header";
-               rel2.to: "header";
-               align: 1.0 0.0;
-               aspect: 1 1;
-               aspect_preference: BOTH;
-               image.normal: "power_icon.png";
+            part { name: "power_icon"; type: IMAGE;
+               description { state: "default" 0.0;
+                  aspect: 1 1; aspect_preference: BOTH;
+                  align: 1.0 0.0;
+                  image.normal: "power_icon.png";
+               }
             }
          }
 
          part { name: "prompt.swallow"; type: SWALLOW;  /* API */
-            clip_to: "prompt.clip";
+            clip_to: "prompt_clip";
             description { state: "default" 0.0;
-               rel1 {
-                  to: "username.swallow";
-               }
-               rel2 {
-                  to: "username.swallow";
-               }
+               rel1.to: "username.swallow";
+               rel2.to: "username.swallow";
             }
             description { state: "visible" 0.0;
                inherit: "default" 0.0;
-               rel1 {
-                  relative: 0.0 1.0;
-               }
-               rel2 {
-                  relative: 1.0 2.0;
-               }
+               rel1.relative: 0.0 1.0;
+               rel2.relative: 1.0 2.0;
             }
          }
          part { name: "session.icon"; type: IMAGE;
-            clip_to: "prompt.clip";
+            clip_to: "prompt_clip";
             description { state: "default" 0.0;
                rel1 {
                   to: "prompt.swallow";
@@ -93,14 +72,13 @@ collections {
                   to: "prompt.swallow";
                   relative: 1.5 1.0;
                }
+               aspect: 1 1; aspect_preference: BOTH;
                align: 0.0 0.5;
-               aspect: 1 1;
-               aspect_preference: BOTH;
                image.normal: "sessions_icon.png";
             }
          }
          part { name: "session.text"; type: TEXT;  /* API */
-            clip_to: "prompt.clip";
+            clip_to: "prompt_clip";
             description { state: "default" 0.0;
                rel1 {
                   to: "session.icon";
@@ -121,15 +99,14 @@ collections {
                }
             }
          }
-         part { name: "prompt.clip"; type: RECT;
+         part { name: "prompt_clip"; type: RECT;
             description { state: "default" 0.0;
                rel1.to: "prompt.swallow";
                rel2.to: "session.text";
                color: 255 255 255 0;
             }
             description { state: "visible" 0.0;
-               rel1.to: "prompt.swallow";
-               rel2.to: "session.text";
+               inherit: "default" 0.0;
                color: 255 255 255 255;
             }
          }
@@ -173,21 +150,21 @@ collections {
             action: STATE_SET "visible" 0.0;
             transition: LINEAR 0.2;
             target: "prompt.swallow";
-            target: "prompt.clip";
+            target: "prompt_clip";
          }
          program { name: "prompt_hide";  /* API */
             signal: "prompt,hide"; source: "";
             action: STATE_SET "default" 0.0;
             transition: LINEAR 0.2;
             target: "prompt.swallow";
-            target: "prompt.clip";
+            target: "prompt_clip";
          }
          program { name: "sessions_show";  /* API */
             signal: "mouse,up,1"; source: "session.*";
             action: SIGNAL_EMIT "sessions,show" "";
          }
          program { name: "powers_show";  /* API */
-            signal: "mouse,up,1"; source: "power.icon";
+            signal: "mouse,up,1"; source: "power_icon";
             action: SIGNAL_EMIT "powers,show" "";
          }
       }
