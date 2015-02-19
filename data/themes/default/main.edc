@@ -31,38 +31,6 @@ collections {
                }
             }
          }
-         part { name: "session.icon";
-            type: IMAGE;
-            description { state: "default" 0.0;
-               rel1.to: "header";
-               rel2.to: "header";
-               align: 0.0 0.0;
-               aspect: 1 1;
-               aspect_preference: BOTH;
-               image.normal: "sessions_icon.png";
-            }
-         }
-         part { name: "session.text"; type: TEXT;
-            description { state: "default" 0.0;
-               rel1 {
-                  to: "session.icon";
-                  relative: 1.0 0.0;
-                  offset: 6 0;
-               }
-               rel2 {
-                  to: "session.icon";
-                  relative: 1.0 1.0;
-                  offset: 6 0;
-               }
-               align: 0.0 0.5;
-               text {
-                  font: "Sans";
-                  size: 14;
-                  min: 1 1;
-                  ellipsis: -1;
-               }
-            }
-         }
          part { name: "hostname.text"; type: TEXT;
             description { state: "default" 0.0;
                rel1 {
@@ -94,6 +62,7 @@ collections {
          }
 
          part { name: "prompt.swallow"; type: SWALLOW;  /* API */
+            clip_to: "prompt.clip";
             description { state: "default" 0.0;
                rel1 {
                   to: "username.swallow";
@@ -112,8 +81,61 @@ collections {
                }
             }
          }
+         part { name: "session.icon"; type: IMAGE;
+            clip_to: "prompt.clip";
+            description { state: "default" 0.0;
+               rel1 {
+                  to: "prompt.swallow";
+                  relative: 1.0 0.0;
+                  offset: 3 0;
+               }
+               rel2 {
+                  to: "prompt.swallow";
+                  relative: 1.5 1.0;
+               }
+               align: 0.0 0.5;
+               aspect: 1 1;
+               aspect_preference: BOTH;
+               image.normal: "sessions_icon.png";
+            }
+         }
+         part { name: "session.text"; type: TEXT;  /* API */
+            clip_to: "prompt.clip";
+            description { state: "default" 0.0;
+               rel1 {
+                  to: "session.icon";
+                  relative: 1.0 0.0;
+                  offset: 6 0;
+               }
+               rel2 {
+                  to: "session.icon";
+                  relative: 1.0 1.0;
+                  offset: 6 0;
+               }
+               align: 0.0 0.5;
+               text {
+                  font: "Sans";
+                  size: 12;
+                  min: 1 1;
+                  ellipsis: -1;
+               }
+            }
+         }
+         part { name: "prompt.clip"; type: RECT;
+            description { state: "default" 0.0;
+               rel1.to: "prompt.swallow";
+               rel2.to: "session.text";
+               color: 255 255 255 0;
+            }
+            description { state: "visible" 0.0;
+               rel1.to: "prompt.swallow";
+               rel2.to: "session.text";
+               color: 255 255 255 255;
+            }
+         }
          part { name: "username.swallow"; type: SWALLOW;  /* API */
             description { state: "default" 0.0;
+               min: 180 20;
                rel1 {
                   relative: 0.45 0.5;
                }
@@ -134,27 +156,6 @@ collections {
                }
             }
          }
-         part { name: "power.swallow";  type: SWALLOW; /* API */
-            description { state: "default" 0.0;
-               rel1 {
-                  to: "header";
-                  relative: 1.0 1.0;
-               }
-               rel2 {
-                  relative: 1.65 0.45;
-               }
-            }
-            description { state: "visible" 0.0;
-               inherit: "default" 0.0;
-               rel1 {
-                  relative: 0.65 1.0;
-               }
-               rel2 {
-                  relative: 1.0 0.45;
-               }
-            }
-         }
-         
          part { name: "debug.text"; type: TEXT;  /* API */
             description { state: "default" 0.0;
                color: 200 0 0 255;
@@ -172,12 +173,14 @@ collections {
             action: STATE_SET "visible" 0.0;
             transition: LINEAR 0.2;
             target: "prompt.swallow";
+            target: "prompt.clip";
          }
          program { name: "prompt_hide";  /* API */
             signal: "prompt,hide"; source: "";
             action: STATE_SET "default" 0.0;
             transition: LINEAR 0.2;
             target: "prompt.swallow";
+            target: "prompt.clip";
          }
          program { name: "sessions_show";  /* API */
             signal: "mouse,up,1"; source: "session.*";
