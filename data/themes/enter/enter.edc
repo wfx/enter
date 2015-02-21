@@ -5,19 +5,26 @@ images {
    image: "frame.png" COMP;
    image: "icon_user_default.png" COMP;
    image: "corner.png" COMP;
+   image: "session_enlightenment.png" COMP;
+   image: "icon_user_default.png" COMP;
+   image: "avatar_kitty.png" COMP;
+   image: "corner.png" COMP;
+   image: "brackets.png" COMP;
 }
 
 collections {
    group { name: "header";
       parts {
          // --- header  ---
-         part { name: "header"; type: BOX;
+         part { name: "header"; 
+            type: BOX;
             description { state: "default" 0.0;
                rel1.relative: 0.0 0.0;
                rel2.relative: 1.0 0.0;
                rel2.offset: 0 156;
             }
-            part { name: "header/bg";
+            part { name: "header/bg"; 
+               type: IMAGE;
                description { state: "default" 0.0;
                   image.normal: "header_bg.png";
                }
@@ -110,19 +117,54 @@ collections {
                   rel1.relative: 0.0 0.0;
                   rel2.relative: 1.0 0.5;
                }
+               // --- main / enter / session / info ---
                part { name: "main/enter/session/info";
                   type: BOX;
                   description { state: "default" 0.0;
                      rel1.relative: 0.0 0.0;
-                     rel2.relative: 0.4 1.0;
+                     rel2.relative: 0.32 1.0;
+                  }
+                  part { name: "main/enter/session/info/text";
+                     type: TEXT;
+                     description { state: "default" 0.0;
+                        rel1.relative: 0.0 0.0;
+                        rel2.relative: 1.0 1.0;
+                         text {
+                           font: "Sans";
+                           size: 12;
+                           text: "SESSION INFO";
+                        }
+                     }
+                  }
+                  part { name: "main/enter/session/info/corner"; type: IMAGE;
+                     description { state: "default" 0.0;
+                        image.border: 12 12 12 12;
+                        image.normal: "brackets.png";
+                     }
                   }
                }
-               // WHY IS IT NOT RELATIVE TO  info
+               // --- main / enter / session / logo ---
                part { name: "main/enter/session/logo";
                   type: BOX;
                   description { state: "default" 0.0;
                      align: 0 0;
                      rel1.to: "main/enter/session/info";
+                     rel1.relative: 1.0 0.0;
+                     rel2.relative: 0.52 1.0;
+                  }
+                  part { name: "main/enter/session/logo/image"; type: IMAGE;
+                     description { state: "default" 0.0;
+                        max: 126 174;
+                        image.normal: "session_enlightenment.png";
+                     }
+                  }
+               }
+               // --- main / enter / session / chose ---
+               part { name: "main/enter/session/chose";
+                  type: BOX;
+                  description { state: "default" 0.0;
+                     align: 0 0;
+                     rel1.to: "main/enter/session/logo";
                      rel1.relative: 1.0 0.0;
                      rel2.relative: 1.0 1.0;
                   }
@@ -134,6 +176,47 @@ collections {
                description { state: "default" 0.0;
                   rel1.relative: 0.0 0.5;
                   rel2.relative: 1.0 1.0;
+               }
+               // --- main / enter / account / info ---
+               part { name: "main/enter/account/info";
+                  type: BOX;
+                  description { state: "default" 0.0;
+                     rel1.relative: 0.0 0.0;
+                     rel2.relative: 0.32 1.0;
+                  }
+               }
+               // --- main / enter / account / logo ---
+               part { name: "main/enter/account/logo";
+                  type: BOX;
+                  description { state: "default" 0.0;
+                     align: 0 0;
+                     rel1.to: "main/enter/account/info";
+                     rel1.relative: 1.0 0.0;
+                     rel2.relative: 0.52 1.0;
+                  }
+                  part { name: "main/enter/account/logo/image"; type: IMAGE;
+                     description { state: "default" 0.0;
+                        max: 124 124;
+                        image.normal: "avatar_kitty.png";
+                     }
+                  }
+                  part { name: "main/enter/account/logo/frame"; type: IMAGE;
+                     description { state: "default" 0.0;
+                        max: 126 126;
+                        image.border: 12 12 12 12;
+                        image.normal: "frame.png";
+                     }
+                  }
+               }
+               // --- main / enter / account / chose ---
+               part { name: "main/enter/account/chose";
+                  type: BOX;
+                  description { state: "default" 0.0;
+                     align: 0 0;
+                     rel1.to: "main/enter/account/logo";
+                     rel1.relative: 1.0 0.0;
+                     rel2.relative: 1.0 1.0;
+                  }
                }
             }               
          }
