@@ -1,241 +1,206 @@
 images {
-    image: "header_bg.png" COMP;
-    image: "main_bg.png" COMP;
-    image: "footer_bg.png" COMP;
-    image: "account_frame.png" COMP;
-    image: "icon_user_default.png" COMP;
+   image: "header_bg.png" COMP;
+   image: "main_bg.png" COMP;
+   image: "footer_bg.png" COMP;
+   image: "frame.png" COMP;
+   image: "icon_user_default.png" COMP;
    image: "corner.png" COMP;
 }
 
 collections {
-   group { name: "enter/main";
+   group { name: "header";
       parts {
-         part { name: "mouse_over";
-            type: IMAGE;
+         // --- header  ---
+         part { name: "header"; type: BOX;
             description { state: "default" 0.0;
-               rel1 {
-                  relative: 0.0 0.0;
-               }
-               rel2 {
-                  relative: 1.0 1.0;
-               }
-               align: 0.0 0.0;
-               aspect: 1 1;
-               aspect_preference: BOTH;
-               image.normal: "corner.png";
+               rel1.relative: 0.0 0.0;
+               rel2.relative: 1.0 0.0;
+               rel2.offset: 0 156;
             }
-         }
-         part { name: "header";
-            part { name: "head_bg"; type: IMAGE;
+            part { name: "header/bg";
                description { state: "default" 0.0;
                   image.normal: "header_bg.png";
                }
             }
-            type: RECT;
-            description { state: "default" 0.0;
-               rel1 {
-                  relative: 0.0 0.0;
-               }
-               rel2 {
-                  relative: 1.0 0.0;
-                  offset: -1 128;
-               }
-            }
-            part { name: "info_system";
-               type: RECT;
-               description { state: "default" 0.0;
-                  color:  0 0 100 80;
-                  rel1 {
-                     relative: 0.142 0.1;
-                  }
-                  rel2 {
-                     relative: 0.64 0.9;
-                  }
-               }
-            }
-            part { name: "info_date";
-               type: RECT;
-               description { state: "default" 0.0;
-                  color:  100 0 0 80;
-                  rel1 {
-                     relative: 0.64 0.1;
-                  }
-                  rel2 {
-                     relative: 1.0 0.9;
-                  }
-               }
-            }
          }
-         part { name: "main";
-            part { name: "main_bg"; type: IMAGE;
+         // --- header / info ---
+         part { name: "header/info";
+            type: BOX;
+            description { state: "default" 0.0;
+               rel1.to: "header";
+               rel1.relative: 0.0 0.0;
+               rel1.offset: 80 20;
+               rel2.to: "header";
+               rel2.relative: 1.0 1.0;
+               rel2.offset: 0 -20;
+            }
+            // --- header / info / system ( .text ) ---
+            part { name: "header/info/system";
+               type: BOX;
+               description { state: "default" 0.0;
+                  rel1.relative: 0.0 0.0;
+                  rel2.relative: 0.5 1.0;
+               }
+               part { name: "header/info/system/system.text";
+                  type: TEXT;
+                  description { state: "default" 0.0;
+                     rel1.relative: 0.0 0.0;
+                     rel2.relative: 1.0 1.0;
+                      text {
+                        font: "Sans";
+                        size: 12;
+                        text: "SYSTEM INFO";
+                     }
+                  }
+               }
+            }
+            // --- header / info / date ( .text ) ---
+            part { name: "header/info/date";
+               type: BOX;
+               description { state: "default" 0.0;
+                  rel1.to: "header/info/system";                  
+                  rel1.relative: 1.0 0.0;
+                  rel2.relative: 1.0 1.0;
+               }
+               part { name: "header/info/date.txt"; type: TEXT;
+                  description { state: "default" 0.0;
+                     rel1.to_y: "header/info/date";
+                     rel1.relative: 0.0 0.0;
+                     rel2.relative: 1.0 1.0;
+                     text {
+                        font: "Sans";
+                        size: 12;
+                        text: "DATE";
+                     }
+                  }
+               }
+            }               
+         }
+         //
+         // --- main  ---
+         part { name: "main"; type: BOX;
+            description { state: "default" 0.0;
+               rel1.to: "header";
+               rel1.relative: 0.0 0.0;
+               rel1.offset: 0 156;
+               rel2.to: "footer";
+               rel2.offset: 0 -156;
+               rel2.relative: 1.0 1.0;
+            }
+            part { name: "main/bg";
                description { state: "default" 0.0;
                   image.normal: "main_bg.png";
                }
             }
-            type: RECT;
-            description { state: "default" 0.0;
-               rel1 {
-                  to_y: "header";
-                  offset:  -1 128;
-               }
-               rel2 {
-                  to_y: "footer";
-                  offset:  -1 -128;
-               }
-            }
-            part { name: "use_session";
-               type: RECT;
-               description { state: "default" 0.0;
-                  color:  0 0 100 80;
-                  rel1 {
-                     relative: 0.142 0.148;
-                  }
-                  rel2 {
-                     relative: 0.42 0.42;
-                  }
-               }
-            }
-            part { name: "sel_session";
-               type: RECT;
-               description { state: "default" 0.0;
-                  color:  100 0 0 80;
-                  rel1 {
-                     to: "use_session";
-                     relative: 1.0 0.0;
-                  }
-                  rel2 {
-                     relative: 0.94 0.42;
-                  }
-               }
-            }
-            part { name: "more_session";
-               type: RECT;
-               description { state: "default" 0.0;
-                  color:  0 100 0 80;
-                  rel1 {
-                     to: "sel_session";
-                     relative: 1.0 0.0;
-                  }
-                  rel2 {
-                     relative: 1.0 0.42;
-                  }
-               }
-            }            
-            part { name: "use_account";
-               type: RECT;
-               description { state: "default" 0.0;
-                  color:  0 0 100 80;
-                  rel1 {
-                     to: "use_session";
-                     relative: 0.0 1.76;
-                  }
-                  rel2 {
-                     relative: 0.42 0.88;
-                  }
-               }
-            }
-            part { name: "avatar.icon";
-               type: IMAGE;
-               description { state: "default" 0.0;
-                  rel1 {
-                     to: "use_account";
-                     offset:  10 10;
-                  }
-                  rel2 {
-                     to: "use_account";
-                     offset:  -12 -12;
-                  }
-                  align: 1.0 0.0;
-                  aspect: 1 1;
-                  aspect_preference: BOTH;
-                  image.normal: "icon_user_default.png";
-               }
-            }
-            part { name: "avatar_frame";
-               type: IMAGE;
-               description { state: "default" 0.0;
-                  rel1 {
-                     to: "use_account";
-                  }
-                  rel2 {
-                     to: "use_account";
-                  }
-                  align: 1.0 0.0;
-                  aspect: 1 1;
-                  aspect_preference: BOTH;
-                  image {
-                     normal: "account_frame.png";
-                     border: 2 2 2 2;
-                  }
-               }
-            }         
-            part { name: "sel_account";
-               type: RECT;
-               description { state: "default" 0.0;
-                  color:  100 0 0 80;
-                  rel1 {
-                     to: "use_account";
-                     relative: 1.0 0.0;
-                  }
-                  rel2 {
-                     relative: 0.94 0.88;
-                  }
-               }
-            }
-            part { name: "more_account";
-               type: RECT;
-               description { state: "default" 0.0;
-                  color:  0 100 0 80;
-                  rel1 {
-                     to: "sel_account";
-                     relative: 1.0 0.0;
-                  }
-                  rel2 {
-                     relative: 1.0 0.88;
-                  }
-               }
-            }
          }
-         part { name: "footer";
-            part { name: "footer_bg"; type: IMAGE;
+         // --- main / enter ---
+         part { name: "main/enter";
+            type: BOX;
+            description { state: "default" 0.0;
+               rel1.to: "main";
+               rel1.offset: 80 20;
+               rel2.to: "main";
+               rel2.offset: 0 -20;
+            }
+            // --- main / enter / session  ---
+            part { name: "main/enter/session";
+               type: BOX;
+               description { state: "default" 0.0;
+                  rel1.relative: 0.0 0.0;
+                  rel2.relative: 1.0 0.5;
+               }
+               part { name: "main/enter/session/info";
+                  type: BOX;
+                  description { state: "default" 0.0;
+                     rel1.relative: 0.0 0.0;
+                     rel2.relative: 0.4 1.0;
+                  }
+               }
+               // WHY IS IT NOT RELATIVE TO  info
+               part { name: "main/enter/session/logo";
+                  type: BOX;
+                  description { state: "default" 0.0;
+                     rel1.to: "main/enter/session/info";
+                     rel1.relative: 0.0 0.0;
+                     rel2.relative: 0.5 1.0;
+                  }
+               }
+            }
+            // --- main / enter / account  ---
+            part { name: "main/enter/account";
+               type: BOX;
+               description { state: "default" 0.0;
+                  rel1.relative: 0.0 0.5;
+                  rel2.relative: 1.0 1.0;
+               }
+            }               
+         }
+         //
+         // --- footer  ---
+         part { name: "footer"; type: BOX;
+            description { state: "default" 0.0;
+               rel1.relative: 0.0 1.0;
+               rel1.offset: 0 -156;               
+               rel2.relative: 1.0 1.0;
+            }
+            part { name: "footer/bg";
                description { state: "default" 0.0;
                   image.normal: "footer_bg.png";
                }
             }
-            type: RECT;
+         }
+         // --- footer / extra ---
+         part { name: "footer/extra";
+            type: BOX;
             description { state: "default" 0.0;
-               rel1 {
-                  relative: 0.0 1.0;
-                  offset: -1 -128;
-               }
-               rel2 {
-                  relative: 1.0 1.0;
-               }
+               rel1.to: "footer";
+               rel1.relative: 0.0 0.0;
+               rel1.offset: 80 20;
+               rel2.to: "footer";
+               rel2.relative: 1.0 1.0;
+               rel2.offset: 0 -20;
             }
-            part { name: "use_language";
-               type: RECT;
+            // --- footer / extra / language ( .text ) ---
+            part { name: "footer/extra/language";
+               type: BOX;
                description { state: "default" 0.0;
-                  color:  0 0 100 80;
-                  rel1 {
-                     relative: 0.142 0.25;
-                  }
-                  rel2 {
-                     relative: 0.42 0.75;
+                  rel1.relative: 0.0 0.0;
+                  rel2.relative: 0.5 1.0;
+               }
+               part { name: "footer/extra/language/language.text";
+                  type: TEXT;
+                  description { state: "default" 0.0;
+                     rel1.relative: 0.0 0.0;
+                     rel2.relative: 1.0 1.0;
+                      text {
+                        font: "Sans";
+                        size: 12;
+                        text: "LANGUAGE SETTING";
+                     }
                   }
                }
             }
-            part { name: "power_action";
-               type: RECT;
+            // --- footer / extra / power ( .text ) ---
+            part { name: "footer/extra/power";
+               type: BOX;
                description { state: "default" 0.0;
-                  color:  100 0 0 80;
-                  rel1 {
-                     relative: 0.5 0.25;
-                  }
-                  rel2 {
-                     relative: 1.0 0.75;
+                  rel1.to: "footer/extra/language";                  
+                  rel1.relative: 1.0 0.0;
+                  rel2.relative: 1.0 1.0;
+               }
+               part { name: "footer/extra/power.txt"; type: TEXT;
+                  description { state: "default" 0.0;
+                     rel1.to_y: "footer/extra/language";
+                     rel1.relative: 0.0 0.0;
+                     rel2.relative: 1.0 1.0;
+                     text {
+                        font: "Sans";
+                        size: 12;
+                        text: "POWER ACTION";
+                     }
                   }
                }
-            }
+            }               
          }
       }
    }
