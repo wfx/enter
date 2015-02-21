@@ -1,0 +1,200 @@
+/*
+header
+   info
+      info_system.text
+      info_date.text
+
+main
+   session
+      session.name
+      session.logo
+      list
+         logo_small (2x5)
+         list_fw
+         list_bw
+
+   account
+      entry
+         name
+         promt
+      avatar
+         logo
+      list
+         logo_small (2x5)
+         list_fw
+         list_bw
+      
+Footer
+   ciao
+      Language -> ciao_language
+      Power    -> ciao_power
+*/
+
+images {
+   image: "header_bg.png" COMP;
+   image: "main_bg.png" COMP;
+   image: "footer_bg.png" COMP;
+   image: "frame.png" COMP;
+   image: "icon_user_default.png" COMP;
+   image: "corner.png" COMP;
+}
+
+collections {
+   group { name: "enter/main";
+      parts {
+         // --- header  ---
+         part { name: "header"; type: BOX;
+            description { state: "default" 0.0;
+               rel1 {
+                  relative: 0.0 0.0;
+               }
+               rel2 {
+                  relative: 1.0 0.0;
+                  offset: 0 156;
+               }
+            }           	
+            part { name: "header_bg"; type: IMAGE;
+               description { state: "default" 0.0;
+                  image.normal: "header_bg.png";
+               }
+            }
+            // --- Info ---
+            part { name: "info";
+               type: BOX;
+               description { state: "default" 0.0;
+                  rel1 {
+                     relative: 0.142 0.1;
+                  }
+                  rel2 {
+                     relative: 1.0 0.9;
+                  }
+               }
+               // --- system { info_system.text } ---
+               part { name: "system";
+                  type: BOX;
+                  description { state: "default" 0.0;
+                     rel1 {
+                        relative: 0.0 0.0;
+                     }
+                     rel2 {
+                        relative: 0.45 1.0;
+                     }
+                  }
+                  part { name: "info_system.text";
+                     type: TEXT;
+                     description { state: "default" 0.0;
+                        rel1 {
+                           to_y: "system";
+                           relative: 0.0 0.0;
+                        }
+                        rel2 {
+                           to_y: "system";
+                           relative: 1.0 1.0;
+                        }
+                        text {
+                           font: "Sans";
+                           size: 12;
+                        }
+                     }
+                  }
+               } 
+               // --- date { info_date.text } ---
+               part { name: "date";
+                  type: BOX;
+                  description { state: "default" 0.0;
+                     rel1 {
+                        to: "system";
+                        relative: 1.0 0.0;
+                     }
+                     rel2 {
+                        relative: 1.0 1.0;
+                     }
+                  }
+                  part { name: "info_date.txt"; type: TEXT;
+                     description { state: "default" 0.0;
+                        rel1 {
+                           to_y: "date";
+                           relative: 0.0 0.0;
+                        }
+                        rel2 {
+                           to_y: "date";
+                           relative: 1.0 1.0;
+                        }
+                        text {
+                           font: "Sans";
+                           size: 12;
+                        }
+                     }
+                  }
+               }               
+            }
+         }
+
+         // Main ( Session & Account )
+         part { name: "main"; type: BOX;
+            description { state: "default" 0.0;
+               min: 880 460;
+               rel1 {
+                  relative: 0.0 0.0;
+                  offset: 0 156;
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+                  offset: 0 -156;
+               }
+            }
+            part { name: "main_bg"; type: IMAGE;
+               description { state: "default" 0.0;
+                  image.normal: "main_bg.png";
+               }
+            }
+            // --- session ---
+            part { name: "main_session";
+               type: BOX;
+               description { state: "default" 0.0;
+                  rel1 {
+                     relative: 0.142 0.0;
+                  }
+                  rel2 {
+                     relative: 1.0 0.5;
+                  }
+            }
+            // --- account ---
+            part { name: "main_account";
+               type: BOX;
+               description { state: "default" 0.0;
+                  rel1 {
+                     to: "main_session";
+                     relative: 0.0 1.0;
+                  }
+                  rel2 {
+                     relative: 1.0 1.0;
+                  }
+               }
+            }
+         }
+
+         // --- footer  ---
+         part { name: "footer"; type: BOX;
+            description { state: "default" 0.0;
+               rel1 {
+                  relative: 0.0 1.0;
+                  offset: 0 -156;
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+               }
+            }           	
+            part { name: "footer_bg"; type: IMAGE;
+               description { state: "default" 0.0;
+                  image.normal: "footer_bg.png";
+               }
+            }
+         }
+      }
+   }
+   group { name: "enter/raster";
+      parts {
+      }
+   }
+}
