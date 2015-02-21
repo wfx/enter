@@ -27,6 +27,7 @@ collections {
          part { name: "header/info";
             type: BOX;
             description { state: "default" 0.0;
+               align: 0 0;
                rel1.to: "header";
                rel1.relative: 0.0 0.0;
                rel1.offset: 80 20;
@@ -120,9 +121,10 @@ collections {
                part { name: "main/enter/session/logo";
                   type: BOX;
                   description { state: "default" 0.0;
+                     align: 0 0;
                      rel1.to: "main/enter/session/info";
-                     rel1.relative: 0.0 0.0;
-                     rel2.relative: 0.5 1.0;
+                     rel1.relative: 1.0 0.0;
+                     rel2.relative: 1.0 1.0;
                   }
                }
             }
