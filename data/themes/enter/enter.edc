@@ -154,7 +154,8 @@ collections {
                   }
                   part { name: "main/enter/session/logo/image"; type: IMAGE;
                      description { state: "default" 0.0;
-                        max: 126 174;
+                        aspect: 1 1;
+                        aspect_preference: BOTH;
                         image.normal: "session_enlightenment.png";
                      }
                   }
