@@ -124,6 +124,7 @@ collections {
             part { name: "main/session/text"; type: TEXT;
                description { state: "default" 0.0;
                   rel1 {
+                     offset: 12 12;
                      relative: 0.0 0.0;
                   }
                   rel2 {
@@ -132,6 +133,7 @@ collections {
                   text {
                      font: "Sans";
                      size: 12;
+                     align: 0.0 .0.0;
                      text: "MAIN SESSION";
                   }
                }
@@ -145,22 +147,21 @@ collections {
                      relative: 0.5 1.0;
                   }
                   image {
-                     border: 12 12 12 12;
+                     border: 12 12 2 2;
                      normal: "brackets.png";
                   }
                }
             }
             part { name: "main/session/logo"; type: IMAGE;
                description { state: "default" 0.0;
+                  min: 126 174;
                   rel1 {
                      relative: 0.0 0.0;
                   }
                   rel2 {
                      relative: 0.5 1.0;
                   }
-                  // ????
-                  aspect: 126 174;
-                  //aspect: 1 1;
+                  aspect: 1 1;
                   aspect_preference: BOTH;
                   align: 1.0 0.5;
                   image.normal: "session_enlightenment.png";
