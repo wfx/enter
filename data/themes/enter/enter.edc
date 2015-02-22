@@ -72,7 +72,6 @@ collections {
          // --- MAIN ---
          part { name: "main"; type: IMAGE;
             description { state: "default" 0.0;
-               min: 886 418;
                rel1 {
                   relative: 0.0 0.0;
                   offset: 0 156;
@@ -87,6 +86,7 @@ collections {
          // --- MAIN SESSION  ---
          part { name: "main/session.text"; type: TEXT;
             description { state: "default" 0.0;
+               min: 442 0;
                rel1 {
                   to: "main";
                   relative: 0.1 0.1;
@@ -121,20 +121,26 @@ collections {
                }
             }
          } 
-         part { name: "main/session_logo"; type: IMAGE;
+         part { name: "main/session_logo"; type: BOX;
             description { state: "default" 0.0;
-               min: 126 174;
-               max: 126 174;
-               align: 1.0 0.5;
+               align: 1.0 0.0;
+               aspect: 1 174;
+               aspect_preference: BOTH;
                rel1 {
-                  to_y: "main";
-                  relative: 0.0 0.0;
+                  to: "main";
+                  offset: 0 -20;
+                  relative: 0.1 0.1;
                }
                rel2 {
                   to: "main";
-                  relative: 1.0 1.0;
+                  offset: 0 20;
+                  relative: 0.45 0.30;
                }
-               image.normal: "session_enlightenment.png";
+            }
+            part { name: "main/session_logo/image"; type: IMAGE;
+               description { state: "default" 0.0;
+                  image.normal: "session_enlightenment.png";
+               }
             }
          }
          // --- MAIN ACCOUNT  ---
