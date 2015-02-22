@@ -48,6 +48,7 @@ collections {
                description { state: "default" 0.0;
                   rel1 {
                      relative: 0.0 0.0;
+                     offset: 12 0;
                   }
                   rel2 {
                      relative: 1.0 1.0;
@@ -55,6 +56,7 @@ collections {
                   text {
                      font: "Sans";
                      size: 12;
+                     align: 0.0 0.5;
                      text: "SYSTEM INFO";
                   }
                }
@@ -81,10 +83,12 @@ collections {
                   }
                   rel2 {
                      relative: 1.0 1.0;
+                     offset: -80 0;
                   }
                   text {
                      font: "Sans";
                      size: 12;
+                     align: 1.0 0.5;
                      text: "DATE";
                   }
                }
@@ -107,67 +111,60 @@ collections {
             }
          }
          // --- MAIN SESSION  ---
-         part { name: "main/session"; type: RECT;
-            description { state: "default" 0.0;
-               color: 0 0 0 0;
-               rel1 {
-                  to: "main";
-                  relative: 0.0 0.0;
-                  offset: 80 40;
-               }
-               rel2 {
-                  to: "main";
-                  relative: 1.0 0.5;
-                  offset: 0 -40;
-               }
-            }
-            part { name: "main/session/text"; type: TEXT;
+         part { name: "main/session_text"; type: TEXT;
                description { state: "default" 0.0;
                   rel1 {
-                     offset: 12 12;
+                     to: "main";
+                     offset: 80 54;
                      relative: 0.0 0.0;
                   }
                   rel2 {
-                     relative: 0.5 1.0;
+                     to: "main";
+                     offset: 0 -62;
+                     relative: 0.45 0.42;
                   }
                   text {
                      font: "Sans";
-                     size: 12;
+                     size:18;
                      align: 0.0 .0.0;
                      text: "MAIN SESSION";
                   }
                }
             }
-            part { name: "main/session/brackets"; type: IMAGE;
+            part { name: "main/session_brackets"; type: IMAGE;
                description { state: "default" 0.0;
                   rel1 {
+                     to: "main/session_text";
+                     offset: -12 -12;
                      relative: 0.0 0.0;
                   }
                   rel2 {
-                     relative: 0.5 1.0;
+                     to: "main/session_text";
+                     offset: 12 12;
+                     relative: 1.0 1.0;
                   }
                   image {
                      border: 12 12 2 2;
                      normal: "brackets.png";
                   }
                }
-            }
-            part { name: "main/session/logo"; type: IMAGE;
+            } 
+            part { name: "main/session_logo"; type: IMAGE;
                description { state: "default" 0.0;
                   min: 126 174;
+                  max: 126 174;
+                  align: 1.0 0.5;
                   rel1 {
+                     to: "main";
                      relative: 0.0 0.0;
                   }
                   rel2 {
-                     relative: 0.5 1.0;
+                     to_x: "main";
+                      relative: 0.45 0.42;
                   }
-                  aspect: 1 1;
-                  aspect_preference: BOTH;
-                  align: 1.0 0.5;
                   image.normal: "session_enlightenment.png";
                }
             }
-         }
          // --- MAIN ACCOUNT  ---
          
          //
