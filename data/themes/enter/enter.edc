@@ -22,8 +22,7 @@ collections {
                   relative: 0.0 0.0;
                }
                rel2 {
-                  relative: 1.0 0.0;
-                  offset: 0 156;
+                  relative: 1.0 0.2;
                }
                image.normal: "header_bg.png";
             }
@@ -48,7 +47,6 @@ collections {
             part { name: "date.text"; type: TEXT; /* API */
                description { state: "default" 0.0;
                   rel1 {
-
                      relative: 0.5 0.0;
                   }
                   rel2 {
@@ -66,12 +64,10 @@ collections {
          part { name: "main"; type: IMAGE;
             description { state: "default" 0.0;
                rel1 {
-                  relative: 0.0 0.0;
-                  offset: 0 156;
+                  relative: 0.0 0.2;
                }
                rel2 {
-                  relative: 1.0 1.0;
-                  offset: 0 -156;
+                  relative: 1.0 0.8;
                }
                image.normal: "main_bg.png";
             }
@@ -178,8 +174,7 @@ collections {
          part { name: "footer"; type: IMAGE;
             description { state: "default" 0.0;
                rel1 {
-                  relative: 0.0 1.0;
-                  offset: 0 -156;  
+                  relative: 0.0 0.8;
                }             
                rel2 { 
                   relative: 1.0 1.0;
