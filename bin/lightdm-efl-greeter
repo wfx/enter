@@ -28,6 +28,7 @@ from efl.elementary.layout import Layout
 from efl.elementary.list import List
 from efl.elementary.entry import Entry
 from efl.elementary.menu import Menu
+from efl.elementary.image import Image
 from efl.elementary.window import StandardWindow
 from efl.evas import EXPAND_BOTH
 
@@ -47,6 +48,7 @@ theme_file = os.path.join(install_prefix, 'share', 'lightdm-efl-greeter', 'theme
 class MainWin(StandardWindow):
     def __init__(self, app, show_users=False):
         self.app = app
+        self.show_users = show_users
 
         # window setup
         StandardWindow.__init__(self, 'lightdm-efl-greeter', 'Enter',
@@ -92,6 +94,27 @@ class MainWin(StandardWindow):
         en.callback_activated_add(self._prompt_en_activated_cb)
         self.prompt_entry = en
 
+        # populate users list
+        if self.show_users:
+            for u in LightDM.UserList().get_users():
+                ul = Layout(self, file=(theme_file, 'enter/user'))
+                ul.signal_callback_add('user,selected', '',
+                                       self._sig_user_selected, u.props.name)
+                ul.part_text_set('username.text', u.props.name)
+                if os.path.exists(u.props.image):
+                    im = Image(ul, file=u.props.image)
+                else:
+                    im = Image(ul, file=(theme_file, 'enter/default_face'))
+                ul.part_content_set('avatar.swallow', im)
+                self.layout.box_append('userslist.box', ul)
+                ul.show()
+            self.layout.signal_emit('userslist,show', '')
+
+    def _sig_user_selected(self, obj, emission, source, username):
+        """ Signal from the theme: an avatar has been selected """
+        self.username_entry.text = username
+        self.app.user_selected(username)
+        
     # hostname
     def hostname_set(self, hostname):
         self.layout.part_text_set('hostname.text', hostname)
@@ -171,6 +194,7 @@ class MainWin(StandardWindow):
         self.layout.part_text_set('message.text', msg)
 
     def log(self, msg):
+        print("LOG:"+str(msg), file=sys.stderr)
         self.layout.part_text_set('debug.text', str(msg))
 
 
