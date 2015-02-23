@@ -154,21 +154,19 @@ collections {
                description { state: "default" 0.0;
                   color: 0 0 0 0;
                   rel1 {
-                     to: "main";
                      relative: 0.5 0.1;
                   }
                   rel2 {
-                     to: "main";
                      relative: 1.0 0.4;
                   }
-                  part { name: "userslist.box"; type: BOX; /* API */
-                     description { state: "default" 0.0;
-                     align: 1.0 0.0;
-                        box {
-                           layout: "vertical_flow";
-                           align: 1.0 0.0;
-                           padding: 3 3;
-                        }
+               }
+               part { name: "userslist.box"; type: BOX; 
+                  description { state: "default" 0.0;
+                  align: 1.0 0.0;
+                     box {
+                        layout: "vertical_flow";
+                        align: 1.0 0.0;
+                        padding: 3 3;
                      }
                   }
                }
