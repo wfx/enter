@@ -64,10 +64,12 @@ collections {
          part { name: "main"; type: IMAGE;
             description { state: "default" 0.0;
                rel1 {
-                  relative: 0.0 0.2;
+                  to: "header";
+                  relative: 0.0 1.0;
                }
                rel2 {
-                  relative: 1.0 0.8;
+                  to: "footer";
+                  relative: 1.0 0.0;
                }
                image.normal: "main_bg.png";
             }
