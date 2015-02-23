@@ -16,8 +16,6 @@ images {
 collections {
    group { name: "enter";
       parts {
-         //
-         // --- HEADER  ---
          part { name: "header"; type: IMAGE;
             description { state: "default" 0.0;
                rel1 {
@@ -29,47 +27,42 @@ collections {
                }
                image.normal: "header_bg.png";
             }
-         }
-         // --- HEADER / SYSTEM  ---
-         part { name: "header/system.text"; type: TEXT;
-            description { state: "default" 0.0;
-            rel1 {
-               to: "header";
-               relative: 0.1 0.0;
+            // --- HEADER / SYSTEM  ---
+            part { name: "system.text"; type: TEXT; /* API */
+               description { state: "default" 0.0;
+                  rel1 {
+                     offset: 12 0;;
+                     relative: 0.1 0.0;
+                  }
+                  rel2 {
+                     relative: 0.5 1.0;
+                  }
+                  text {
+                     font: "Sans";
+                     size: 12;
+                     align: 0.0 0.5;
+                     text: "SYSTEM INFO";
+                  }
+               }
             }
-            rel2 {
-               to: "header";
-               relative: 0.5 1.0;
-            }
-               text {
-                  font: "Sans";
-                  size: 12;
-                  align: 0.0 0.5;
-                  text: "SYSTEM INFO";
+            part { name: "date.text"; type: TEXT; /* API */
+               description { state: "default" 0.0;
+                  rel1 {
+
+                     relative: 0.5 0.0;
+                  }
+                  rel2 {
+                     relative: 0.9 1.0;
+                  }
+                  text {
+                     font: "Sans";
+                     size: 12;
+                     align: 1.0 0.5;
+                     text: "DATE";
+                  }
                }
             }
          }
-         // --- HEADER  / DATE  ---
-         part { name: "header/date.text"; type: TEXT;
-            description { state: "default" 0.0;
-               rel1 {
-                  to: "header";
-                  relative: 0.5 0.0;
-               }
-               rel2 {
-                  to: "header";
-                  relative: 0.9 1.0;
-               }
-               text {
-                  font: "Sans";
-                  size: 12;
-                  align: 1.0 0.5;
-                  text: "DATE";
-               }
-            }
-         }
-         //
-         // --- MAIN ---
          part { name: "main"; type: IMAGE;
             description { state: "default" 0.0;
                rel1 {
@@ -82,72 +75,108 @@ collections {
                }
                image.normal: "main_bg.png";
             }
-         }
-         // --- MAIN SESSION  ---
-         part { name: "main/session.text"; type: TEXT;
-            description { state: "default" 0.0;
-               min: 442 0;
-               rel1 {
-                  to: "main";
-                  relative: 0.1 0.1;
-               }
-               rel2 {
-                  to: "main";
-                  relative: 0.45 0.30;
-               }
-               text {
-                  font: "Sans";
-                  size:18;
-                  align: 0.0 .0.0;
-                  text: "MAIN SESSION";
-               }
-            }
-         }
-         part { name: "main/session_brackets"; type: IMAGE;
-            description { state: "default" 0.0;
-               rel1 {
-                  to: "main/session.text";
-                  offset: -12 -12;
-                  relative: 0.0 0.0;
-               }
-               rel2 {
-                  to: "main/session.text";
-                  offset: 12 12;
-                  relative: 1.0 1.0;
-               }
-               image {
-                  border: 12 12 2 2;
-                  normal: "brackets.png";
-               }
-            }
-         } 
-         part { name: "main/session_logo"; type: BOX;
-            description { state: "default" 0.0;
-               align: 1.0 0.0;
-               aspect: 1 174;
-               aspect_preference: BOTH;
-               rel1 {
-                  to: "main";
-                  offset: 0 -20;
-                  relative: 0.1 0.1;
-               }
-               rel2 {
-                  to: "main";
-                  offset: 0 20;
-                  relative: 0.45 0.30;
-               }
-            }
-            part { name: "main/session_logo/image"; type: IMAGE;
+            part { name: "session_name"; type: RECT;
                description { state: "default" 0.0;
-                  image.normal: "session_enlightenment.png";
+                  color: 0 0 0 0;
+                  rel1 {
+                     relative: 0.1 0.1;
+                  }
+                  rel2 {
+                     relative: 0.5 0.4;
+                  }
+               }
+               part { name: "session.name"; type: TEXT; /* API */
+                  description { state: "default" 0.0;
+                     rel1 {
+                        offset: 12 36;
+                        relative: 0.0 0.0;
+                     }
+                     rel2 {
+                        relative: 0.5 1.0;
+                     }
+                      text {
+                        font: "Sans";
+                        size:16;
+                        align: 0.0 .0.0;
+                        text: "SESSION NAME";
+                     }
+                  }
+                  part { name: "session.info"; type: TEXT; /* API */
+                     description { state: "default" 0.0;
+                        rel1 {
+                           offset: 0 24;
+                           relative: 0.0 0.0;
+                        }
+                        rel2 {
+                           relative: 1.0 1.0;
+                        }
+                        text {
+                           font: "Sans";
+                           size:12;
+                           align: 0.0 .0.0;
+                           text: "Session info";
+                        }
+                     }
+                  }
+               }
+               part { name: "session_brackets"; type: IMAGE;
+                  description { state: "default" 0.0;
+                     rel1 {
+                        offset: 0 24;
+                        relative: 0.0 0.0;
+                     }
+                     rel2 {
+                        offset: 0 -24;
+                        relative: 1.0 1.0;
+                     }
+                     image {
+                        border: 12 12 2 2;
+                        normal: "brackets.png";
+                     }
+                  }
+               } 
+               part { name: "session.logo"; type: IMAGE;
+                  description { state: "default" 0.0;
+                     align: 1.0 0.0;
+                     aspect_preference: BOTH;
+                     rel1 {
+                        relative: 0.5 0.0;
+                     }
+                     rel2 {
+                        offset: -24 0;
+                        relative: 1.0 1.0;
+                     }
+                     image.normal: "session_enlightenment.png";
+                  }
                }
             }
+            part { name: "session_chose"; type: RECT;
+               description { state: "default" 0.0;
+                  color: 0 0 0 0;
+                  rel1 {
+                     to: "main";
+                     relative: 0.5 0.1;
+                  }
+                  rel2 {
+                     to: "main";
+                     relative: 1.0 0.4;
+                  }
+                  part { name: "userslist.box"; type: BOX; /* API */
+                     description { state: "default" 0.0;
+                     align: 1.0 0.0;
+                        box {
+                           layout: "vertical_flow";
+                           align: 1.0 0.0;
+                           padding: 3 3;
+                        }
+                     }
+                  }
+               }
+            }
+            //
+            // --- MAIN ACCOUNT  ---         
+            //
          }
-         // --- MAIN ACCOUNT  ---
-         
-         //
-         // --- FOOTER  ---
-         //
          part { name: "footer"; type: IMAGE;
             description { state: "default" 0.0;
                rel1 {
