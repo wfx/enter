@@ -29,34 +29,21 @@ collections {
             // --- HEADER / SYSTEM  ---
             part { name: "system.text"; type: TEXT; /* API */
                description { state: "default" 0.0;
-                  rel1 {
-                     offset: 12 0;;
-                     relative: 0.1 0.0;
-                  }
-                  rel2 {
-                     relative: 0.5 1.0;
-                  }
                   text {
                      font: "Sans";
                      size: 12;
-                     align: 0.0 0.5;
                      text: "SYSTEM INFO";
+                     align: 0.125 0.5;
                   }
                }
             }
             part { name: "date.text"; type: TEXT; /* API */
                description { state: "default" 0.0;
-                  rel1 {
-                     relative: 0.5 0.0;
-                  }
-                  rel2 {
-                     relative: 0.9 1.0;
-                  }
                   text {
                      font: "Sans";
                      size: 12;
-                     align: 1.0 0.5;
                      text: "DATE";
+                     align: 0.9 0.5;
                   }
                }
             }
@@ -73,75 +60,53 @@ collections {
                }
                image.normal: "main_bg.png";
             }
-            part { name: "session_name"; type: RECT;
+            part { name: "session_name"; type: IMAGE;
                description { state: "default" 0.0;
-                  color: 0 0 0 0;
                   rel1 {
                      relative: 0.1 0.1;
                   }
                   rel2 {
                      relative: 0.5 0.4;
                   }
+                  image {
+                     border: 12 12 2 2;
+                     normal: "brackets.png";
+                  }
                }
                part { name: "session.name"; type: TEXT; /* API */
                   description { state: "default" 0.0;
                      rel1 {
-                        offset: 12 36;
-                        relative: 0.0 0.0;
+                        offset: 12 12;
                      }
-                     rel2 {
-                        relative: 0.5 1.0;
-                     }
-                      text {
-                        font: "Sans";
-                        size:16;
-                        align: 0.0 .0.0;
-                        text: "SESSION NAME";
-                     }
-                  }
-                  part { name: "session.info"; type: TEXT; /* API */
-                     description { state: "default" 0.0;
-                        rel1 {
-                           offset: 0 24;
-                           relative: 0.0 0.0;
-                        }
-                        rel2 {
-                           relative: 1.0 1.0;
-                        }
-                        text {
-                           font: "Sans";
-                           size:12;
-                           align: 0.0 .0.0;
-                           text: "Session info";
-                        }
+                     text {
+                        size:18;
+                        align: 0.0 0.0;
+                        text: "Session name";
                      }
                   }
                }
-               part { name: "session_brackets"; type: IMAGE;
+               part { name: "session.info"; type: TEXT; /* API */
                   description { state: "default" 0.0;
                      rel1 {
-                        offset: 0 24;
-                        relative: 0.0 0.0;
+                        to: "session.name";
                      }
-                     rel2 {
-                        offset: 0 -24;
-                        relative: 1.0 1.0;
-                     }
-                     image {
-                        border: 12 12 2 2;
-                        normal: "brackets.png";
+                     text {
+                        size:12;
+                        align: 0.0 0.42;
+                        text: "Session info";
                      }
                   }
-               } 
+               }
                part { name: "session.logo"; type: IMAGE;
                   description { state: "default" 0.0;
                      align: 1.0 0.0;
                      aspect_preference: BOTH;
                      rel1 {
+                        offset: 0 -24;
                         relative: 0.5 0.0;
                      }
                      rel2 {
-                        offset: -24 0;
+                        offset: -24 24;
                         relative: 1.0 1.0;
                      }
                      image.normal: "session_enlightenment.png";
