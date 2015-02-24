@@ -11,6 +11,7 @@ images {
    image: "avatar_kitty.png" COMP;
    image: "corner.png" COMP;
    image: "brackets.png" COMP;
+   image: "underline.png" COMP;
 }
 
 collections {
@@ -22,7 +23,7 @@ collections {
                   relative: 0.0 0.0;
                }
                rel2 {
-                  relative: 1.0 0.2;
+                  relative: 1.0 0.18;
                }
                image.normal: "header_bg.png";
             }
@@ -60,13 +61,13 @@ collections {
                }
                image.normal: "main_bg.png";
             }
-            part { name: "session_name"; type: IMAGE;
+            part { name: "session"; type: IMAGE;
                description { state: "default" 0.0;
                   rel1 {
-                     relative: 0.1 0.1;
+                     relative: 0.152 0.1;
                   }
                   rel2 {
-                     relative: 0.5 0.4;
+                     relative: 0.452 0.34;
                   }
                   image {
                      border: 12 12 2 2;
@@ -74,6 +75,7 @@ collections {
                   }
                }
                part { name: "session.name"; type: TEXT; /* API */
+                  effect: SHADOW;
                   description { state: "default" 0.0;
                      rel1 {
                         offset: 12 12;
@@ -86,13 +88,13 @@ collections {
                   }
                }
                part { name: "session.info"; type: TEXT; /* API */
+                  effect: SHADOW;
                   description { state: "default" 0.0;
-                     rel1 {
-                        to: "session.name";
-                     }
+                     rel1.to_x: "session.name";
+                     rel1.offset: 0 36;
                      text {
                         size:12;
-                        align: 0.0 0.42;
+                        align: 0.0 0.0;
                         text: "Session info";
                      }
                   }
@@ -134,14 +136,123 @@ collections {
                   }
                }
             }
-            //
-            // --- MAIN ACCOUNT  ---         
-            //
+            part { name: "user"; type: RECT;
+               description { state: "default" 0.0;
+                  color: 0 0 0 0;
+                  rel1 {
+                     to: "session";
+                     relative: 0.0 2.0;
+                  }
+                  rel2 {
+                     relative: 0.452 0.84;
+                  }
+               }
+               part { name: "user_name"; type: BOX;
+                  description { state: "default" 0.0;
+                     rel1 {
+                        to: "user";
+                        relative: 0.0 0.0;
+                     }
+                     rel2 {
+                        relative: 0.5 0.56;
+                     }  
+                  }
+                  part { name: "user.name"; type: TEXT; /* API */
+                     effect: SHADOW;
+                     description { state: "default" 0.0;
+                        rel1 {
+                           offset: 12 12;
+                        }
+                        text {
+                           size:28;
+                           align: 0.0 0.0;
+                           text: "Username";
+                        }
+                     }
+                  }
+               }
+               part { name: "user_promt"; type: IMAGE;
+                  description { state: "default" 0.0;
+                     visible: 0;
+                     rel1 {
+                        to: "user_name";
+                        relative: 0.0 1.0;
+                        offset: 0 12;
+                     }
+                     rel2 {
+                        relative: 0.5 1.0;
+                     }
+                     image {
+                        border: 12 12 12 12;
+                        normal: "corner.png";
+                     }
+                  }
+                  description { state: "set_focus" 1.0;
+                     visible: 1;
+                     rel1 {
+                        to: "user_name";
+                        relative: 0.0 1.0;
+                        offset: 0 12;
+                     }
+                     rel2 {
+                        relative: 0.5 1.0;
+                     }
+                     image {
+                        border: 12 12 12 12;
+                        normal: "corner.png";
+                     }
+                  }
+                  part { name: "user.promt"; type: TEXT; /* API */
+                     effect: SHADOW;
+                     description { state: "default" 0.0;
+                        rel1 {
+                           offset: 12 0;
+                        }
+                        text {
+                           size:18;
+                           align: 0.0 0.5;
+                           text: "Password";
+                        }
+                     }
+                  } 
+               }
+               part { name: "user.face"; type: IMAGE; /* API */
+                  description { state: "default" 0.0;
+                     align: 1.0 0.0;
+                     aspect_preference: BOTH;
+                     rel1 {
+                        offset: 12 12;
+                        relative: 0.65 0.0;
+                     }
+                     rel2 {
+                        offset: -12 -12;
+                        relative: 1.0 1.0;
+                     }
+                     image.normal: "avatar_kitty.png";
+                  }
+               }
+               part { name: "user_face_frame"; type: IMAGE;
+                  description { state: "default" 0.0;
+                     align: 1.0 0.0;
+                     aspect_preference: BOTH;
+                     rel1 {
+                        to: "user.face";
+                     }
+                     rel2 {
+                        to: "user.face";
+                     }
+                     image {
+                        border: 3 3 3 3;
+                        normal: "frame.png";
+                     }
+                  }
+               }              
+            }
          }
          part { name: "footer"; type: IMAGE;
             description { state: "default" 0.0;
                rel1 {
-                  relative: 0.0 0.8;
+                  relative: 0.0 0.82;
                }             
                rel2 { 
                   relative: 1.0 1.0;
@@ -150,5 +261,13 @@ collections {
             }
          }
       }
+      programs {
+         program { name: "promt_set_focus";
+            signal: "mounse,in"; source: "";
+            action: STATE_SET "set_focus" 1.0;
+            transition: LINEAR 0.2;
+            target: "user_promt";
+         }
+      } 
    }
 }
