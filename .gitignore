@@ -3,3 +3,4 @@ __foo__/
 build/
 dev_test/
 installed_files.txt
+*.edj
