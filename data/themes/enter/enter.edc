@@ -79,6 +79,10 @@ collections {
                   description { state: "default" 0.0;
                      rel1 {
                         offset: 12 12;
+                        relative: 0.0 0.0;
+                     }
+                     rel2 {
+                        relative: 1.0 0.65;
                      }
                      text {
                         size:18;
@@ -101,14 +105,16 @@ collections {
                }
                part { name: "session.logo"; type: IMAGE;
                   description { state: "default" 0.0;
-                     align: 1.0 0.0;
-                     aspect_preference: BOTH;
+                     align: 1.0 0.5;
+                     aspect: 1.0 1.0;
                      rel1 {
+                        to: "session";
+                        relative: 0.64 0.0;
                         offset: 0 -24;
-                        relative: 0.5 0.0;
                      }
                      rel2 {
                         offset: -24 24;
+                        to: "session";
                         relative: 1.0 1.0;
                      }
                      image.normal: "session_enlightenment.png";
@@ -219,7 +225,7 @@ collections {
                part { name: "user.face"; type: IMAGE; /* API */
                   description { state: "default" 0.0;
                      align: 1.0 0.0;
-                     aspect_preference: BOTH;
+                     aspect: 1.0 1.0;
                      rel1 {
                         offset: 12 12;
                         relative: 0.65 0.0;
