@@ -196,18 +196,6 @@ collections {
                   description { state: "focused" 0.0;
                      inherit: "default" 0.0;
                      visible: 1;
-                     rel1 {
-                        to: "user_name";
-                        relative: 0.0 1.0;
-                        offset: 0 12;
-                     }
-                     rel2 {
-                        relative: 0.5 1.0;
-                     }
-                     image {
-                        border: 12 12 12 12;
-                        normal: "corner.png";
-                     }
                   }
                   part { name: "user.promt"; type: TEXT; /* API */
                      effect: SHADOW;
@@ -270,7 +258,7 @@ collections {
       }
       programs {
          program { name: "promt_focused";
-            signal: "mounse,in"; source: "user_promt";
+            signal: "mouse,in"; source: "user_promt";
             action: STATE_SET "focused" 0.0;
             transition: LINEAR 0.2;
             target: "user_promt";
@@ -278,7 +266,7 @@ collections {
       } 
       programs {
          program { name: "promt_default";
-            signal: "mounse,out"; source: "user_promt";
+            signal: "mouse,out"; source: "user_promt";
             action: STATE_SET "default" 0.0;
             transition: LINEAR 0.2;
             target: "user_promt";
