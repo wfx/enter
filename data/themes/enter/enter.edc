@@ -183,7 +183,6 @@ collections {
                      rel1 {
                         to: "user_name";
                         relative: 0.0 1.0;
-                        offset: 0 12;
                      }
                      rel2 {
                         relative: 0.5 1.0;
