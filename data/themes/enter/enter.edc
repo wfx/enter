@@ -193,7 +193,8 @@ collections {
                         normal: "corner.png";
                      }
                   }
-                  description { state: "set_focus" 1.0;
+                  description { state: "focused" 0.0;
+                     inherit: "default" 0.0;
                      visible: 1;
                      rel1 {
                         to: "user_name";
@@ -268,12 +269,20 @@ collections {
          }
       }
       programs {
-         program { name: "promt_set_focus";
-            signal: "mounse,in"; source: "";
-            action: STATE_SET "set_focus" 1.0;
+         program { name: "promt_focused";
+            signal: "mounse,in"; source: "user_promt";
+            action: STATE_SET "focused" 0.0;
             transition: LINEAR 0.2;
             target: "user_promt";
          }
       } 
+      programs {
+         program { name: "promt_default";
+            signal: "mounse,out"; source: "user_promt";
+            action: STATE_SET "default" 0.0;
+            transition: LINEAR 0.2;
+            target: "user_promt";
+         }
+      }       
    }
 }
