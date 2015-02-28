@@ -14,7 +14,7 @@ images {
    image: "underline.png" COMP;
    image: "default_face.png" COMP;
    image: "power_icon.png" COMP;
-   image: "lang_icon.png" COMP;
+   image: "globe.png" COMP;
 }
 
 collections {
@@ -156,20 +156,25 @@ collections {
                      }
                   }
                }
-               part { name: "session.logo"; type: IMAGE; /* API */
+               part { name: "session_logo"; type: RECT;
                   description { state: "default" 0.0;
-                     align: 1.0 0.5;
-                     aspect: 1 1;
+                     color: 0 0 0 0;
                      rel1 {
                         relative: 0.65 0.0;
-                        offset: 0 -24;
+                        offset: 0 -12;
                      }
                      rel2 {
-                        offset: 0 24;
                         relative: 1.0 1.0;
+                        offset: -12 12;
                      }
-                     image.normal: "session_enlightenment.png";
                   }
+                  part { name: "session.logo"; type: IMAGE; /* API */
+                     description { state: "default" 0.0;
+                        align: 0.5 0.5;
+                        aspect: 1 1;
+                        image.normal: "session_enlightenment.png";
+                     }
+                  }   
                }
             }
             part { name: "session_chose"; type: RECT;
@@ -299,7 +304,7 @@ collections {
                description { state: "default" 0.0;
                   aspect: 1 1; aspect_preference: BOTH;
                   align: 0.96 0.5;
-                  max: 42 42;
+                  max: 24 24;
                   image.normal: "power_icon.png";
                }
             }
@@ -307,8 +312,8 @@ collections {
                description { state: "default" 0.0;
                   aspect: 1 1; aspect_preference: BOTH;
                   align: 0.04 0.5;
-                  max: 42 42;
-                  image.normal: "lang_icon.png";
+                  max: 24 24;
+                  image.normal: "globe.png";
                }
             }
          }
