@@ -12,10 +12,69 @@ images {
    image: "corner.png" COMP;
    image: "brackets.png" COMP;
    image: "underline.png" COMP;
+   image: "default_face.png" COMP;
+   image: "power_icon.png" COMP;
+   image: "lang_icon.png" COMP;
 }
 
 collections {
-   group { name: "enter";
+    
+   group { name: "enter/default_face";  /* API */
+      parts {
+         part { name: "img"; type: IMAGE;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               image.normal: "default_face.png";
+            }
+         }
+         part { name: "default_face_frame"; type: IMAGE;
+            description { state: "default" 0.0;
+               align: 1.0 0.0;
+               aspect_preference: BOTH;
+               image {
+                  border: 3 3 3 3;
+                  normal: "frame.png";
+               }
+            }
+         }
+      }
+   }
+
+   group { name: "enter/user";  /* API */
+      parts {
+         part { name: "bg"; type: RECT;
+            description { state: "default" 0.0;
+               min: 44 44;
+               color: 0 0 0 100;
+            }
+         }
+         part { name: "avatar.swallow"; type: SWALLOW;  /* API */
+            description { state: "default" 0.0;
+               rel1.offset: 1 1;
+               rel2.offset: -2 -2;
+            }
+         }
+         part { name: "username.text"; type: TEXT;  /* API */
+            effect: SHADOW;
+            description { state: "default" 0.0;
+               text {
+                  text: "1";
+                  font: "Sans";
+                  size: 12;
+                  align: 0.5 1.0;
+               }
+            }
+         }
+      }
+      programs {
+         program {
+            signal: "mouse,up,1"; source: "bg";
+            action: SIGNAL_EMIT "user,selected" "";
+         }
+      }
+   }
+
+   group { name: "enter/main";
       parts {
          part { name: "header"; type: IMAGE;
             description { state: "default" 0.0;
@@ -27,28 +86,22 @@ collections {
                }
                image.normal: "header_bg.png";
             }
-            // --- HEADER / SYSTEM  ---
-            part { name: "system.text"; type: TEXT; /* API */
+            part { name: "hostname.text"; type: TEXT;  /* API */
                description { state: "default" 0.0;
                   text {
-                     font: "Sans";
-                     size: 12;
-                     text: "SYSTEM INFO";
-                     align: 0.125 0.5;
+                     font: "Sans"; size: 14;
                   }
                }
             }
             part { name: "date.text"; type: TEXT; /* API */
                description { state: "default" 0.0;
                   text {
-                     font: "Sans";
-                     size: 12;
-                     text: "DATE";
-                     align: 0.9 0.5;
+                     font: "Sans"; size: 12;
                   }
                }
             }
          }
+         
          part { name: "main"; type: IMAGE;
             description { state: "default" 0.0;
                rel1 {
@@ -103,18 +156,16 @@ collections {
                      }
                   }
                }
-               part { name: "session.logo"; type: IMAGE;
+               part { name: "session.logo"; type: IMAGE; /* API */
                   description { state: "default" 0.0;
                      align: 1.0 0.5;
-                     aspect: 1.0 1.0;
+                     aspect: 1 1;
                      rel1 {
-                        to: "session";
-                        relative: 0.64 0.0;
+                        relative: 0.65 0.0;
                         offset: 0 -24;
                      }
                      rel2 {
-                        offset: -24 24;
-                        to: "session";
+                        offset: 0 24;
                         relative: 1.0 1.0;
                      }
                      image.normal: "session_enlightenment.png";
@@ -131,7 +182,7 @@ collections {
                      relative: 1.0 0.4;
                   }
                }
-               part { name: "userslist.box"; type: BOX; 
+               part { name: "sessionlist.box"; type: BOX; 
                   description { state: "default" 0.0;
                   align: 1.0 0.0;
                      box {
@@ -153,7 +204,7 @@ collections {
                      relative: 0.452 0.84;
                   }
                }
-               part { name: "user_name"; type: BOX;
+               part { name: "username_entry"; type: BOX;
                   description { state: "default" 0.0;
                      rel1 {
                         to: "user";
@@ -163,25 +214,20 @@ collections {
                         relative: 0.5 0.56;
                      }  
                   }
-                  part { name: "user.name"; type: TEXT; /* API */
+                  part { name: "username.entry"; type: EXTERNAL;  /* API */
                      effect: SHADOW;
                      description { state: "default" 0.0;
                         rel1 {
                            offset: 12 12;
                         }
-                        text {
-                           size:28;
-                           align: 0.0 0.0;
-                           text: "Username";
-                        }
                      }
                   }
                }
-               part { name: "user_promt"; type: IMAGE;
+               part { name: "promt_entry"; type: IMAGE;
                   description { state: "default" 0.0;
                     color: 255 255 255 0;
                      rel1 {
-                        to: "user_name";
+                        to: "username_entry";
                         relative: 0.0 1.0;
                      }
                      rel2 {
@@ -196,17 +242,12 @@ collections {
                      inherit: "default" 0.0;
                      color: 255 255 255 255;
                   }
-                  part { name: "user.promt"; type: TEXT; /* API */
+                  part { name: "prompt.entry"; type: EXTERNAL; /* API */
                      effect: SHADOW;
                      repeat_events: 1;
                      description { state: "default" 0.0;
                         rel1 {
                            offset: 12 0;
-                        }
-                        text {
-                           size:18;
-                           align: 0.0 0.5;
-                           text: "Password";
                         }
                      }
                   } 
@@ -214,16 +255,16 @@ collections {
                part { name: "user.face"; type: IMAGE; /* API */
                   description { state: "default" 0.0;
                      align: 1.0 0.0;
-                     aspect: 1.0 1.0;
+                     aspect: 1 1;
                      rel1 {
-                        offset: 12 12;
+                        offset: 12 0;
                         relative: 0.65 0.0;
                      }
                      rel2 {
-                        offset: -12 -12;
+                        offset: -12 0;
                         relative: 1.0 1.0;
                      }
-                     image.normal: "avatar_kitty.png";
+                     image.normal: "default_face.png";
                   }
                }
                part { name: "user_face_frame"; type: IMAGE;
@@ -254,22 +295,38 @@ collections {
                }
                image.normal: "footer_bg.png";
             }
+            part { name: "power_icon"; type: IMAGE;
+               description { state: "default" 0.0;
+                  aspect: 1 1; aspect_preference: BOTH;
+                  align: 0.96 0.5;
+                  max: 42 42;
+                  image.normal: "power_icon.png";
+               }
+            }
+            part { name: "lang_icon"; type: IMAGE;
+               description { state: "default" 0.0;
+                  aspect: 1 1; aspect_preference: BOTH;
+                  align: 0.04 0.5;
+                  max: 42 42;
+                  image.normal: "lang_icon.png";
+               }
+            }
          }
       }
       programs {
          program { name: "promt_focused";
-            signal: "mouse,in"; source: "user_promt";
+            signal: "mouse,in"; source: "promt_entry";
             action: STATE_SET "focused" 0.0;
-            transition: LINEAR 0.2;
-            target: "user_promt";
+            transition: LINEAR 0.4;
+            target: "promt_entry";
          }
       } 
       programs {
          program { name: "promt_default";
-            signal: "mouse,out"; source: "user_promt";
+            signal: "mouse,out"; source: "promt_entry";
             action: STATE_SET "default" 0.0;
-            transition: LINEAR 0.2;
-            target: "user_promt";
+            transition: LINEAR 0.4;
+            target: "promt_entry";
          }
       }       
    }
