@@ -41,7 +41,7 @@ install_prefix = os.path.dirname(os.path.dirname(__file__))
 # gettext.install('enter', names='ngettext', localedir=locale_dir)
 
 
-#theme = 'default.edj'
+# theme = 'default.edj'
 theme = 'enter.edj'
 theme_file = os.path.join(install_prefix, 'share', 'lightdm-efl-greeter', 'themes', theme)
 
@@ -96,7 +96,7 @@ class MainWin(StandardWindow):
         self.prompt_entry = en
 
         # populate users list
-        if self.show_users:
+        if self.show_users and self.layout.edje.part_exists('userslist.box'):
             for u in LightDM.UserList().get_users():
                 ul = Layout(self, file=(theme_file, 'enter/user'))
                 ul.signal_callback_add('user,selected', '',

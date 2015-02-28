@@ -13,6 +13,7 @@ images {
    image: "lang_icon.png" COMP;
    image: "default_face.png" COMP;
 }
+
 externals {
    external: "elm";
 }

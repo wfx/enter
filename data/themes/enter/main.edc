@@ -1,3 +1,11 @@
+
+#define DBG_SHOW(_PART, _R, _G, _B) \
+   part { name: "dbg_show"_PART; \
+      type: RECT; mouse_events: 0; \
+      description { state: "default" 0.0; \
+         rel1.to: _PART; rel2.to: _PART; \
+         color: _R _G _B 50; } }
+
 // reality is an interpretation of fantasy (Yello)
 images {
    image: "header_bg.png" COMP;
@@ -212,10 +220,14 @@ collections {
                      }  
                   }
                   part { name: "username.entry"; type: EXTERNAL;  /* API */
-                     effect: SHADOW;
+                     source: "elm/entry";
                      description { state: "default" 0.0;
                         rel1 {
                            offset: 12 12;
+                        }
+                        params {
+                           bool: "single line" 1;
+                           bool: "scrollable" 1;
                         }
                      }
                   }
@@ -240,11 +252,15 @@ collections {
                      color: 255 255 255 255;
                   }
                   part { name: "prompt.entry"; type: EXTERNAL; /* API */
-                     effect: SHADOW;
+                     source: "elm/entry";
                      repeat_events: 1;
                      description { state: "default" 0.0;
                         rel1 {
                            offset: 12 0;
+                        }
+                        params {
+                           bool: "single line" 1;
+                           bool: "scrollable" 1;
                         }
                      }
                   } 
