@@ -95,6 +95,9 @@ class MainWin(StandardWindow):
         en.callback_activated_add(self._prompt_en_activated_cb)
         self.prompt_entry = en
 
+        # language label
+        self.layout.part_text_set('lang.text', self.app.selected_lang.props.name)
+
         # populate users list
         if self.show_users and self.layout.edje.part_exists('userslist.box'):
             for u in LightDM.UserList().get_users():
@@ -168,7 +171,8 @@ class MainWin(StandardWindow):
         m = Menu(self)
         for code, lang in app.languages.items():
             txt = '{} - {}'.format(lang.props.name, lang.props.territory)
-            m.item_add(None, txt, None, self._lang_clicked_cb, lang)
+            icon = 'arrow-right' if lang == self.app.selected_lang else None
+            m.item_add(None, txt, icon, self._lang_clicked_cb, lang)
 
         x, y = self.evas.pointer_canvas_xy_get()
         m.move(x, y)
@@ -176,6 +180,7 @@ class MainWin(StandardWindow):
 
     def _lang_clicked_cb(self, menu, item, lang):
         self.app.selected_lang = lang.props.code
+        self.layout.part_text_set('lang.text', lang.props.name)
         # TODO how to apply ??
 
     # username entry
@@ -224,7 +229,8 @@ class EnterApplication(object):
         self.languages = dict() # key: lang_code  data: Language instance
         for lang in LightDM.get_languages():
             self.languages[lang.props.code] = lang
-        self.selected_lang = None
+        self.selected_lang = LightDM.get_language()
+        
 
         # main window
         self.main_win = MainWin(self, not self.greeter.get_hide_users_hint())
