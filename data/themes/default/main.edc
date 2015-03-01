@@ -299,6 +299,16 @@ collections {
             signal: "mouse,up,1"; source: "lang_icon";
             action: SIGNAL_EMIT "langs,show" "";
          }
+         program { name: "ui_hide"; /* API */
+            signal: "ui,hide"; source: "";
+            action: STATE_SET "default" 0.0;
+            transition: ACCELERATE 0.4;
+            target: "userslist";
+            after: "ui_hide_done";
+         }
+         program { name: "ui_hide_done";
+            action: SIGNAL_EMIT "ui,hide,done" ""; /* API */
+         }
       }
    }
 

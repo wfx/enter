@@ -115,7 +115,12 @@ class MainWin(StandardWindow):
         """ Signal from the theme: an avatar has been selected """
         self.username_entry.text = username
         self.app.user_selected(username)
-        
+
+    def hide(self, hide_done_cb):
+        self.layout.signal_emit('ui,hide', '')
+        self.layout.signal_callback_add('ui,hide,done', '',
+                                        lambda o,e,s: hide_done_cb())
+
     # hostname
     def hostname_set(self, hostname):
         self.layout.part_text_set('hostname.text', hostname)
@@ -264,8 +269,8 @@ class EnterApplication(object):
     def greeter_authentication_complete_cb(self, greeter):
         """ called by LDM when auth is completed """
         if self.greeter.get_is_authenticated():
-            if not self.greeter.start_session_sync(self.selected_session):
-                self.main_win.message_show('Failed to start session')
+            self.main_win.hide(
+                lambda: self.greeter.start_session_sync(self.selected_session))
         else:
             self.main_win.message_show('Login failed')
 
