@@ -1,3 +1,45 @@
+/*
+
+THEME REFERENCE
+===============
+
+Mandatory groups:
+   "enter/default_face"  Default image used when user do not have a face
+   "enter/user" The single user object used to populate the users list
+   "enter/main" The main user interface
+
+"enter/user" Group
+------------------
+Parts:
+   "avatar.swallow" The user image will be swallowed here
+   "username.text" The username
+
+Signals theme -> application:
+   "user,selected" Must be emitted when a user is selected
+
+"enter/main" Group
+------------------
+Parts:
+   "hostname.text"  Will be filled with the name of the host machine
+   "userslist.box"  Will be filled with "enter/user" objects
+   "username.entry" The elm entry used to type the username
+   "prompt.entry"   The elm entry used to type the password
+   "session.text"   Will be filled with the selected session name
+   "message.text"   Will be filled with various textual information for the user
+
+Signals application -> theme:
+   "userslist,show" Theme must to show the users list
+   "prompt,show"    Theme must show the password prompt ("prompt.entry")
+   "prompt,hide"    Theme must hide the password prompt
+   "ui,hide"        Theme must hide the main ui (and then emit: "ui,hide,done")
+
+Signals theme -> application:
+   "sessions,show" Ask the app to show the sessions Menu
+   "langs,show"    Ask the app to show the languages Menu
+   "powers,show"   Ask the app to show the power actions Menu
+   "ui,hide,done"  Notify the app that the ui has been hidden
+
+*/
 
 #define DBG_SHOW(_PART, _R, _G, _B) \
    part { name: "dbg_show"_PART; \
