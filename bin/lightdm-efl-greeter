@@ -41,8 +41,8 @@ install_prefix = os.path.dirname(os.path.dirname(__file__))
 # gettext.install('enter', names='ngettext', localedir=locale_dir)
 
 
-# theme = 'default.edj'
-theme = 'enter.edj'
+theme = 'default.edj'
+# theme = 'enter.edj'
 theme_file = os.path.join(install_prefix, 'share', 'lightdm-efl-greeter', 'themes', theme)
 
 
@@ -238,7 +238,7 @@ class EnterApplication(object):
         user = users_list.get_user_by_name(username)
         if user:
             user_session = user.get_session()
-        else:
+        if not user or user_session is None:
             user_session = self.greeter.get_default_session_hint()
         self.main_win.select_session(self.sessions[user_session])
 
