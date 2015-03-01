@@ -224,12 +224,12 @@ collections {
             description { state: "default" 0.0;
                rel1 {
                   to: "prompt.entry";
-                  relative: 1.0 0.0;
-                  offset: 3 0;
+                  relative: 0.0 1.0;
+                  offset: 0 3;
                }
                rel2 {
                   to: "prompt.entry";
-                  relative: 1.5 1.0;
+                  relative: 1.0 2.0;
                }
                aspect: 1 1; aspect_preference: BOTH;
                align: 0.0 0.5;
@@ -260,8 +260,8 @@ collections {
          }
          part { name: "prompt_clip"; type: RECT;
             description { state: "default" 0.0;
-               rel1.to: "prompt.entry";
-               rel2.to: "session.text";
+               rel1.to_y: "prompt.entry";
+               rel2.to_y: "session.text";
                color: 255 255 255 0;
             }
             description { state: "visible" 0.0;
@@ -288,7 +288,7 @@ collections {
          part { name: "message.text"; type: TEXT;  /* API */
             description { state: "default" 0.0;
                rel1 {
-                  relative: 0.0 0.6;
+                  relative: 0.0 0.75;
                }
                text {
                   font: "Sans";
