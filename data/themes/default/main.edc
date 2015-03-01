@@ -33,10 +33,27 @@ collections {
 
    group { name: "enter/user";  /* API */
       parts {
+         part { name: "hover_border"; type: RECT;
+            description { state: "default" 0.0;
+               color: 0 0 0 0;
+               rel1 {
+                  to: "bg";
+                  offset: -1 -1;
+               }
+               rel2 {
+                  to: "bg";
+                  offset: 0 0;
+               }
+            }
+            description { state: "hover" 0.0;
+               inherit: "default" 0.0;
+               color: 0 0 0 255;
+            }
+         }
          part { name: "bg"; type: RECT;
             description { state: "default" 0.0;
                min: 80 80;
-               color: 0 0 0 100;
+               color: 50 50 50 255;
             }
          }
          part { name: "avatar.swallow"; type: SWALLOW;  /* API */
@@ -58,6 +75,18 @@ collections {
          }
       }
       programs {
+         program {
+            signal: "mouse,in"; source: "bg";
+            action: STATE_SET "hover" 0.0;
+            transition: LINEAR 0.1 CURRENT;
+            target: "hover_border";
+         }
+         program {
+            signal: "mouse,out"; source: "bg";
+            action: STATE_SET "default" 0.0;
+            transition: LINEAR 0.1 CURRENT;
+            target: "hover_border";
+         }
          program {
             signal: "mouse,up,1"; source: "bg";
             action: SIGNAL_EMIT "user,selected" "";
@@ -125,7 +154,7 @@ collections {
                   box {
                      layout: "horizontal";
                      align: 0.5 0.0;
-                     padding: 3 3;
+                     padding: 4 3;
                   }
                }
             }
