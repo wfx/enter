@@ -94,6 +94,8 @@ collections {
                description { state: "default" 0.0;
                   aspect: 1 1; aspect_preference: BOTH;
                   align: 1.0 0.0;
+                  rel1.offset: 3 3;
+                  rel2.offset: -4 -4;
                   image.normal: "power_icon.png";
                }
             }
@@ -101,6 +103,8 @@ collections {
                description { state: "default" 0.0;
                   aspect: 1 1; aspect_preference: BOTH;
                   align: 0.0 0.0;
+                  rel1.offset: 2 2;
+                  rel2.offset: -3 -3;
                   image.normal: "lang_icon.png";
                }
             }
