@@ -210,9 +210,10 @@ collections {
                      relative: 1.0 3.0;
                   }
                }
-               part { name: "username_entry";
-                  type: BOX;
+               part { name: "username_entry";  /* API */
+                  type: IMAGE;
                   description { state: "default" 0.0;
+                     color: 255 255 255 0;
                      rel1 {
                         to: "user";
                         relative: 0.0 0.0;
@@ -221,11 +222,20 @@ collections {
                         relative: 0.0 0.55;
                         offset: -12 0;
                         to: "user.face";
-                     }  
+                     }
+                     image {
+                        border: 12 12 12 12;
+                        normal: "corner.png";
+                     } 
+                  }
+                  description { state: "focused" 0.0;
+                     inherit: "default" 0.0;
+                     color: 255 255 255 255;
                   }
                   part { name: "username.entry";  /* API */
                      type: EXTERNAL;
                      source: "elm/entry";
+                     repeat_events: 1;
                      description { state: "default" 0.0;
                         rel1.offset: 12 0;
                         rel2.offset: -12 0;
@@ -343,6 +353,18 @@ collections {
             action: STATE_SET "default" 0.0;
             transition: LINEAR 0.4;
             target: "promt_entry";
+         }
+         program { name: "username_focused";
+            signal: "mouse,in"; source: "username_entry";
+            action: STATE_SET "focused" 0.0;
+            transition: LINEAR 0.4;
+            target: "username_entry";
+         }
+         program { name: "username_default";
+            signal: "mouse,out"; source: "username_entry";
+            action: STATE_SET "default" 0.0;
+            transition: LINEAR 0.4;
+            target: "username_entry";
          }
       }   
    }
