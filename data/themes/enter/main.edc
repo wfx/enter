@@ -219,7 +219,7 @@ collections {
                         relative: 0.0 0.0;
                      }
                      rel2 {
-                        relative: 0.0 0.55;
+                        relative: 0.0 0.5;
                         offset: -12 0;
                         to: "user.face";
                      }
