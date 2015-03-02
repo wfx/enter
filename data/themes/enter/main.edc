@@ -289,7 +289,7 @@ collections {
                      aspect: 1 1; aspect_preference: BOTH;
                      rel1.offset: 12 12;
                      rel2.offset: -12 -12;
-                     image.normal: "default_face.png";
+                     image.normal: "avatar_kitty.png";
                   }
                }
                part { name: "user_face_frame";
