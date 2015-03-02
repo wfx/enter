@@ -144,7 +144,7 @@ collections {
                      normal: "brackets.png";
                   }
                }
-               part { name: "session.name"; /* API */
+               part { name: "session.text"; /* API */
                   type: TEXT;
                   effect: SHADOW;
                   description { state: "default" 0.0;
@@ -159,7 +159,7 @@ collections {
                      text {
                         size:16;
                         align: 0.0 0.0;
-                        text: "Session name";
+                        text: "Session...";
                      }
                   }
                }
@@ -168,7 +168,7 @@ collections {
                   effect: SHADOW;
                   description { state: "default" 0.0;
                      rel1 {
-                        to_x: "session.name";
+                        to_x: "session.text";
                         offset: 0 36;
                      }
                      rel2 {
@@ -177,7 +177,7 @@ collections {
                      text {
                         size:12;
                         align: 0.0 0.0;
-                        text: "Session info";
+                        text: "";
                      }
                   }
                }
@@ -195,6 +195,25 @@ collections {
                   }   
                }
             }
+            part { name: "sessionlist.box";
+            type: BOX;
+            description { state: "default" 0.0;
+               rel1 {
+                  to: "session";
+                  relative: 1.0 0.0;
+                     offset: 12 0;
+               }
+               rel2 {
+                  to_y: "session";
+                  relative: 1.0 1.0;
+               }
+               box {
+                  layout: "horizontal";
+                  align: 0.0 1.0;
+                  padding: 8 8;
+               }
+            }
+         }
             part { name: "user";
                type: RECT;
                description { state: "default" 0.0;
@@ -352,6 +371,41 @@ collections {
                }              
             }
          }
+         part { name: "userslist";
+            type: SPACER;
+            description { state: "default" 0.0;
+               rel1 {
+                  to: "user";
+                  relative: 1.0 0.0;
+                  offset: 12 0;
+               }
+               rel2 {
+                  to_y: "user";
+                  relative: 1.0 1.0;
+               }
+            }
+            description { state: "visible" 0.0;
+               rel1 {
+                  to: "user";
+                  relative: 1.0 0.0;
+                  offset: 12 0;
+               }
+               rel2 {
+                  to_y: "user";
+                  relative: 1.0 1.0;
+               }
+            }
+            part { name: "userslist.box";
+               type: BOX;
+               description { state: "default" 0.0;
+                  box {
+                     layout: "horizontal";
+                     align: 0.0 1.0;
+                     padding: 8 8;
+                  }
+               }
+            }
+         }
          part { name: "footer";
             type: IMAGE;
             description { state: "default" 0.0;
@@ -384,6 +438,13 @@ collections {
          }
       }
       programs {
+         program { name: "userslist_show";  /* API */
+            signal: "userslist,show"; source: "";
+            action: STATE_SET "visible" 0.0;
+            transition: DECELERATE 0.4;
+            target: "userslist";
+         }
+         // Focus on usename_entry
          program { name: "username_focused";
             signal: "mouse,in"; source: "username_entry";
             action: STATE_SET "focused" 0.0;
@@ -408,7 +469,7 @@ collections {
             transition: LINEAR 0.8;
             target: "username_underline";
          }
-         
+         // Focus on promt_entry
          program { name: "promt_focused";
             signal: "mouse,in"; source: "promt_entry";
             action: STATE_SET "focused" 0.0;
@@ -432,6 +493,17 @@ collections {
             action: STATE_SET "default" 0.0;
             transition: LINEAR 0.8;
             target: "promt_underline";
+         }
+         // Fade for main
+         program { name: "ui_hide"; /* API */
+            signal: "ui,hide"; source: "";
+            action: STATE_SET "default" 0.0;
+            transition: ACCELERATE 0.4;
+            target: "main";
+            after: "ui_hide_done";
+         }
+         program { name: "ui_hide_done";
+            action: SIGNAL_EMIT "ui,hide,done" ""; /* API */
          }
       }   
    }
