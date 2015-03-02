@@ -4,9 +4,11 @@ THEME REFERENCE
 ===============
 
 Mandatory groups:
-   "enter/default_face"  Default image used when user do not have a face
-   "enter/user" The single user object used to populate the users list
-   "enter/main" The main user interface
+   "enter/default_face"    Default image used when user do not have a face
+   "enter/user"            The single user object used to populate the users list
+   "enter/main"            The main user interface
+   "enter/session/xxxx"    Icons for the various sessions
+   "enter/session/unknown" Mandatory fallback icon for sessions
 
 "enter/user" Group
 ------------------
@@ -48,6 +50,8 @@ Signals theme -> application:
       description { state: "default" 0.0; \
          rel1.to: _PART; rel2.to: _PART; \
          color: _R _G _B 50; } }
+
+#define SHOW(_PART) DBG_SHOW(_PART, 100, 0, 0)
 
 images {
    image: "bg_radgrad.png" COMP;
@@ -234,7 +238,8 @@ collections {
                rel2.relative: 1.0 2.0;
             }
          }
-         part { name: "session.icon"; type: IMAGE;
+         part { name: "session.icon"; type: EXTERNAL;  /* API */
+            source: "elm/icon";
             clip_to: "prompt_clip";
             description { state: "default" 0.0;
                rel1 {
@@ -248,7 +253,6 @@ collections {
                }
                aspect: 1 1; aspect_preference: BOTH;
                align: 0.0 0.5;
-               image.normal: "sessions_icon.png";
             }
          }
          part { name: "session.text"; type: TEXT;  /* API */
@@ -257,12 +261,10 @@ collections {
                rel1 {
                   to: "session.icon";
                   relative: 1.0 0.0;
-                  offset: 6 0;
                }
                rel2 {
                   to: "session.icon";
                   relative: 1.0 1.0;
-                  offset: 6 0;
                }
                align: 0.0 0.5;
                text {
@@ -372,6 +374,18 @@ collections {
          }
       }
    }
+
+#define SESSION_ICON(_GROUP, _FILE)           \
+   group { name: _GROUP;                      \
+      images { image: _FILE COMP; }           \
+      parts { part { name: "im"; type: IMAGE; \
+         description { state: "default" 0.0;  \
+            image.normal: _FILE; } } } }
+   SESSION_ICON("enter/session/enlightenment", "session_enlightenment.png")
+   SESSION_ICON("enter/session/gnome", "session_gnome.png")
+   SESSION_ICON("enter/session/kde", "session_kde.png")
+   SESSION_ICON("enter/session/unknown", "session_unknown.png")
+#undef SESSION_ICON
 
 }
 

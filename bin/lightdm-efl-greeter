@@ -29,6 +29,7 @@ from efl.elementary.list import List
 from efl.elementary.entry import Entry
 from efl.elementary.menu import Menu
 from efl.elementary.image import Image
+from efl.elementary.icon import Icon
 from efl.elementary.window import StandardWindow
 from efl.evas import EXPAND_BOTH
 
@@ -147,6 +148,33 @@ class MainWin(StandardWindow):
     def select_session(self, session):
         """ Mark the given Session as selected """
         self.layout.part_text_set('session.text', session.props.name)
+        icon_group = self.search_group_for_session(session.props.key)
+        if icon_group:
+            ic = self.layout.edje.part_external_object_get('session.icon')
+            ic.file = (theme_file, icon_group)
+
+    def search_group_for_session(self, session_key):
+        # try the exact session name
+        group = 'enter/session/' + session_key
+        if edje.file_group_exists(theme_file, group):
+            return group
+
+        # or search a group that start with the session name
+        for group in edje.file_collection_list(theme_file):
+            if group.startswith('enter/session/'):
+                if group.split('/')[2].startswith(session_key):
+                    return group
+
+        # some fixed fallback (for derivate works?)
+        if session_key.startswith(('cinnamon', )):
+            group = 'enter/session/gnome'
+            if edje.file_group_exists(theme_file, group):
+                return group
+
+        # give up
+        group = 'enter/session/unknown'
+        if edje.file_group_exists(theme_file, group):
+            return group
 
     # powers
     def _sig_powers_show(self, ly, signal, source):
