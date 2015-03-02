@@ -256,7 +256,7 @@ collections {
                      }
                      rel2 {
                         relative: 0.0 1.0;
-                        offset: -12 0;
+                        offset: -12 12;
                         to: "user.face";
                      }
                      image {
@@ -287,7 +287,8 @@ collections {
                   description { state: "default" 0.0;
                      align: 1.0 0.0;
                      aspect: 1 1; aspect_preference: BOTH;
-                     rel2.offset: -12 -1;
+                     rel1.offset: 12 12;
+                     rel2.offset: -12 -12;
                      image.normal: "default_face.png";
                   }
                }
