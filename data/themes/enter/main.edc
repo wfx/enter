@@ -11,7 +11,6 @@ images {
    image: "main_bg.png" COMP;
    image: "footer_bg.png" COMP;
    image: "frame.png" COMP;
-   image: "icon_user_default.png" COMP;
    image: "corner.png" COMP;
    image: "session_enlightenment.png" COMP;
    image: "icon_user_default.png" COMP;
@@ -141,7 +140,7 @@ collections {
                      relative: 0.452 0.34;
                   }
                   image {
-                     border: 12 12 2 2;
+                     border: 13 13 2 2;
                      normal: "brackets.png";
                   }
                }
@@ -224,9 +223,30 @@ collections {
                         to: "user.face";
                      }
                      image {
-                        border: 12 12 12 12;
+                        border: 13 13 13 13;
                         normal: "corner.png";
                      } 
+                  }
+                  part { name: "username_underline";
+                     type: IMAGE;
+                     description { state: "default" 0.0;
+                        color: 255 255 255 0;
+                        rel1 {
+                           relative: 0.0 1.0;
+                           offset: 12 -12;
+                        }
+                        rel2 {
+                           relative: 1.0 1.0;
+                           offset: -12 -12;
+                        }
+                        image {
+                           normal: "underline.png";
+                        }
+                     }
+                     description { state: "focused" 0.0;
+                        inherit: "default" 0.0;
+                        color: 255 255 255 255;
+                     }
                   }
                   description { state: "focused" 0.0;
                      inherit: "default" 0.0;
@@ -260,13 +280,34 @@ collections {
                         to: "user.face";
                      }
                      image {
-                        border: 12 12 12 12;
+                        border: 13 13 13 13;
                         normal: "corner.png";
                      }
                   }
                   description { state: "focused" 0.0;
                      inherit: "default" 0.0;
                      color: 255 255 255 255;
+                  }
+                  part { name: "promt_underline";
+                     type: IMAGE;
+                     description { state: "default" 0.0;
+                        color: 255 255 255 0;
+                        rel1 {
+                           relative: 0.0 1.0;
+                           offset: 12 -12;
+                        }
+                        rel2 {
+                           relative: 1.0 1.0;
+                           offset: -12 -12;
+                        }
+                        image {
+                           normal: "underline.png";
+                        }
+                     }
+                     description { state: "focused" 0.0;
+                        inherit: "default" 0.0;
+                        color: 255 255 255 255;
+                     }
                   }
                   part { name: "prompt.entry"; /* API */
                      type: EXTERNAL;
@@ -343,6 +384,31 @@ collections {
          }
       }
       programs {
+         program { name: "username_focused";
+            signal: "mouse,in"; source: "username_entry";
+            action: STATE_SET "focused" 0.0;
+            transition: LINEAR 0.4;
+            target: "username_entry";
+         }
+         program { name: "username_default";
+            signal: "mouse,out"; source: "username_entry";
+            action: STATE_SET "default" 0.0;
+            transition: LINEAR 0.4;
+            target: "username_entry";
+         }
+         program { name: "username_underline_focused";
+            signal: "mouse,in"; source: "username_entry";
+            action: STATE_SET "focused" 0.0;
+            transition: LINEAR 0.8;
+            target: "username_underline";
+         }
+         program { name: "username_underline_default";
+            signal: "mouse,out"; source: "username_entry";
+            action: STATE_SET "default" 0.0;
+            transition: LINEAR 0.8;
+            target: "username_underline";
+         }
+         
          program { name: "promt_focused";
             signal: "mouse,in"; source: "promt_entry";
             action: STATE_SET "focused" 0.0;
@@ -355,17 +421,17 @@ collections {
             transition: LINEAR 0.4;
             target: "promt_entry";
          }
-         program { name: "username_focused";
-            signal: "mouse,in"; source: "username_entry";
+         program { name: "promt_underline_focused";
+            signal: "mouse,in"; source: "promt_entry";
             action: STATE_SET "focused" 0.0;
-            transition: LINEAR 0.4;
-            target: "username_entry";
+            transition: LINEAR 0.8;
+            target: "promt_underline";
          }
-         program { name: "username_default";
-            signal: "mouse,out"; source: "username_entry";
+         program { name: "promt_underline_default";
+            signal: "mouse,out"; source: "promt_entry";
             action: STATE_SET "default" 0.0;
-            transition: LINEAR 0.4;
-            target: "username_entry";
+            transition: LINEAR 0.8;
+            target: "promt_underline";
          }
       }   
    }
