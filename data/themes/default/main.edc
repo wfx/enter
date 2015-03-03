@@ -384,6 +384,7 @@ collections {
    SESSION_ICON("enter/session/enlightenment", "session_enlightenment.png")
    SESSION_ICON("enter/session/gnome", "session_gnome.png")
    SESSION_ICON("enter/session/kde", "session_kde.png")
+   SESSION_ICON("enter/session/epymc", "session_epymc.png")
    SESSION_ICON("enter/session/unknown", "session_unknown.png")
 #undef SESSION_ICON
 

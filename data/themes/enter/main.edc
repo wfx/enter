@@ -21,6 +21,8 @@ images {
    image: "default_face.png" COMP;
    image: "power_icon.png" COMP;
    image: "globe.png" COMP;
+   image: "session_unknown.png" COMP;
+   image: "session_epamc.png" COMP;
 }
 
 collections {
@@ -76,11 +78,11 @@ collections {
                }
             }
          }
-      }
-      programs {
-         program {
-            signal: "mouse,up,1"; source: "bg";
-            action: SIGNAL_EMIT "user,selected" "";
+         programs {
+            program {
+               signal: "mouse,up,1"; source: "bg";
+               action: SIGNAL_EMIT "user,selected" "";
+            }
          }
       }
    }
@@ -133,6 +135,7 @@ collections {
                type: IMAGE;
                description { state: "default" 0.0;
                   min: 224 72;
+                  max: 440 376;
                   rel1 {
                      relative: 0.152 0.1;
                   }
@@ -280,7 +283,7 @@ collections {
                         rel2.offset: -12 0;
                         params {
                            bool: "single line" 1;
-                           bool: "scrollable" 1;
+                           bool: "scrollable" 0;
                         }
                      }
                   }
@@ -337,7 +340,7 @@ collections {
                         rel2.offset: -12 0;
                         params {
                            bool: "single line" 1;
-                           bool: "scrollable" 1;
+                           bool: "scrollable" 0;
                         }
                      }
                   } 
@@ -507,4 +510,16 @@ collections {
          }
       }   
    }
+   #define SESSION_ICON(_GROUP, _FILE)           \
+   group { name: _GROUP;                      \
+      images { image: _FILE COMP; }           \
+      parts { part { name: "im"; type: IMAGE; \
+         description { state: "default" 0.0;  \
+            image.normal: _FILE; } } } }
+   SESSION_ICON("enter/session/enlightenment", "session_enlightenment.png")
+   SESSION_ICON("enter/session/gnome", "session_gnome.png")
+   SESSION_ICON("enter/session/kde", "session_kde.png")
+   SESSION_ICON("enter/session/epymc", "session_epymc.png")
+   SESSION_ICON("enter/session/unknown", "session_unknown.png")
+   #undef SESSION_ICON
 }
