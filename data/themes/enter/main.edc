@@ -495,16 +495,16 @@ collections {
             target: "promt_underline";
          }
          // Fade for main
-         //program { name: "ui_hide"; /* API */
-         //   signal: "ui,hide"; source: "";
-         //   action: STATE_SET "default" 0.0;
-         //  transition: ACCELERATE 0.4;
-         //   target: "main";
-         //   after: "ui_hide_done";
-         //}
-         //program { name: "ui_hide_done";
-         //   action: SIGNAL_EMIT "ui,hide,done" ""; /* API */
-         //}
+         program { name: "ui_hide"; /* API */
+            signal: "ui,hide"; source: "";
+            action: STATE_SET "default" 0.0;
+            transition: ACCELERATE 0.4;
+            target: "main";
+            after: "ui_hide_done";
+         }
+         program { name: "ui_hide_done"; /* API */
+            action: SIGNAL_EMIT "ui,hide,done" "";
+         }
       }   
    }
 }
