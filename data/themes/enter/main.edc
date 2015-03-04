@@ -33,6 +33,7 @@ collections {
             type: IMAGE;
             mouse_events: 0;
             description { state: "default" 0.0;
+               max: 44 44;
                image.normal: "default_face.png";
             }
          }
@@ -55,8 +56,8 @@ collections {
          part { name: "bg";
             type: RECT;
             description { state: "default" 0.0;
-               min: 44 44;
-               color: 0 0 0 100;
+               max: 44 44;
+               color: 50 50 50 100;
             }
          }
          part { name: "avatar.swallow";  /* API */
@@ -70,11 +71,24 @@ collections {
             type: TEXT;
             effect: SHADOW;
             description { state: "default" 0.0;
+               // dont like to show the username at this place.
+               color: 0 0 0 0;
                text {
                   text: "1";
                   font: "Sans";
                   size: 12;
                   align: 0.5 1.0;
+               }
+            }
+         }
+         part { name: "default_face_frame";
+            type: IMAGE;
+            description { state: "default" 0.0;
+               align: 1.0 0.0;
+               aspect_preference: BOTH;
+               image {
+                  border: 3 3 3 3;
+                  normal: "frame.png";
                }
             }
          }
@@ -184,7 +198,7 @@ collections {
                      }
                   }
                }
-               part { name: "session.logo";
+               part { name: "session.logo"; /* API */
                   type: IMAGE;
                   description { state: "default" 0.0;
                      rel1.offset: 0 -24;
@@ -199,24 +213,24 @@ collections {
                }
             }
             part { name: "sessionlist.box";
-            type: BOX;
-            description { state: "default" 0.0;
-               rel1 {
-                  to: "session";
-                  relative: 1.0 0.0;
+               type: BOX;
+               description { state: "default" 0.0;
+                  rel1 {
+                     to: "session";
+                     relative: 1.0 0.0;
                      offset: 12 0;
-               }
-               rel2 {
-                  to_y: "session";
-                  relative: 1.0 1.0;
-               }
-               box {
-                  layout: "horizontal";
-                  align: 0.0 1.0;
-                  padding: 8 8;
+                  }
+                  rel2 {
+                     to_y: "session";
+                     relative: 1.0 1.0;
+                  }
+                  box {
+                     layout: "horizontal";
+                     align: 0.0 1.0;
+                     padding: 8 8;
+                  }
                }
             }
-         }
             part { name: "user";
                type: RECT;
                description { state: "default" 0.0;
@@ -252,7 +266,7 @@ collections {
                   part { name: "username_underline";
                      type: IMAGE;
                      description { state: "default" 0.0;
-                        color: 255 255 255 0;
+                        color: 255 255 255 10;
                         rel1 {
                            relative: 0.0 1.0;
                            offset: 12 -12;
@@ -287,6 +301,17 @@ collections {
                         }
                      }
                   }
+                  part { name: "username.text";  /* API */
+                     type: TEXT;
+                     effect: SHADOW;
+                     description { state: "default" 0.0;
+                        text {
+                           font: "Sans";
+                           size: 12;
+                           align: 0.5 1.0;
+                        }
+                     }
+                  }
                }
                part { name: "promt_entry";
                   type: IMAGE;
@@ -313,7 +338,7 @@ collections {
                   part { name: "promt_underline";
                      type: IMAGE;
                      description { state: "default" 0.0;
-                        color: 255 255 255 0;
+                        color: 255 255 255 10;
                         rel1 {
                            relative: 0.0 1.0;
                            offset: 12 -12;
@@ -438,6 +463,24 @@ collections {
                   image.normal: "globe.png";
                }
             }
+            part { name: "lang.text"; type: TEXT; /* API */
+               description { state: "default" 0.0;
+                  rel1 {
+                     to: "lang_icon";
+                     relative: 1.0 0.0;
+                     offset: 12 0;
+                  }
+                  rel2 {
+                     to_y: "lang_icon";
+                     relative: 1.0 1.0;
+                  }
+                  text {
+                     font: "Sans";
+                     size: 12;
+                     align: 0.0 0.5;
+                  }
+               }
+            }
          }
       }
       programs {
@@ -496,6 +539,20 @@ collections {
             action: STATE_SET "default" 0.0;
             transition: LINEAR 0.8;
             target: "promt_underline";
+         }
+         // Language
+         program { name: "langs_show";  /* API */
+            signal: "mouse,up,1"; source: "lang_icon";
+            action: SIGNAL_EMIT "langs,show" "";
+         }
+         program { name: "langs_show2";  /* API */
+            signal: "mouse,up,1"; source: "lang.text";
+            action: SIGNAL_EMIT "langs,show" "";
+         }
+         // Power
+         program { name: "powers_show";  /* API */
+            signal: "mouse,up,1"; source: "power_icon";
+            action: SIGNAL_EMIT "powers,show" "";
          }
          // Fade for main
          program { name: "ui_hide"; /* API */
