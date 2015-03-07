@@ -41,6 +41,10 @@ install_prefix = os.path.dirname(os.path.dirname(__file__))
 # locale_dir = os.path.join(install_prefix, 'share', 'locale')
 # gettext.install('enter', names='ngettext', localedir=locale_dir)
 
+# debuging
+import logging
+elog = logging.getLogger("efl")
+elog.addHandler(logging.StreamHandler())
 
 theme = 'default.edj'
 #theme = 'enter.edj'
