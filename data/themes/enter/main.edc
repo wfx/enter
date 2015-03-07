@@ -293,11 +293,19 @@ collections {
                      source: "elm/entry";
                      repeat_events: 1;
                      description { state: "default" 0.0;
-                        rel1.offset: 12 0;
-                        rel2.offset: -12 0;
+                        rel1 {
+                           to: "username_entry";
+                           relative: 0.0 0.0;
+                           offset: 12 0;
+                        }
+                        rel2 { 
+                           offset: -12 0;
+                           to: "username_entry";
+                           relative: 1.0 1.0;
+                        }
                         params {
                            bool: "single line" 1;
-                           bool: "scrollable" 0;
+                           bool: "scrollable" 1;
                         }
                      }
                   }
@@ -516,6 +524,12 @@ collections {
             target: "username_underline";
          }
          // Focus on promt_entry
+         program { name: "prompt_show";  /* API */
+            // pass
+         }
+         program { name: "prompt_hide";  /* API */
+            // pass
+         }
          program { name: "promt_focused";
             signal: "mouse,in"; source: "promt_entry";
             action: STATE_SET "focused" 0.0;
