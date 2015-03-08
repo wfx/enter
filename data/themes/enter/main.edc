@@ -365,6 +365,9 @@ collections {
                      inherit: "default" 0.0;
                      color: 255 255 255 255;
                   }
+                  description { state: "visible" 0.0;
+                     // pass
+                  }
                   part { name: "promt_underline";
                      type: IMAGE;
                      description { state: "default" 0.0;
