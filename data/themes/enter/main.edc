@@ -106,7 +106,7 @@ collections {
          }
          programs {
             program {
-               signal: "mouse,up,1"; source: "bg";
+               signal: "mouse,up,1"; source: "avatar.swallow";
                action: SIGNAL_EMIT "user,selected" "";
             }
             program {
