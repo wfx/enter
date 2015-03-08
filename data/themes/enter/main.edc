@@ -192,7 +192,7 @@ collections {
                         relative: 0.0 0.0;
                      }
                      rel2 {
-                        to: "session.logo";
+                        to: "session.icon";
                         relative: 0.0 0.65;
                      }
                      text {
@@ -211,7 +211,7 @@ collections {
                         offset: 0 36;
                      }
                      rel2 {
-                        to: "session.logo";
+                        to: "session.icon";
                      }
                      text {
                         size:12;
@@ -220,18 +220,18 @@ collections {
                      }
                   }
                }
-               part { name: "session.logo"; /* API */
-                  type: IMAGE;
+               part { name: "session.icon"; type: EXTERNAL;  /* API */
+                  source: "elm/icon";
                   description { state: "default" 0.0;
-                     rel1.offset: 0 -24;
-                     rel2.offset: -14 24;
+                     rel1 {
+                        offset: 0 -24;
+                     }
+                     rel2 {
+                        offset: -14 24;
+                     }
                      align: 1.0 0.5;
                      aspect: 1 1; aspect_preference: BOTH;
-                     image {
-                        normal: "session_enlightenment.png";
-                        
-                     }
-                  }   
+                  }
                }
             }
             part { name: "sessionlist.box";
