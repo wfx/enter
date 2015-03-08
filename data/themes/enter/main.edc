@@ -33,8 +33,12 @@ collections {
             type: IMAGE;
             mouse_events: 0;
             description { state: "default" 0.0;
-               min: 22 22;
-               max: 44 44;
+               // min: 22 22;
+               // max: 44 44;
+               // TODO: find a solution to scale it.
+               //       ...tecnically not possible to scale an item inside a box
+               // until we know it.
+               min: 44 44;
                image.normal: "default_face.png";
             }
             part { name: "default_face_frame";
@@ -57,8 +61,12 @@ collections {
          part { name: "bg";
             type: RECT;
             description { state: "default" 0.0;
-               min: 22 22;
-               max: 44 44;
+               // min: 22 22;
+               // max: 44 44;
+               // TODO: find a solution to scale it.
+               //       ...tecnically not possible to scale an item inside a box
+               // until we know it.
+               min: 44 44;
                color: 50 50 50 100;
             }
             part { name: "avatar.swallow";  /* API */
@@ -72,7 +80,6 @@ collections {
                type: TEXT;
                effect: SHADOW;
                description { state: "default" 0.0;
-                  // i dont like to show the username at this place.
                   color: 255 255 255 0;
                   rel1 {
                      relative: -10.0 1.0;
