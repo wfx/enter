@@ -109,6 +109,16 @@ collections {
                signal: "mouse,up,1"; source: "bg";
                action: SIGNAL_EMIT "user,selected" "";
             }
+            program {
+               signal: "mouse,in"; source: "avatar.swallow";
+               action: STATE_SET "visible" 0.0;
+               target: "username.text";
+            }
+            program {
+                 signal: "mouse,out"; source: "avatar.swallow";
+                 action: STATE_SET "default" 0.0;
+                 target: "username.text";
+            }
          }
       }
    }
@@ -535,16 +545,7 @@ collections {
             transition: LINEAR 0.8;
             target: "username_underline";
          }
-         program {
-               signal: "mouse,in"; source: "username_entry";
-               action: STATE_SET "visible" 0.0;
-               target: "username.text";
-         }
-         program {
-              signal: "mouse,out"; source: "username_entry";
-              action: STATE_SET "default" 0.0;
-              target: "username.text";
-         }
+         
          // Focus on promt_entry
          program { name: "prompt_show";  /* API */
             // pass
