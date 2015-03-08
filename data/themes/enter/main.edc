@@ -73,13 +73,23 @@ collections {
                effect: SHADOW;
                description { state: "default" 0.0;
                   // i dont like to show the username at this place.
-                  color: 0 0 0 0;
+                  color: 255 255 255 0;
+                  rel1 {
+                     relative: -10.0 1.0;
+                  }
+                  rel2 {
+                     relative: +11.0 2.0;
+                  }
                   text {
                      text: "1";
                      font: "Sans";
                      size: 12;
                      align: 0.5 1.0;
                   }
+               }
+               description { state: "visible" 0.0;
+                  inherit: "default" 0.0;
+                  color: 255 255 255 255;
                }
             }
             part { name: "default_face_frame";
@@ -524,6 +534,16 @@ collections {
             action: STATE_SET "default" 0.0;
             transition: LINEAR 0.8;
             target: "username_underline";
+         }
+         program {
+               signal: "mouse,in"; source: "username_entry";
+               action: STATE_SET "visible" 0.0;
+               target: "username.text";
+         }
+         program {
+              signal: "mouse,out"; source: "username_entry";
+              action: STATE_SET "default" 0.0;
+              target: "username.text";
          }
          // Focus on promt_entry
          program { name: "prompt_show";  /* API */
