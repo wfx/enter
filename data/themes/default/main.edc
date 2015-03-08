@@ -27,6 +27,7 @@ Parts:
    "username.entry" The elm entry used to type the username
    "prompt.entry"   The elm entry used to type the password
    "session.text"   Will be filled with the selected session name
+   "session.icon"   ElmIcon Externals, will be filled with the session icon
    "lang.text"      Will be filled with the selected language
    "message.text"   Will be filled with various textual information for the user
 
