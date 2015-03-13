@@ -85,8 +85,10 @@ class MainWin(StandardWindow):
         # give focus to the window (without a wm)
         ecore_x_win = ecore_x.Window_from_xid(self.xwindow_xid)
         ecore_x_win.focus()
+        ecore_x_win.cursor_set(2)
         ecore_x_win.cursor_show()
         self.username_entry.focus = True
+        
 
     def theme_setup(self):
         # username entry
