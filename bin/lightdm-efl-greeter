@@ -311,6 +311,7 @@ class EnterApplication(object):
     def greeter_authentication_complete_cb(self, greeter):
         """ called by LDM when auth is completed """
         if self.greeter.get_is_authenticated():
+            self.greeter.set_language(self.selected_lang.props.code)
             self.main_win.hide(
                 lambda: self.greeter.start_session_sync(self.selected_session))
         else:
