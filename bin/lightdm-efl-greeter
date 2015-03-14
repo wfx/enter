@@ -217,7 +217,6 @@ class MainWin(StandardWindow):
     def _lang_clicked_cb(self, menu, item, lang):
         self.app.selected_lang = lang.props.code
         self.layout.part_text_set('lang.text', lang.props.name)
-        # TODO how to apply ??
 
     # username entry
     def _username_en_activated_cb(self, en):
