@@ -303,7 +303,7 @@ class EnterApplication(object):
         else:
             self.main_win.prompt_show(text, password=False)
 
-    def greeter_show_message_cb(self, text, message_type):
+    def greeter_show_message_cb(self, greeter, text, message_type):
         """ called by LDM when we must show a message """
         self.main_win.message_show(text)
 
