@@ -29,7 +29,7 @@ Parts:
    "session.text"   Will be filled with the selected session name
    "session.icon"   ElmIcon Externals, will be filled with the session icon
    "lang.text"      Will be filled with the selected language
-   "message.text"   Will be filled with various textual information for the user
+   "message.entry"  Will be filled with various textual information for the user
 
 Signals application -> theme:
    "userslist,show" Theme must to show the users list
@@ -303,15 +303,19 @@ collections {
                }
             }
          }
-         part { name: "message.text"; type: TEXT;  /* API */
+         part { name: "message.entry"; type: EXTERNAL;  /* API */
+            source: "elm/entry";
             description { state: "default" 0.0;
+               min: 180 20;
                rel1 {
-                  relative: 0.0 0.75;
+                  relative: 0.45 0.75;
                }
-               text {
-                  font: "Sans";
-                  size: 10;
-                  align: 0.5 0.0;
+               rel2 {
+                  relative: 0.55 0.75;
+               }
+               params {
+                  bool: "single line" 1;
+                  bool: "scrollable" 0;
                }
             }
          }
