@@ -90,7 +90,7 @@ class MainWin(StandardWindow):
         ecore_x.cursor_free(id)
         ecore_x_win.cursor_show()
         self.username_entry.focus = True
-        
+
 
     def theme_setup(self):
         # username entry
@@ -106,11 +106,11 @@ class MainWin(StandardWindow):
 
         # language label
         self.layout.part_text_set('lang.text', self.app.selected_lang.props.name)
-        
+
         # message entry
         en = self.layout.edje.part_external_object_get('message.entry')
         en.callback_activated_add(self.message_show)
-        self.message_entry = en  
+        self.message_entry = en
 
         # populate users list
         if self.show_users and self.layout.edje.part_exists('userslist.box'):
@@ -243,7 +243,7 @@ class MainWin(StandardWindow):
 
     def message_show(self, msg):
         # self.layout.part_text_set('message.text', msg)
-        self.message_entry.text = msg
+        self.message_entry.entry_append(msg + "<br>")
 
     def log(self, msg):
         print("LOG:"+str(msg), file=sys.stderr)
@@ -271,7 +271,7 @@ class EnterApplication(object):
         for lang in LightDM.get_languages():
             self.languages[lang.props.code] = lang
         self.selected_lang = LightDM.get_language()
-        
+
 
         # main window
         self.main_win = MainWin(self, not self.greeter.get_hide_users_hint())
