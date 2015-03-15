@@ -161,6 +161,7 @@ class MainWin(StandardWindow):
     def select_session(self, session):
         """ Mark the given Session as selected """
         self.layout.part_text_set('session.text', session.props.name)
+        self.layout.part_text_set('session.info', session.props.comment)
         icon_group = self.search_group_for_session(session.props.key)
         if icon_group:
             ic = self.layout.edje.part_external_object_get('session.icon')
