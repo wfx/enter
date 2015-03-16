@@ -20,6 +20,15 @@ from __future__ import absolute_import, print_function, unicode_literals
 import os
 import sys
 
+import logging
+elog = logging.getLogger("efl")
+elog_handler = logging.StreamHandler(sys.stderr)
+elog_formatter = logging.Formatter("[%(levelname)s] %(filename)s:%(lineno)d   %(message)s")
+elog_handler.setFormatter(elog_formatter)
+elog.addHandler(elog_handler)
+elog.setLevel(logging.DEBUG)
+elog.info("efl logging initialized")
+
 from efl import ecore
 from efl import ecore_x
 from efl import edje
@@ -35,16 +44,10 @@ from efl.evas import EXPAND_BOTH
 
 from gi.repository import LightDM
 
-
 # install the _() and ngettext() functions in the main namespace
 install_prefix = os.path.dirname(os.path.dirname(__file__))
 # locale_dir = os.path.join(install_prefix, 'share', 'locale')
 # gettext.install('enter', names='ngettext', localedir=locale_dir)
-
-# debuging
-import logging
-elog = logging.getLogger("efl")
-elog.addHandler(logging.StreamHandler())
 
 theme = 'default.edj'
 #theme = 'enter.edj'
@@ -115,6 +118,15 @@ class MainWin(StandardWindow):
         # populate users list
         if self.show_users and self.layout.edje.part_exists('userslist.box'):
             for u in LightDM.UserList().get_users():
+                #
+                # A user instance has these attributes:
+                # ['background', 'common_user', 'display_name', 'has_messages',
+                #  'home_directory', 'image', 'language', 'layout', 'layouts',
+                #  'logged_in', 'name', 'real_name', 'session', 'uid']                print(dir(u.props), file=sys.stderr)
+                #
+                # TODO: Think about a way to represent all of these to themes
+                #       without making them mandatory.
+                #
                 ul = Layout(self, file=(theme_file, 'enter/user'))
                 ul.signal_callback_add('user,selected', '',
                                        self._sig_user_selected, u.props.name)
@@ -330,3 +342,4 @@ if __name__ == '__main__':
     ecore.main_loop_glib_integrate()
     elementary.run()
     elementary.shutdown()
+    logging.shutdown()
