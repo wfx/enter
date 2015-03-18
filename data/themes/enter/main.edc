@@ -205,7 +205,7 @@ collections {
                      text {
                         size:16;
                         align: 0.0 0.0;
-                        text: "Session...";
+                        text: "";
                      }
                   }
                }
