@@ -285,6 +285,7 @@ collections {
                   size: 12;
                   min: 1 1;
                   ellipsis: -1;
+                  text: "Click to select session";
                }
             }
          }
