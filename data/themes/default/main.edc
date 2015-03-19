@@ -13,8 +13,20 @@ Mandatory groups:
 "enter/user" Group
 ------------------
 Parts:
-   "avatar.swallow" The user image will be swallowed here
-   "username.text" The username
+   "user.image.swallow" The user image will be swallowed here
+   "user.name.text"     The username
+   Optional:
+   "user.opt.background.swallow" Image
+   "user.opt.display_name.text"
+   "user.opt.has_messages.swallow" Check
+   "user.opt.home_directory.text"
+   "user.opt.language.text"
+   "user.opt.layout.text"
+   "user.opt.layouts.swallow" List
+   "user.opt.logged_in.swallow" Check
+   "user.opt.real_name.text"
+   "user.opt.session.text"
+   "user.opt.uid.text"
 
 Signals theme -> application:
    "user,selected" Must be emitted when a user is selected
@@ -104,13 +116,13 @@ collections {
                color: 50 50 50 255;
             }
          }
-         part { name: "avatar.swallow"; type: SWALLOW;  /* API */
+         part { name: "user.image.swallow"; type: SWALLOW;  /* API */
             description { state: "default" 0.0;
                rel1.offset: 3 3;
                rel2.offset: -4 -4;
             }
          }
-         part { name: "username.text"; type: TEXT;  /* API */
+         part { name: "user.name.text"; type: TEXT;  /* API */
             effect: SHADOW;
             description { state: "default" 0.0;
                text {

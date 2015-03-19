@@ -34,12 +34,13 @@ from efl import ecore_x
 from efl import edje
 from efl import elementary
 from efl.elementary.layout import Layout
-from efl.elementary.list import List
+from efl.elementary.list import List, ListItem
 from efl.elementary.entry import Entry
 from efl.elementary.menu import Menu
 from efl.elementary.image import Image
 from efl.elementary.icon import Icon
 from efl.elementary.window import StandardWindow
+from efl.elementary.check import Check
 from efl.evas import EXPAND_BOTH
 
 from gi.repository import LightDM
@@ -120,22 +121,82 @@ class MainWin(StandardWindow):
             for u in LightDM.UserList().get_users():
                 #
                 # A user instance has these attributes:
-                # ['background', 'common_user', 'display_name', 'has_messages',
-                #  'home_directory', 'image', 'language', 'layout', 'layouts',
-                #  'logged_in', 'name', 'real_name', 'session', 'uid']                print(dir(u.props), file=sys.stderr)
+                # - 'background' (string)
+                # - 'common_user' (non-readable object)
+                # - 'display_name' (string)
+                # - 'has_messages' (bool)
+                # - 'home_directory' (string)
+                # - 'image' (string)
+                # - 'language' (string)
+                # - 'layout' (keyboard layout)(string)
+                # - 'layouts' (keyboard layouts)(list of strings)
+                # - 'logged_in' (bool)
+                # - 'name' (string)
+                # - 'real_name' (string)
+                # - 'session' (string)
+                # - 'uid' (string)
                 #
-                # TODO: Think about a way to represent all of these to themes
-                #       without making them mandatory.
-                #
+
                 ul = Layout(self, file=(theme_file, 'enter/user'))
+
                 ul.signal_callback_add('user,selected', '',
                                        self._sig_user_selected, u.props.name)
-                ul.part_text_set('username.text', u.props.name)
+
+                ul.part_text_set('user.name.text', u.props.name)
+
                 if os.path.exists(u.props.image):
                     im = Image(ul, file=u.props.image)
                 else:
                     im = Image(ul, file=(theme_file, 'enter/default_face'))
-                ul.part_content_set('avatar.swallow', im)
+                ul.part_content_set('user.image.swallow', im)
+
+                # Optional parts
+                edj = ul.edje
+                if edj.part_exists('user.opt.background.swallow'):
+                    if os.path.exists(u.props.background):
+                        im = Image(ul, file=u.props.background)
+                    else:
+                        pass
+                        # TODO: Default background?
+                        #im = Image(ul, file=(theme_file, 'enter/default_background'))
+                    ul.part_content_set('user.opt.background.swallow', im)
+
+                if edj.part_exists('user.opt.display_name.text'):
+                    ul.part_text_set('user.opt.display_name.text', u.props.display_name)
+
+                if edj.part_exists('user.opt.has_messages.swallow'):
+                    swallow = Check(ul, state=u.props.has_messages)
+                    ul.part_content_set('user.opt.has_messages.swallow', swallow)
+
+                if edj.part_exists('user.opt.home_directory.text'):
+                    ul.part_text_set('user.opt.home_directory.text', u.props.home_directory)
+
+                if edj.part_exists('user.opt.language.text'):
+                    ul.part_text_set('user.opt.language.text', u.props.language)
+
+                if edj.part_exists('user.opt.layout.text'):
+                    ul.part_text_set('user.opt.layout.text', u.props.layout)
+
+                if edj.part_exists('user.opt.layouts.swallow'):
+                    swallow = List(ul)
+                    for lang in u.props.layouts:
+                        ListItem(lang).append_to(swallow)
+                    swallow.go()
+                    ul.part_content_set('user.opt.layouts.swallow', swallow)
+
+                if edj.part_exists('user.opt.logged_in.swallow'):
+                    swallow = Check(ul, state=u.props.logged_in)
+                    ul.part_content_set('user.opt.logged_in.swallow', swallow)
+
+                if edj.part_exists('user.opt.real_name.text'):
+                    ul.part_text_set('user.opt.real_name.text', u.props.real_name)
+
+                if edj.part_exists('user.opt.session.text'):
+                    ul.part_text_set('user.opt.session.text', u.props.session)
+
+                if edj.part_exists('user.opt.uid.text'):
+                    ul.part_text_set('user.opt.uid.text', u.props.uid)
+
                 self.layout.box_append('userslist.box', ul)
                 ul.show()
             self.layout.signal_emit('userslist,show', '')
