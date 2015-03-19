@@ -231,14 +231,18 @@ class MainWin(StandardWindow):
         self.app.selected_session = session.props.key
         self.select_session(session)
 
-    def select_session(self, session):
+    def select_session(self, session=None):
         """ Mark the given Session as selected """
-        self.layout.part_text_set('session.text', session.props.name)
-        self.layout.part_text_set('session.info', session.props.comment)
-        icon_group = self.search_group_for_session(session.props.key)
-        if icon_group:
-            ic = self.layout.edje.part_external_object_get('session.icon')
-            ic.file = (theme_file, icon_group)
+        if session:
+            self.layout.part_text_set('session.text', session.props.name)
+            self.layout.part_text_set('session.info', session.props.comment)
+            icon_group = self.search_group_for_session(session.props.key)
+            if icon_group:
+                ic = self.layout.edje.part_external_object_get('session.icon')
+                ic.file = (theme_file, icon_group)
+        else:
+            self.layout.part_text_set('session.text', "Click to select session")
+            # TODO: Clear the icon
 
     def search_group_for_session(self, session_key):
         # try the exact session name
@@ -369,10 +373,12 @@ class EnterApplication(object):
         user_session = user.get_session()
         if user_session is None:
             user_session = self.greeter.get_default_session_hint()
-            if user_session not in self.sessions:
-                user_session = None
+        if user_session not in self.sessions:
+            user_session = None
         if user_session:
             self.main_win.select_session(self.sessions[user_session])
+        else:
+            self.main_win.select_session()
 
         # start user auth process
         self.greeter.authenticate(username)
