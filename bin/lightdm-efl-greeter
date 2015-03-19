@@ -362,11 +362,17 @@ class EnterApplication(object):
         # select the session for the user
         users_list = LightDM.UserList()
         user = users_list.get_user_by_name(username)
-        if user:
-            user_session = user.get_session()
-        if not user or user_session is None:
+        if not user:
+            # TODO: display an error
+            return
+
+        user_session = user.get_session()
+        if user_session is None:
             user_session = self.greeter.get_default_session_hint()
-        self.main_win.select_session(self.sessions[user_session])
+            if user_session not in self.sessions:
+                user_session = None
+        if user_session:
+            self.main_win.select_session(self.sessions[user_session])
 
         # start user auth process
         self.greeter.authenticate(username)
