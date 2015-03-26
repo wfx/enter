@@ -4,3 +4,4 @@ build/
 dev_test/
 installed_files.txt
 *.edj
+*.bak

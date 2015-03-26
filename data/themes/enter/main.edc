@@ -1,3 +1,61 @@
+/*
+
+THEME REFERENCE
+===============
+
+Mandatory groups:
+   "enter/default_face"    Default image used when user do not have a face
+   "enter/user"            The single user object used to populate the users list
+   "enter/main"            The main user interface
+   "enter/session/xxxx"    Icons for the various sessions
+   "enter/session/unknown" Mandatory fallback icon for sessions
+
+"enter/user" Group
+------------------
+Parts:
+   "user.image.swallow" The user image will be swallowed here
+   "user.name.text"     The username
+   Optional:
+   "user.opt.background.swallow" Image
+   "user.opt.display_name.text"
+   "user.opt.has_messages.swallow" Check
+   "user.opt.home_directory.text"
+   "user.opt.language.text"
+   "user.opt.layout.text"
+   "user.opt.layouts.swallow" List
+   "user.opt.logged_in.swallow" Check
+   "user.opt.real_name.text"
+   "user.opt.session.text"
+   "user.opt.uid.text"
+
+Signals theme -> application:
+   "user,selected" Must be emitted when a user is selected
+
+"enter/main" Group
+------------------
+Parts:
+   "hostname.text"  Will be filled with the name of the host machine
+   "userslist.box"  Will be filled with "enter/user" objects
+   "username.entry" The elm entry used to type the username
+   "prompt.entry"   The elm entry used to type the password
+   "session.text"   Will be filled with the selected session name
+   "session.icon"   ElmIcon Externals, will be filled with the session icon
+   "lang.text"      Will be filled with the selected language
+   "message.entry"  Will be filled with various textual information for the user
+
+Signals application -> theme:
+   "userslist,show" Theme must to show the users list
+   "prompt,show"    Theme must show the password prompt ("prompt.entry")
+   "prompt,hide"    Theme must hide the password prompt
+   "ui,hide"        Theme must hide the main ui (and then emit: "ui,hide,done")
+
+Signals theme -> application:
+   "sessions,show" Ask the app to show the sessions Menu
+   "langs,show"    Ask the app to show the languages Menu
+   "powers,show"   Ask the app to show the power actions Menu
+   "ui,hide,done"  Notify the app that the ui has been hidden
+
+*/
 
 #define DBG_SHOW(_PART, _R, _G, _B) \
    part { name: "dbg_show"_PART; \
@@ -6,51 +64,44 @@
          rel1.to: _PART; rel2.to: _PART; \
          color: _R _G _B 50; } }
 
+#define SHOW(_PART) DBG_SHOW(_PART, 100, 0, 0)
+
 images {
    image: "header_bg.png" COMP;
    image: "main_bg.png" COMP;
    image: "footer_bg.png" COMP;
+   
    image: "frame.png" COMP;
-   image: "corner.png" COMP;
-   image: "session_enlightenment.png" COMP;
-   image: "icon_user_default.png" COMP;
-   image: "avatar_kitty.png" COMP;
    image: "corner.png" COMP;
    image: "brackets.png" COMP;
    image: "underline.png" COMP;
-   image: "default_face.png" COMP;
+      
+   image: "sessions_icon.png" COMP;
    image: "power_icon.png" COMP;
-   image: "globe.png" COMP;
-   image: "session_unknown.png" COMP;
-   image: "session_epamc.png" COMP;
+   image: "lang_icon.png" COMP;
+   image: "default_face.png" COMP;
+   
+   image: "session_enlightenment.png" COMP;
+   image: "session_enlightenment_small.png" COMP;
+   image: "session_gnome.png" COMP;
+   image: "session_gnome_small.png" COMP;
+   image: "session_kde.png" COMP;
+   image: "session_kde_small.png" COMP;
+   image: "session_unknow.png" COMP;
+   image: "session_inknow_small.png" COMP;
+}
+
+externals {
+   external: "elm";
 }
 
 collections {
-    
    group { name: "enter/default_face";  /* API */
       parts {
-         part { name: "img";
-            type: IMAGE;
+         part { name: "img"; type: IMAGE;
             mouse_events: 0;
             description { state: "default" 0.0;
-               // min: 22 22;
-               // max: 44 44;
-               // TODO: find a solution to scale it.
-               //       ...tecnically not possible to scale an item inside a box
-               // until we know it.
-               min: 44 44;
                image.normal: "default_face.png";
-            }
-            part { name: "default_face_frame";
-               type: IMAGE;
-               description { state: "default" 0.0;
-                  align: 1.0 0.0;
-                  aspect_preference: BOTH;
-                  image {
-                     border: 3 3 3 3;
-                     normal: "frame.png";
-                  }
-               }
             }
          }
       }
@@ -58,82 +109,95 @@ collections {
 
    group { name: "enter/user";  /* API */
       parts {
-         part { name: "bg";
-            type: RECT;
+         part { name: "bg"; type: RECT;
             description { state: "default" 0.0;
-               // min: 22 22;
-               // max: 44 44;
-               // TODO: find a solution to scale it.
-               //       ...tecnically not possible to scale an item inside a box
-               // until we know it.
                min: 44 44;
-               color: 50 50 50 100;
+               color: 50 50 50 255;
             }
-            part { name: "avatar.swallow";  /* API */
-               type: SWALLOW;
-               description { state: "default" 0.0;
-                  rel1.offset: 1 1;
-                  rel2.offset: -2 -2;
+         }
+         part { name: "hover_border"; type: IMAGE;
+            description { state: "default" 0.0;
+               color: 255 255 255 0;
+               rel1 {
+                  to: "bg";
+                  relative: 0.0 0.0;
+                  offset: -12 -12;
                }
+               rel2 {
+                  relative: 1.0 1.0;
+                  offset: 12 12;
+                  to: "bg";
+               }
+               image {
+                  border: 13 13 13 13;
+                  normal: "corner.png";
+               } 
             }
-            part { name: "username.text";  /* API */
-               type: TEXT;
-               effect: SHADOW;
-               description { state: "default" 0.0;
-                  color: 255 255 255 0;
-                  rel1 {
-                     relative: -10.0 1.0;
-                  }
-                  rel2 {
-                     relative: +11.0 2.0;
-                  }
-                  text {
-                     text: "1";
-                     font: "Sans";
-                     size: 6;
-                     align: 0.5 0.0;
-                  }
-               }
-               description { state: "visible" 0.0;
-                  inherit: "default" 0.0;
-                  color: 255 255 255 255;
-               }
+            description { state: "hover" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
             }
-            part { name: "default_face_frame";
-               type: IMAGE;
-               description { state: "default" 0.0;
-                  align: 0.5 0.5;
-                  aspect_preference: BOTH;
-                  image {
-                     border: 3 3 3 3;
-                     normal: "frame.png";
-                  }
+         }
+         part { name: "user.image.swallow"; type: SWALLOW;  /* API */
+            description { state: "default" 0.0;
+               rel1.offset: 2 2;
+               rel2.offset: -2 -2;
+            }
+         }
+         part { name: "user.name.text"; type: TEXT;  /* API */
+            effect: SHADOW;
+            description { state: "default" 0.0;
+               rel1 {
+                  to: "bg";
+                  relative: 0.0 1.0;
+               }
+               rel2 {
+                  to: "bg";
+                  relative: 1.0 1.0;
+                  offset: 0 14;
+               }
+               text {
+                  text: "1";
+                  font: "Sans";
+                  size: 10;
+                  align: 0.5 1.0;
                }
             }
          }
-         programs {
-            program {
-               signal: "mouse,up,1"; source: "avatar.swallow";
-               action: SIGNAL_EMIT "user,selected" "";
+         part { name: "face_frame"; type: IMAGE;
+            description { state: "default" 0.0;
+               align: 0.5 0.5;
+               aspect_preference: BOTH;
+               image {
+                  border: 3 3 3 3;
+                  normal: "frame.png";
+               }
             }
-            program {
-               signal: "mouse,in"; source: "avatar.swallow";
-               action: STATE_SET "visible" 0.0;
-               target: "username.text";
-            }
-            program {
-                 signal: "mouse,out"; source: "avatar.swallow";
-                 action: STATE_SET "default" 0.0;
-                 target: "username.text";
-            }
+         }
+      }
+      programs {
+         program {
+            signal: "mouse,in"; source: "face_frame";
+            action: STATE_SET "hover" 0.0;
+            transition: LINEAR 0.6 CURRENT;
+            target: "hover_border";
+         }
+         program {
+            signal: "mouse,out"; source: "face_frame";
+            action: STATE_SET "default" 0.0;
+            transition: LINEAR 0.4 CURRENT;
+            target: "hover_border";
+         }
+         program {
+            signal: "mouse,up,1"; source: "face_frame";
+            action: SIGNAL_EMIT "user,selected" "";
          }
       }
    }
 
-   group { name: "enter/main";
+   group { name: "enter/main";  /* API */
       parts {
-         part { name: "header";
-            type: IMAGE;
+         part { name: "header"; type: IMAGE;
             description { state: "default" 0.0;
                rel1 {
                   relative: 0.0 0.0;
@@ -143,8 +207,7 @@ collections {
                }
                image.normal: "header_bg.png";
             }
-            part { name: "hostname.text";  /* API */
-               type: TEXT;
+            part { name: "hostname.text"; type: TEXT; /* API */
                description { state: "default" 0.0;
                   text {
                      font: "Sans"; size: 14;
@@ -152,8 +215,7 @@ collections {
                   }
                }
             }
-            part { name: "date.text"; /* API */
-               type: TEXT;
+            part { name: "date.text"; type: TEXT; /* API */
                description { state: "default" 0.0;
                   text {
                      font: "Sans"; size: 12;
@@ -161,8 +223,8 @@ collections {
                }
             }
          }
-         part { name: "main";
-            type: IMAGE;
+         
+         part { name: "main"; type: IMAGE;
             description { state: "default" 0.0;
                rel1 {
                   to: "header";
@@ -174,308 +236,137 @@ collections {
                }
                image.normal: "main_bg.png";
             }
-            part { name: "session";
-               type: IMAGE;
+            part { name: "userslist"; type: SPACER;
                description { state: "default" 0.0;
-                  min: 224 72;
-                  max: 440 376;
-                  rel1 {
-                     relative: 0.152 0.1;
-                  }
-                  rel2 {
-                     relative: 0.452 0.34;
-                  }
-                  image {
-                     border: 13 13 2 2;
-                     normal: "brackets.png";
-                  }
+                  rel1.relative: 0.1 (0.25 - 0.5);
+                  rel2.relative: 0.9 (0.45 - 0.5);
                }
-               part { name: "session.text"; /* API */
-                  type: TEXT;
-                  effect: SHADOW;
-                  description { state: "default" 0.0;
-                     rel1 {
-                        offset: 12 12;
-                        relative: 0.0 0.0;
-                     }
-                     rel2 {
-                        to: "session.icon";
-                        relative: 0.0 0.65;
-                     }
-                     text {
-                        size:16;
-                        align: 0.0 0.0;
-                        text: "";
-                     }
-                  }
+               description { state: "visible" 0.0;
+                  rel1.relative: 0.1 0.25;
+                  rel2.relative: 0.9 0.45;
                }
-               part { name: "session.info"; /* API */
-                  type: TEXT;
-                  effect: SHADOW;
+               part { name: "userslist.box"; /* API */
+                  type: BOX;
                   description { state: "default" 0.0;
-                     rel1 {
-                        to_x: "session.text";
-                        offset: 0 36;
+                     box {
+                        layout: "horizontal";
+                        align: 0.5 0.0;
+                        padding: 24 0;
                      }
-                     rel2 {
-                        to: "session.icon";
-                     }
-                     text {
-                        size:12;
-                        align: 0.0 0.0;
-                        text: "";
-                     }
-                  }
-               }
-               part { name: "session.icon"; type: EXTERNAL;  /* API */
-                  source: "elm/icon";
-                  description { state: "default" 0.0;
-                     rel1 {
-                        offset: 0 -24;
-                     }
-                     rel2 {
-                        offset: -14 24;
-                     }
-                     align: 1.0 0.5;
-                     aspect: 1 1; aspect_preference: BOTH;
                   }
                }
             }
-            part { name: "sessionlist.box";
-               type: BOX;
+            part { name: "prompt.entry"; type: EXTERNAL;  /* API */
+               source: "elm/entry";
+               clip_to: "prompt_clip";
+               description { state: "default" 0.0;
+                  rel1.to: "username.entry";
+                  rel2.to: "username.entry";
+                  params {
+                     bool: "single line" 1;
+                     bool: "scrollable" 1;
+                  }
+               }
+               description { state: "visible" 0.0;
+                  inherit: "default" 0.0;
+                  rel1.relative: 0.0 1.0;
+                  rel2.relative: 1.0 2.0;
+               }
+            }
+            part { name: "session.icon"; type: EXTERNAL;  /* API */
+               source: "elm/icon";
+               clip_to: "prompt_clip";
                description { state: "default" 0.0;
                   rel1 {
-                     to: "session";
-                     relative: 1.0 0.0;
-                     offset: 12 0;
+                     to: "prompt.entry";
+                     relative: 0.0 1.0;
+                     offset: 0 3;
                   }
                   rel2 {
-                     to_y: "session";
+                     to: "prompt.entry";
+                     relative: 1.0 2.0;
+                  }
+                  aspect: 1 1; aspect_preference: BOTH;
+                  align: 0.0 0.5;
+               }
+            }
+            part { name: "session.text"; type: TEXT;  /* API */
+               clip_to: "prompt_clip";
+               description { state: "default" 0.0;
+                  rel1 {
+                     to: "session.icon";
+                     relative: 1.0 0.0;
+                  }
+                  rel2 {
+                     to: "session.icon";
                      relative: 1.0 1.0;
                   }
-                  box {
-                     layout: "horizontal";
-                     align: 0.0 1.0;
-                     padding: 8 8;
+                  align: 0.0 0.5;
+                  text {
+                     font: "Sans";
+                     size: 12;
+                     min: 1 1;
+                     ellipsis: -1;
+                     text: "Click to select session";
                   }
                }
             }
-            part { name: "user";
-               type: RECT;
+            part { name: "prompt_clip"; type: RECT;
                description { state: "default" 0.0;
-                  color: 0 0 0 0;
-                  min: 224 72;
+                  rel1.to_y: "prompt.entry";
+                  rel2.to_y: "session.text";
+                  color: 255 255 255 0;
+               }
+               description { state: "visible" 0.0;
+                  inherit: "default" 0.0;
+                  color: 255 255 255 255;
+               }
+            }
+            part { name: "username.entry"; type: EXTERNAL;  /* API */
+               source: "elm/entry";
+               description { state: "default" 0.0;
+                  min: 180 20;
                   rel1 {
-                     to: "session";
-                     relative: 0.0 2.0;
+                     relative: 0.45 0.5;
                   }
                   rel2 {
-                     to: "session";
-                     relative: 1.0 3.0;
+                     relative: 0.55 0.5;
                   }
-               }
-               part { name: "username_entry";  /* API */
-                  type: IMAGE;
-                  description { state: "default" 0.0;
-                     color: 255 255 255 0;
-                     rel1 {
-                        to: "user";
-                        relative: 0.0 0.0;
-                     }
-                     rel2 {
-                        relative: 0.0 0.5;
-                        offset: -12 0;
-                        to: "user.face";
-                     }
-                     image {
-                        border: 13 13 13 13;
-                        normal: "corner.png";
-                     } 
+                  params {
+                     bool: "single line" 1;
+                     bool: "scrollable" 1;
                   }
-                  part { name: "username_underline";
-                     type: IMAGE;
-                     description { state: "default" 0.0;
-                        color: 255 255 255 10;
-                        rel1 {
-                           relative: 0.0 1.0;
-                           offset: 12 -12;
-                        }
-                        rel2 {
-                           relative: 1.0 1.0;
-                           offset: -12 -12;
-                        }
-                        image {
-                           normal: "underline.png";
-                        }
-                     }
-                     description { state: "focused" 0.0;
-                        inherit: "default" 0.0;
-                        color: 255 255 255 255;
-                     }
-                  }
-                  description { state: "focused" 0.0;
-                     inherit: "default" 0.0;
-                     color: 255 255 255 255;
-                  }
-                  part { name: "username.entry";  /* API */
-                     type: EXTERNAL;
-                     source: "elm/entry";
-                     repeat_events: 1;
-                     description { state: "default" 0.0;
-                        rel1 {
-                           to: "username_entry";
-                           relative: 0.0 0.0;
-                           offset: 12 0;
-                        }
-                        rel2 { 
-                           offset: -12 0;
-                           to: "username_entry";
-                           relative: 1.0 1.0;
-                        }
-                        params {
-                           bool: "single line" 1;
-                           bool: "scrollable" 1;
-                        }
-                     }
-                  }
-                  part { name: "username.text";  /* API */
-                     type: TEXT;
-                     effect: SHADOW;
-                     description { state: "default" 0.0;
-                        text {
-                           font: "Sans";
-                           size: 12;
-                           align: 0.5 1.0;
-                        }
-                     }
-                  }
-               }
-               part { name: "promt_entry";
-                  type: IMAGE;
-                  description { state: "default" 0.0;
-                    color: 255 255 255 0;
-                     rel1 {
-                        to: "user";
-                        relative: 0.0 0.5;
-                     }
-                     rel2 {
-                        relative: 0.0 1.0;
-                        offset: -12 12;
-                        to: "user.face";
-                     }
-                     image {
-                        border: 13 13 13 13;
-                        normal: "corner.png";
-                     }
-                  }
-                  description { state: "focused" 0.0;
-                     inherit: "default" 0.0;
-                     color: 255 255 255 255;
-                  }
-                  description { state: "visible" 0.0;
-                     inherit: "default" 0.0;
-                  }
-                  part { name: "promt_underline";
-                     type: IMAGE;
-                     description { state: "default" 0.0;
-                        color: 255 255 255 10;
-                        rel1 {
-                           relative: 0.0 1.0;
-                           offset: 12 -12;
-                        }
-                        rel2 {
-                           relative: 1.0 1.0;
-                           offset: -12 -12;
-                        }
-                        image {
-                           normal: "underline.png";
-                        }
-                     }
-                     description { state: "focused" 0.0;
-                        inherit: "default" 0.0;
-                        color: 255 255 255 255;
-                     }
-                  }
-                  part { name: "prompt.entry"; /* API */
-                     type: EXTERNAL;
-                     source: "elm/entry";
-                     repeat_events: 1;
-                     description { state: "default" 0.0;
-                        rel1.offset: 12 0;
-                        rel2.offset: -12 0;
-                        params {
-                           bool: "single line" 1;
-                           bool: "scrollable" 1;
-                        }
-                     }
-                  } 
-               }
-               part { name: "user.face"; /* API */
-                  type: IMAGE;
-                  description { state: "default" 0.0;
-                     align: 1.0 0.0;
-                     aspect: 1 1; aspect_preference: BOTH;
-                     rel1.offset: 12 12;
-                     rel2.offset: -12 -12;
-                     image.normal: "avatar_kitty.png";
-                  }
-               }
-               part { name: "user_face_frame";
-                  type: IMAGE;
-                  description { state: "default" 0.0;
-                     align: 1.0 0.0;
-                     aspect_preference: BOTH;
-                     rel1 {
-                        to: "user.face";
-                     }
-                     rel2 {
-                        to: "user.face";
-                     }
-                     image {
-                        border: 3 3 3 3;
-                        normal: "frame.png";
-                     }
-                  }
-               }              
-            }
-         }
-         part { name: "userslist";
-            type: SPACER;
-            description { state: "default" 0.0;
-               rel1 {
-                  to: "user";
-                  relative: 1.0 0.0;
-                  offset: 12 0;
-               }
-               rel2 {
-                  to_y: "user";
-                  relative: 1.0 1.0;
                }
             }
-            description { state: "visible" 0.0;
-               rel1 {
-                  to: "user";
-                  relative: 1.0 0.0;
-                  offset: 12 0;
-               }
-               rel2 {
-                  to_y: "user";
-                  relative: 1.0 1.0;
-               }
-            }
-            part { name: "userslist.box";
-               type: BOX;
+            part { name: "message.entry"; type: EXTERNAL;  /* API */
+               source: "elm/entry";
                description { state: "default" 0.0;
-                  box {
-                     layout: "vertical_flow";
-                     align: 0.0 1.0;
-                     padding: 8 8;
+                  min: 180 20;
+                  rel1 {
+                     relative: 0.45 0.75;
+                  }
+                  rel2 {
+                     relative: 0.55 0.75;
+                  }
+                  params {
+                     bool: "single line" 1;
+                     bool: "scrollable" 0;
                   }
                }
             }
-         }
-         part { name: "footer";
-            type: IMAGE;
+            part { name: "debug.text"; type: TEXT;  /* API */
+               description { state: "default" 0.0;
+                  color: 200 0 0 255;
+                  text {
+                     font: "Sans";
+                     size: 10;
+                     align: 0.5 1.0;
+                  }
+               }
+            }
+         }            
+
+         part { name: "footer"; type: IMAGE;
             description { state: "default" 0.0;
                rel1 {
                   relative: 0.0 0.82;
@@ -485,8 +376,7 @@ collections {
                }
                image.normal: "footer_bg.png";
             }
-            part { name: "power_icon";
-               type: IMAGE;
+            part { name: "power_icon"; type: IMAGE;
                description { state: "default" 0.0;
                   aspect: 1 1; aspect_preference: BOTH;
                   align: 0.96 0.5;
@@ -494,13 +384,12 @@ collections {
                   image.normal: "power_icon.png";
                }
             }
-            part { name: "lang_icon";
-               type: IMAGE;
+            part { name: "lang_icon"; type: IMAGE;
                description { state: "default" 0.0;
                   aspect: 1 1; aspect_preference: BOTH;
                   align: 0.04 0.5;
                   max: 24 24;
-                  image.normal: "globe.png";
+                  image.normal: "lang_icon.png";
                }
             }
             part { name: "lang.text"; type: TEXT; /* API */
@@ -508,21 +397,18 @@ collections {
                   rel1 {
                      to: "lang_icon";
                      relative: 1.0 0.0;
-                     offset: 12 0;
-                  }
-                  rel2 {
-                     to_y: "lang_icon";
-                     relative: 1.0 1.0;
+                     offset: 12 4;
                   }
                   text {
                      font: "Sans";
                      size: 12;
-                     align: 0.0 0.5;
+                     align: 0.0 0.0;
                   }
                }
             }
          }
       }
+
       programs {
          program { name: "userslist_show";  /* API */
             signal: "userslist,show"; source: "";
@@ -530,64 +416,28 @@ collections {
             transition: DECELERATE 0.4;
             target: "userslist";
          }
-         // Focus on usename_entry
-         program { name: "username_focused";
-            signal: "mouse,in"; source: "username_entry";
-            action: STATE_SET "focused" 0.0;
-            transition: LINEAR 0.4;
-            target: "username_entry";
-         }
-         program { name: "username_default";
-            signal: "mouse,out"; source: "username_entry";
-            action: STATE_SET "default" 0.0;
-            transition: LINEAR 0.4;
-            target: "username_entry";
-         }
-         program { name: "username_underline_focused";
-            signal: "mouse,in"; source: "username_entry";
-            action: STATE_SET "focused" 0.0;
-            transition: LINEAR 0.8;
-            target: "username_underline";
-         }
-         program { name: "username_underline_default";
-            signal: "mouse,out"; source: "username_entry";
-            action: STATE_SET "default" 0.0;
-            transition: LINEAR 0.8;
-            target: "username_underline";
-         }
-         
-         // Focus on promt_entry
          program { name: "prompt_show";  /* API */
-            // pass
+            signal: "prompt,show"; source: "";
+            action: STATE_SET "visible" 0.0;
+            transition: LINEAR 0.2;
+            target: "prompt.entry";
+            target: "prompt_clip";
          }
          program { name: "prompt_hide";  /* API */
-            // pass
-         }
-         program { name: "promt_focused";
-            signal: "mouse,in"; source: "promt_entry";
-            action: STATE_SET "focused" 0.0;
-            transition: LINEAR 0.4;
-            target: "promt_entry";
-         }
-         program { name: "promt_default";
-            signal: "mouse,out"; source: "promt_entry";
+            signal: "prompt,hide"; source: "";
             action: STATE_SET "default" 0.0;
-            transition: LINEAR 0.4;
-            target: "promt_entry";
+            transition: LINEAR 0.2;
+            target: "prompt.entry";
+            target: "prompt_clip";
          }
-         program { name: "promt_underline_focused";
-            signal: "mouse,in"; source: "promt_entry";
-            action: STATE_SET "focused" 0.0;
-            transition: LINEAR 0.8;
-            target: "promt_underline";
+         program { name: "sessions_show";  /* API */
+            signal: "mouse,up,1"; source: "session.*";
+            action: SIGNAL_EMIT "sessions,show" "";
          }
-         program { name: "promt_underline_default";
-            signal: "mouse,out"; source: "promt_entry";
-            action: STATE_SET "default" 0.0;
-            transition: LINEAR 0.8;
-            target: "promt_underline";
+         program { name: "powers_show";  /* API */
+            signal: "mouse,up,1"; source: "power_icon";
+            action: SIGNAL_EMIT "powers,show" "";
          }
-         // Language
          program { name: "langs_show";  /* API */
             signal: "mouse,up,1"; source: "lang_icon";
             action: SIGNAL_EMIT "langs,show" "";
@@ -596,25 +446,20 @@ collections {
             signal: "mouse,up,1"; source: "lang.text";
             action: SIGNAL_EMIT "langs,show" "";
          }
-         // Power
-         program { name: "powers_show";  /* API */
-            signal: "mouse,up,1"; source: "power_icon";
-            action: SIGNAL_EMIT "powers,show" "";
-         }
-         // Fade for main
          program { name: "ui_hide"; /* API */
             signal: "ui,hide"; source: "";
             action: STATE_SET "default" 0.0;
             transition: ACCELERATE 0.4;
-            target: "main";
+            target: "userslist";
             after: "ui_hide_done";
          }
-         program { name: "ui_hide_done"; /* API */
-            action: SIGNAL_EMIT "ui,hide,done" "";
+         program { name: "ui_hide_done";
+            action: SIGNAL_EMIT "ui,hide,done" ""; /* API */
          }
-      }   
+      }
    }
-   #define SESSION_ICON(_GROUP, _FILE)           \
+
+#define SESSION_ICON(_GROUP, _FILE)           \
    group { name: _GROUP;                      \
       images { image: _FILE COMP; }           \
       parts { part { name: "im"; type: IMAGE; \
@@ -625,5 +470,7 @@ collections {
    SESSION_ICON("enter/session/kde", "session_kde.png")
    SESSION_ICON("enter/session/epymc", "session_epymc.png")
    SESSION_ICON("enter/session/unknown", "session_unknown.png")
-   #undef SESSION_ICON
+#undef SESSION_ICON
+
 }
+
