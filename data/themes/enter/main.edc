@@ -88,7 +88,7 @@ images {
    image: "session_kde.png" COMP;
    image: "session_kde_small.png" COMP;
    image: "session_unknow.png" COMP;
-   image: "session_inknow_small.png" COMP;
+   image: "session_unknow_small.png" COMP;
 }
 
 externals {
@@ -269,8 +269,73 @@ collections {
                }
                description { state: "visible" 0.0;
                   inherit: "default" 0.0;
-                  rel1.relative: 0.0 1.0;
-                  rel2.relative: 1.0 2.0;
+                  rel1 {
+                     to: "username.entry";
+                     relative: 0.0 1.0;
+                     offset: 0 48;
+                  }
+                  rel2 {
+                     to: "username.entry";
+                     relative: 1.0 2.0;
+                  }
+               }
+               part { name: "prompt_focused"; type: IMAGE;
+                  description { state: "default" 0.0;
+                     color: 255 255 255 0;
+                     rel1 {
+                        relative: 0.0 0.0;
+                        offset: -12 -12;
+                     }
+                     rel2 {
+                        relative: 1.0 1.0;
+                        offset: 12 12;
+                     }
+                     image {
+                        border: 13 13 13 13;
+                        normal: "corner.png";
+                     } 
+                  }
+                  description { state: "hover" 0.0;
+                     inherit: "default" 0.0;
+                     color: 255 255 255 255;
+                  }
+               }
+            }
+            part { name: "username.entry"; type: EXTERNAL;  /* API */
+               source: "elm/entry";
+               description { state: "default" 0.0;
+                  min: 180 20;
+                  rel1 {
+                     relative: 0.45 0.5;
+                  }
+                  rel2 {
+                     relative: 0.55 0.5;
+                  }
+                  params {
+                     bool: "single line" 1;
+                     bool: "scrollable" 1;
+                  }
+               }
+               part { name: "username_focused"; type: IMAGE;
+                  description { state: "default" 0.0;
+                     color: 255 255 255 0;
+                     rel1 {
+                        relative: 0.0 0.0;
+                        offset: -12 -12;
+                     }
+                     rel2 {
+                        relative: 1.0 1.0;
+                        offset: 12 12;
+                     }
+                     image {
+                        border: 13 13 13 13;
+                        normal: "corner.png";
+                     } 
+                  }
+                  description { state: "hover" 0.0;
+                     inherit: "default" 0.0;
+                     color: 255 255 255 255;
+                  }
                }
             }
             part { name: "session.icon"; type: EXTERNAL;  /* API */
@@ -322,38 +387,6 @@ collections {
                   color: 255 255 255 255;
                }
             }
-            part { name: "username.entry"; type: EXTERNAL;  /* API */
-               source: "elm/entry";
-               description { state: "default" 0.0;
-                  min: 180 20;
-                  rel1 {
-                     relative: 0.45 0.5;
-                  }
-                  rel2 {
-                     relative: 0.55 0.5;
-                  }
-                  params {
-                     bool: "single line" 1;
-                     bool: "scrollable" 1;
-                  }
-               }
-            }
-            part { name: "message.entry"; type: EXTERNAL;  /* API */
-               source: "elm/entry";
-               description { state: "default" 0.0;
-                  min: 180 20;
-                  rel1 {
-                     relative: 0.45 0.75;
-                  }
-                  rel2 {
-                     relative: 0.55 0.75;
-                  }
-                  params {
-                     bool: "single line" 1;
-                     bool: "scrollable" 0;
-                  }
-               }
-            }
             part { name: "debug.text"; type: TEXT;  /* API */
                description { state: "default" 0.0;
                   color: 200 0 0 255;
@@ -376,14 +409,6 @@ collections {
                }
                image.normal: "footer_bg.png";
             }
-            part { name: "power_icon"; type: IMAGE;
-               description { state: "default" 0.0;
-                  aspect: 1 1; aspect_preference: BOTH;
-                  align: 0.96 0.5;
-                  max: 24 24;
-                  image.normal: "power_icon.png";
-               }
-            }
             part { name: "lang_icon"; type: IMAGE;
                description { state: "default" 0.0;
                   aspect: 1 1; aspect_preference: BOTH;
@@ -397,13 +422,44 @@ collections {
                   rel1 {
                      to: "lang_icon";
                      relative: 1.0 0.0;
-                     offset: 12 4;
+                     offset: 4 0;
+                  }
+                  rel2 {
+                     to_y: "lang_icon";
+                     relative: 0.25 1.0;
                   }
                   text {
                      font: "Sans";
                      size: 12;
-                     align: 0.0 0.0;
+                     align: 0.0 0.5;
                   }
+               }
+            }
+            part { name: "message.entry"; type: EXTERNAL;  /* API */
+               source: "elm/entry";
+               description { state: "default" 0.0;
+                  min: 180 20;
+                  max: 180 20;
+                  rel1 {
+                     to: "lang.text";
+                     relative:  1.0 0.0;
+                  }
+                  rel2 {
+                     to_y: "power_icon";
+                     relative:  0.75 1.0;
+                  }
+                  params {
+                     bool: "single line" 0;
+                     bool: "scrollable" 0;
+                  }
+               }
+            }
+            part { name: "power_icon"; type: IMAGE;
+               description { state: "default" 0.0;
+                  aspect: 1 1; aspect_preference: BOTH;
+                  align: 0.96 0.5;
+                  max: 24 24;
+                  image.normal: "power_icon.png";
                }
             }
          }
@@ -456,6 +512,31 @@ collections {
          program { name: "ui_hide_done";
             action: SIGNAL_EMIT "ui,hide,done" ""; /* API */
          }
+         
+         program {
+            signal: "mouse,in"; source: "username.entry";
+            action: STATE_SET "hover" 0.0;
+            transition: LINEAR 0.6 CURRENT;
+            target: "username_focused";
+         }
+         program {
+            signal: "mouse,out"; source: "username.entry";
+            action: STATE_SET "default" 0.0;
+            transition: LINEAR 0.4 CURRENT;
+            target: "username_focused";
+         }
+         program {
+            signal: "mouse,in"; source: "prompt.entry";
+            action: STATE_SET "hover" 0.0;
+            transition: LINEAR 0.6 CURRENT;
+            target: "prompt_focused";
+         }
+         program {
+            signal: "mouse,out"; source: "prompt.entry";
+            action: STATE_SET "default" 0.0;
+            transition: LINEAR 0.4 CURRENT;
+            target: "prompt_focused";
+         }
       }
    }
 
@@ -468,7 +549,6 @@ collections {
    SESSION_ICON("enter/session/enlightenment", "session_enlightenment.png")
    SESSION_ICON("enter/session/gnome", "session_gnome.png")
    SESSION_ICON("enter/session/kde", "session_kde.png")
-   SESSION_ICON("enter/session/epymc", "session_epymc.png")
    SESSION_ICON("enter/session/unknown", "session_unknown.png")
 #undef SESSION_ICON
 
