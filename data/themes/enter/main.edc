@@ -336,7 +336,8 @@ collections {
                   }
                }
             }
-            part { name: "userslist"; type: SPACER;
+            SHOW("userslist");
+            part { name: "userslist"; type: RECT;
                description { state: "default" 0.0;
                   rel1  {
                      to: "user";
@@ -345,20 +346,19 @@ collections {
                   }
                   rel2 {
                      to: "user";
-                     relative: 1.0 (0.0 - 1.0);
+                     relative: 1.0 (1.0 - 1.0);
                   }
                }
                description { state: "visible" 0.0;
                   rel1  {
-                     to: "user.face";
+                     to: "user";
                      relative: 1.0 0.0;
                      offset: 24 0;
                   }
                   rel2 {
-                     to: "user.face";
+                     to: "user";
                      relative: 1.0 1.0;
                   }
-
                }
                part { name: "userslist.box"; /* API */
                   type: BOX;
