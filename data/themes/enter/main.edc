@@ -28,7 +28,7 @@ Parts:
    "user.opt.session.text"
    "user.opt.uid.text"
 
-Signals theme -> application:
+Signals theme - application:
    "user,selected" Must be emitted when a user is selected
 
 "enter/main" Group
@@ -43,13 +43,13 @@ Parts:
    "lang.text"      Will be filled with the selected language
    "message.entry"  Will be filled with various textual information for the user
 
-Signals application -> theme:
+Signals application - theme:
    "userslist,show" Theme must to show the users list
    "prompt,show"    Theme must show the password prompt ("prompt.entry")
    "prompt,hide"    Theme must hide the password prompt
    "ui,hide"        Theme must hide the main ui (and then emit: "ui,hide,done")
 
-Signals theme -> application:
+Signals theme - application:
    "sessions,show" Ask the app to show the sessions Menu
    "langs,show"    Ask the app to show the languages Menu
    "powers,show"   Ask the app to show the power actions Menu
@@ -336,8 +336,7 @@ collections {
                   }
                }
             }
-            SHOW("userslist");
-            part { name: "userslist"; type: RECT;
+            part { name: "userslist"; type: SPACER;
                description { state: "default" 0.0;
                   rel1  {
                      to: "user";
@@ -357,7 +356,7 @@ collections {
                   }
                   rel2 {
                      to: "user";
-                     relative: 1.0 1.0;
+                     relative: 2.0 1.0;
                   }
                }
                part { name: "userslist.box"; /* API */
@@ -437,7 +436,6 @@ collections {
                   }
                }
             }
-
             part { name: "session.icon"; type: EXTERNAL;  /* API */
                source: "elm/icon";
                clip_to: "prompt_clip";
@@ -497,6 +495,7 @@ collections {
                   }
                }
             }
+            SHOW("userslist");
          }
          part { name: "footer"; type: IMAGE;
             description { state: "default" 0.0;
