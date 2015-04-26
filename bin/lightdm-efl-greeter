@@ -50,8 +50,8 @@ install_prefix = os.path.dirname(os.path.dirname(__file__))
 # locale_dir = os.path.join(install_prefix, 'share', 'locale')
 # gettext.install('enter', names='ngettext', localedir=locale_dir)
 
-theme = 'default.edj'
-#theme = 'enter.edj'
+#theme = 'default.edj'
+theme = 'enter.edj'
 theme_file = os.path.join(install_prefix, 'share', 'lightdm-efl-greeter', 'themes', theme)
 
 
@@ -257,6 +257,7 @@ class MainWin(StandardWindow):
                     return group
 
         # some fixed fallback (for derivate works?)
+        # @davemds: Why we need this?
         if session_key.startswith(('cinnamon', )):
             group = 'enter/session/gnome'
             if edje.file_group_exists(theme_file, group):
