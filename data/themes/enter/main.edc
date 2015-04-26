@@ -341,7 +341,7 @@ collections {
                   rel1  {
                      to: "user";
                      relative: 1.0 0.0;
-                     //offset: 24 0;
+                     offset: 24 0;
                   }
                   rel2 {
                      to: "user";
@@ -350,12 +350,12 @@ collections {
                }
                description { state: "visible" 0.0;
                   rel1  {
-                     to: "user";
-                     relative: 2.0 0.0;
-                     //offset: 24 0;
+                     to: "user.face";
+                     relative: 1.0 0.0;
+                     offset: 24 0;
                   }
                   rel2 {
-                     to: "user";
+                     to: "user.face";
                      relative: 1.0 1.0;
                   }
 
@@ -365,7 +365,7 @@ collections {
                   description { state: "default" 0.0;
                      box {
                         layout: "horizontal";
-                        //align: 0.0 1.0;
+                        align: 0.0 1.0;
                         padding: 24 0;
                      }
                   }
