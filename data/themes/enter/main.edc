@@ -89,6 +89,9 @@ images {
    image: "session_kde_small.png" COMP;
    image: "session_unknow.png" COMP;
    image: "session_unknow_small.png" COMP;
+   
+   // TEST images:
+   image: "avatar_kitty.png" COMP;
 }
 
 externals {
@@ -236,108 +239,205 @@ collections {
                }
                image.normal: "main_bg.png";
             }
+            part { name: "user"; type: RECT;
+               description { state: "default" 0.0;
+                  color: 0 0 0 0;
+                  min: 224 72;
+                  max: 440 376;
+                  rel1 {
+                     relative: 0.152 0.1;
+                  }
+                  rel2 {
+                     relative: 0.452 0.34;
+                  }
+               }      
+               part { name: "username.entry"; type: EXTERNAL;  /* API */
+                  source: "elm/entry";
+                  description { state: "default" 0.0;
+                     align:  0 0;
+                     rel1 {
+                        to_y: "user.face";
+                        relative: 0.0 0.0;
+                        offset: 12 12;
+                     }
+                     rel2 {
+                        to: "user.face";
+                        relative: 0.0 0.5;
+                        offset: -24  0;
+                     }
+                     params {
+                        bool: "single line" 1;
+                        bool: "scrollable" 0;
+                     }
+                  }
+                  part { name: "username_focused"; type: IMAGE;
+                     description { state: "default" 0.0;
+                        color: 255 255 255 0;
+                        rel1 {
+                           relative: 0.0 0.0;
+                           offset: -12 -12;
+                        }
+                        rel2 {
+                           relative: 1.0 1.0;
+                           offset: 12 12;
+                        }
+                        image {
+                           border: 13 13 13 13;
+                           normal: "corner.png";
+                        } 
+                     }
+                     description { state: "hover" 0.0;
+                        inherit: "default" 0.0;
+                        color: 255 255 255 255;
+                     }
+                     part { name: "username_underline";
+                        type: IMAGE;
+                        description { state: "default" 0.0;
+                           color: 255 255 255 0;
+                           rel1 {
+                              relative: 0.0 1.0;
+                              offset: 12 -12;
+                           }
+                           rel2 {
+                              relative: 1.0 1.0;
+                              offset: -12 -12;
+                           }
+                           image {
+                              normal: "underline.png";
+                           }
+                        }
+                        description { state: "focused" 0.0;
+                           inherit: "default" 0.0;
+                           color: 255 255 255 255;
+                        }
+                     }
+                  }
+               }
+               part { name: "user.face"; type: IMAGE; /* TODO: API */
+                  description { state: "default" 0.0;
+                     align: 1.0 0.0;
+                     aspect: 1 1;
+                     aspect_preference: BOTH;
+                     min: 64 64;
+                     max: 92 92;
+                     rel1.offset:  12 12;
+                     rel2.offset: -12 -12;
+                     image.normal: "avatar_kitty.png";
+                  }
+                  part { name: "user_face_frame"; type: IMAGE;
+                     description { state: "default" 0.0;
+                        align: 0.5 0.5;
+                        aspect_preference: BOTH;
+                        image {
+                           border: 3 3 3 3;
+                           normal: "frame.png";
+                        }
+                     }
+                  }
+               }
+            }
             part { name: "userslist"; type: SPACER;
                description { state: "default" 0.0;
-                  rel1.relative: 0.1 (0.25 - 0.5);
-                  rel2.relative: 0.9 (0.45 - 0.5);
+                  rel1  {
+                     to: "user";
+                     relative: 1.0 0.0;
+                     //offset: 24 0;
+                  }
+                  rel2 {
+                     to: "user";
+                     relative: 1.0 (0.0 - 1.0);
+                  }
                }
                description { state: "visible" 0.0;
-                  rel1.relative: 0.1 0.25;
-                  rel2.relative: 0.9 0.45;
+                  rel1  {
+                     to: "user";
+                     relative: 2.0 0.0;
+                     //offset: 24 0;
+                  }
+                  rel2 {
+                     to: "user";
+                     relative: 1.0 1.0;
+                  }
+
                }
                part { name: "userslist.box"; /* API */
                   type: BOX;
                   description { state: "default" 0.0;
                      box {
                         layout: "horizontal";
-                        align: 0.5 0.0;
+                        //align: 0.0 1.0;
                         padding: 24 0;
                      }
                   }
                }
-            }
-            part { name: "prompt.entry"; type: EXTERNAL;  /* API */
-               source: "elm/entry";
-               clip_to: "prompt_clip";
-               description { state: "default" 0.0;
-                  rel1.to: "username.entry";
-                  rel2.to: "username.entry";
-                  params {
-                     bool: "single line" 1;
-                     bool: "scrollable" 1;
-                  }
-               }
-               description { state: "visible" 0.0;
-                  inherit: "default" 0.0;
-                  rel1 {
-                     to: "username.entry";
-                     relative: 0.0 1.0;
-                     offset: 0 48;
-                  }
-                  rel2 {
-                     to: "username.entry";
-                     relative: 1.0 2.0;
-                  }
-               }
-               part { name: "prompt_focused"; type: IMAGE;
+               part { name: "prompt.entry"; type: EXTERNAL;  /* API */
+                  source: "elm/entry";
+                  clip_to: "prompt_clip";
                   description { state: "default" 0.0;
-                     color: 255 255 255 0;
+                     rel1.to: "username.entry";
+                     rel2.to: "username.entry";
+                     params {
+                        bool: "single line" 1;
+                        bool: "scrollable" 0;
+                     }
+                  }
+                  description { state: "visible" 0.0;
+                     inherit: "default" 0.0;
                      rel1 {
-                        relative: 0.0 0.0;
-                        offset: -12 -12;
+                        to: "username.entry";
+                        relative: 0.0 1.0;
+                        offset: 0 48;
                      }
                      rel2 {
-                        relative: 1.0 1.0;
-                        offset: 12 12;
+                        to: "username.entry";
+                        relative: 1.0 2.0;
                      }
-                     image {
-                        border: 13 13 13 13;
-                        normal: "corner.png";
-                     } 
                   }
-                  description { state: "hover" 0.0;
-                     inherit: "default" 0.0;
-                     color: 255 255 255 255;
+                  part { name: "prompt_focused"; type: IMAGE;
+                     description { state: "default" 0.0;
+                        color: 255 255 255 0;
+                        rel1 {
+                           relative: 0.0 0.0;
+                           offset: -12 -12;
+                        }
+                        rel2 {
+                           relative: 1.0 1.0;
+                           offset: 12 12;
+                        }
+                        image {
+                           border: 13 13 13 13;
+                           normal: "corner.png";
+                        } 
+                     }
+                     description { state: "hover" 0.0;
+                        inherit: "default" 0.0;
+                        color: 255 255 255 255;
+                     }
+                     part { name: "promt_underline";
+                        type: IMAGE;
+                        description { state: "default" 0.0;
+                           color: 255 255 255 10;
+                           rel1 {
+                              relative: 0.0 1.0;
+                              offset: 12 -12;
+                           }
+                           rel2 {
+                              relative: 1.0 1.0;
+                              offset: -12 -12;
+                           }
+                           image {
+                              normal: "underline.png";
+                           }
+                        }
+                        description { state: "focused" 0.0;
+                           inherit: "default" 0.0;
+                           color: 255 255 255 255;
+                        }
+                     }
                   }
                }
             }
-            part { name: "username.entry"; type: EXTERNAL;  /* API */
-               source: "elm/entry";
-               description { state: "default" 0.0;
-                  min: 180 20;
-                  rel1 {
-                     relative: 0.45 0.5;
-                  }
-                  rel2 {
-                     relative: 0.55 0.5;
-                  }
-                  params {
-                     bool: "single line" 1;
-                     bool: "scrollable" 1;
-                  }
-               }
-               part { name: "username_focused"; type: IMAGE;
-                  description { state: "default" 0.0;
-                     color: 255 255 255 0;
-                     rel1 {
-                        relative: 0.0 0.0;
-                        offset: -12 -12;
-                     }
-                     rel2 {
-                        relative: 1.0 1.0;
-                        offset: 12 12;
-                     }
-                     image {
-                        border: 13 13 13 13;
-                        normal: "corner.png";
-                     } 
-                  }
-                  description { state: "hover" 0.0;
-                     inherit: "default" 0.0;
-                     color: 255 255 255 255;
-                  }
-               }
-            }
+
             part { name: "session.icon"; type: EXTERNAL;  /* API */
                source: "elm/icon";
                clip_to: "prompt_clip";
@@ -397,8 +497,7 @@ collections {
                   }
                }
             }
-         }            
-
+         }
          part { name: "footer"; type: IMAGE;
             description { state: "default" 0.0;
                rel1 {
@@ -472,6 +571,20 @@ collections {
             transition: DECELERATE 0.4;
             target: "userslist";
          }
+         
+         program { name: "username_underline_focused";
+            signal: "mouse,in"; source: "username_underline";
+            action: STATE_SET "focused" 0.0;
+            transition: LINEAR 0.8;
+            target: "username_underline";
+         }
+         program { name: "username_underline_default";
+            signal: "mouse,out"; source: "username_underline";
+            action: STATE_SET "default" 0.0;
+            transition: LINEAR 0.8;
+            target: "username_underline";
+         }
+         
          program { name: "prompt_show";  /* API */
             signal: "prompt,show"; source: "";
             action: STATE_SET "visible" 0.0;
