@@ -18,6 +18,18 @@ images {
    image: "avatar_kitty.png" COMP;
 }
 collections {
+   group { name: "enter/default_face";  /* API */
+      parts {
+         part { name: "img"; type: IMAGE;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               min: 44 44;
+               max: 44 44;
+               image.normal: "default_face.png";
+            }
+         }
+      }
+   }
    group { name: "enter/main";
       parts {
          part { name: "header"; type: IMAGE;
@@ -78,20 +90,18 @@ collections {
                         padding: 24 0;
                      }
                   }
-                  part { name: "imgA"; type: IMAGE;
-                     mouse_events: 0;
-                     description { state: "default" 0.0;
-                        min: 44 44;
-                        max: 44 44;
-                        image.normal: "default_face.png";
-                     }
-                  }
-                  part { name: "imgB"; type: IMAGE;
-                     mouse_events: 0;
-                     description { state: "default" 0.0;
-                        min: 44 44;
-                        max: 44 44;
-                        image.normal: "default_face.png";
+                  box {
+                     items {
+                        item {
+                           type: GROUP;
+                           source: "enter/default_face";
+                           align: 1.0 0.5;
+                        }
+                        item {
+                           type: GROUP;
+                           source: "enter/default_face";
+                           align: 1.0 0.5;
+                        }
                      }
                   }
                }
