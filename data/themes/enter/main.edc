@@ -364,7 +364,7 @@ collections {
                   description { state: "default" 0.0;
                      box {
                         layout: "horizontal";
-                        align: 0.0 1.0;
+                        align: 0.5 1.0;
                         padding: 24 0;
                      }
                   }
