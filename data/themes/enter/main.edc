@@ -70,17 +70,17 @@ images {
    image: "header_bg.png" COMP;
    image: "main_bg.png" COMP;
    image: "footer_bg.png" COMP;
-   
+
    image: "frame.png" COMP;
    image: "corner.png" COMP;
    image: "brackets.png" COMP;
    image: "underline.png" COMP;
-      
+
    image: "sessions_icon.png" COMP;
    image: "power_icon.png" COMP;
    image: "lang_icon.png" COMP;
    image: "default_face.png" COMP;
-   
+
    image: "session_enlightenment.png" COMP;
    image: "session_enlightenment_small.png" COMP;
    image: "session_gnome.png" COMP;
@@ -89,7 +89,7 @@ images {
    image: "session_kde_small.png" COMP;
    image: "session_unknow.png" COMP;
    image: "session_unknow_small.png" COMP;
-   
+
    // TEST images:
    image: "avatar_kitty.png" COMP;
 }
@@ -134,7 +134,7 @@ collections {
                image {
                   border: 13 13 13 13;
                   normal: "corner.png";
-               } 
+               }
             }
             description { state: "hover" 0.0;
                inherit: "default" 0.0;
@@ -226,7 +226,7 @@ collections {
                }
             }
          }
-         
+
          part { name: "main"; type: IMAGE;
             description { state: "default" 0.0;
                rel1 {
@@ -239,9 +239,10 @@ collections {
                }
                image.normal: "main_bg.png";
             }
-            part { name: "user"; type: RECT;
+            part { name: "session";
+               type: IMAGE;
                description { state: "default" 0.0;
-                  color: 0 0 0 0;
+                  color: 255 255 255 0;
                   min: 224 72;
                   max: 440 376;
                   rel1 {
@@ -250,20 +251,111 @@ collections {
                   rel2 {
                      relative: 0.452 0.34;
                   }
-               }      
+                  image {
+                     border: 13 13 2 2;
+                     normal: "brackets.png";
+                  }
+               }
+               part { name: "session.text"; /* API */
+                  type: TEXT;
+                  effect: SHADOW;
+                  description { state: "default" 0.0;
+                     rel1 {
+                        relative: 0.0 0.0;
+                        offset: 12 12;
+                     }
+                     rel2 {
+                        to: "session.icon";
+                        relative: 0.0 0.5;
+                     }
+                     text {
+                        size:16;
+                        align: 0.0 0.0;
+                        text: "";
+                     }
+                  }
+               }
+               part { name: "session.info"; /* API */
+                  type: TEXT;
+                  effect: SHADOW;
+                  description { state: "default" 0.0;
+                     rel1 {
+                        to: "session.text";
+                        relative: 0.0 1.0;
+                        offset: 0 36;
+                     }
+                     rel2 {
+                        to: "session.text";
+                        relative: 1.0 1.0;
+                     }
+                     text {
+                        size:12;
+                        align: 0.0 0.0;
+                        text: "";
+                     }
+                  }
+               }
+               part { name: "session.icon"; type: EXTERNAL;  /* API */
+                  source: "elm/icon";
+                  description { state: "default" 0.0;
+                     min: 64 64;
+                     rel1.offset: 0 0;
+                     rel2.offset: 0 0;
+                     align: 1.0 0.5;
+                     aspect: 1 1;
+                     aspect_preference: BOTH;
+                  }
+               }
+               description { state: "focused" 0.0;
+                  inherit: "default";
+                  color: 255 255 255 255;
+               }
+            }
+            part { name: "sessionlist.box";
+               type: BOX;
+               description { state: "default" 0.0;
+                  rel1 {
+                     to: "session";
+                     relative: 1.0 0.0;
+                     offset: 12 0;
+                  }
+                  rel2 {
+                     to_y: "session";
+                     relative: 1.0 1.0;
+                  }
+                  box {
+                     layout: "horizontal";
+                     align: 0.0 1.0;
+                     padding: 8 8;
+                  }
+               }
+            }
+            part { name: "user"; type: RECT;
+               description { state: "default" 0.0;
+                  color: 0 0 0 0;
+                  min: 224 72;
+                  max: 440 376;
+                  rel1 {
+                     to: "session";
+                     relative: 0.0 2.0;
+                  }
+                  rel2 {
+                     to: "session";
+                     relative: 1.0 3.0;
+                  }
+               }
                part { name: "username.entry"; type: EXTERNAL;  /* API */
                   source: "elm/entry";
                   description { state: "default" 0.0;
-                     align:  0 0;
+                     align: 0 0;
                      rel1 {
-                        to_y: "user.face";
                         relative: 0.0 0.0;
                         offset: 12 12;
                      }
                      rel2 {
                         to: "user.face";
                         relative: 0.0 0.5;
-                        offset: -24  0;
+                        offset: -24 0;
                      }
                      params {
                         bool: "single line" 1;
@@ -284,7 +376,7 @@ collections {
                         image {
                            border: 13 13 13 13;
                            normal: "corner.png";
-                        } 
+                        }
                      }
                      description { state: "hover" 0.0;
                         inherit: "default" 0.0;
@@ -315,13 +407,12 @@ collections {
                }
                part { name: "user.face"; type: IMAGE; /* TODO: API */
                   description { state: "default" 0.0;
-                     align: 1.0 0.0;
+                     min: 64 64;
+                     rel1.offset: 12 12;
+                     rel2.offset: -12 -12;
+                     align: 1.0 0.5;
                      aspect: 1 1;
                      aspect_preference: BOTH;
-                     min: 64 64;
-                     max: 92 92;
-                     rel1.offset:  12 12;
-                     rel2.offset: -12 -12;
                      image.normal: "avatar_kitty.png";
                   }
                   part { name: "user_face_frame"; type: IMAGE;
@@ -345,7 +436,8 @@ collections {
                   }
                   rel2 {
                      to: "user";
-                     relative: 1.0 (1.0 - 1.0);
+                     relative: 2.0 (1.0 - 1.0);
+                     offset: 0 -24;
                   }
                }
                description { state: "visible" 0.0;
@@ -357,21 +449,25 @@ collections {
                   rel2 {
                      to: "user";
                      relative: 2.0 1.0;
+                     offset: 0 -24;
                   }
                }
                part { name: "userslist.box"; /* API */
                   type: BOX;
                   description { state: "default" 0.0;
+                     rel1.relative: 0.0 1.0;
+                     align: 0.0 1.0;
                      box {
                         layout: "horizontal";
-                        align: 0.5 1.0;
-                        padding: 24 0;
+                        align: 0.0 1.0;
+                        padding: 24 24;
+                        min: 0 1;
                      }
                   }
                }
                part { name: "prompt.entry"; type: EXTERNAL;  /* API */
                   source: "elm/entry";
-                  clip_to: "prompt_clip";
+                  //clip_to: "prompt_clip";
                   description { state: "default" 0.0;
                      rel1.to: "username.entry";
                      rel2.to: "username.entry";
@@ -406,7 +502,7 @@ collections {
                         image {
                            border: 13 13 13 13;
                            normal: "corner.png";
-                        } 
+                        }
                      }
                      description { state: "hover" 0.0;
                         inherit: "default" 0.0;
@@ -436,44 +532,6 @@ collections {
                   }
                }
             }
-            part { name: "session.icon"; type: EXTERNAL;  /* API */
-               source: "elm/icon";
-               clip_to: "prompt_clip";
-               description { state: "default" 0.0;
-                  rel1 {
-                     to: "prompt.entry";
-                     relative: 0.0 1.0;
-                     offset: 0 3;
-                  }
-                  rel2 {
-                     to: "prompt.entry";
-                     relative: 1.0 2.0;
-                  }
-                  aspect: 1 1; aspect_preference: BOTH;
-                  align: 0.0 0.5;
-               }
-            }
-            part { name: "session.text"; type: TEXT;  /* API */
-               clip_to: "prompt_clip";
-               description { state: "default" 0.0;
-                  rel1 {
-                     to: "session.icon";
-                     relative: 1.0 0.0;
-                  }
-                  rel2 {
-                     to: "session.icon";
-                     relative: 1.0 1.0;
-                  }
-                  align: 0.0 0.5;
-                  text {
-                     font: "Sans";
-                     size: 12;
-                     min: 1 1;
-                     ellipsis: -1;
-                     text: "Click to select session";
-                  }
-               }
-            }
             part { name: "prompt_clip"; type: RECT;
                description { state: "default" 0.0;
                   rel1.to_y: "prompt.entry";
@@ -495,14 +553,22 @@ collections {
                   }
                }
             }
+            /*
+            SHOW("session");
+            SHOW("session.icon");
+            SHOW("session.text");
+            SHOW("session.info");
+            SHOW("user");
             SHOW("userslist");
+            SHOW("user.face");
+            */
          }
          part { name: "footer"; type: IMAGE;
             description { state: "default" 0.0;
                rel1 {
                   relative: 0.0 0.82;
-               }             
-               rel2 { 
+               }
+               rel2 {
                   relative: 1.0 1.0;
                }
                image.normal: "footer_bg.png";
@@ -570,7 +636,7 @@ collections {
             transition: DECELERATE 0.4;
             target: "userslist";
          }
-         
+
          program { name: "username_underline_focused";
             signal: "mouse,in"; source: "username_underline";
             action: STATE_SET "focused" 0.0;
@@ -583,7 +649,7 @@ collections {
             transition: LINEAR 0.8;
             target: "username_underline";
          }
-         
+
          program { name: "prompt_show";  /* API */
             signal: "prompt,show"; source: "";
             action: STATE_SET "visible" 0.0;
@@ -624,7 +690,7 @@ collections {
          program { name: "ui_hide_done";
             action: SIGNAL_EMIT "ui,hide,done" ""; /* API */
          }
-         
+
          program {
             signal: "mouse,in"; source: "username.entry";
             action: STATE_SET "hover" 0.0;
@@ -665,4 +731,3 @@ collections {
 #undef SESSION_ICON
 
 }
-
