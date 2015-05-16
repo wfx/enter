@@ -242,7 +242,7 @@ collections {
             part { name: "session";
                type: IMAGE;
                description { state: "default" 0.0;
-                  color: 255 255 255 0;
+                  color: 255 255 255 255;
                   min: 224 72;
                   max: 440 376;
                   rel1 {
@@ -271,7 +271,8 @@ collections {
                      text {
                         size:16;
                         align: 0.0 0.0;
-                        text: "";
+                        //text: "";
+                        text: "Choose youre username.";
                      }
                   }
                }
@@ -311,8 +312,7 @@ collections {
                   color: 255 255 255 255;
                }
             }
-            part { name: "sessionlist.box";
-               type: BOX;
+            part { name: "sessionlist.box"; type: BOX;
                description { state: "default" 0.0;
                   rel1 {
                      to: "session";
@@ -350,7 +350,7 @@ collections {
                      align: 0 0;
                      rel1 {
                         relative: 0.0 0.0;
-                        offset: 12 12;
+                        offset: 12 24;
                      }
                      rel2 {
                         to: "user.face";
@@ -382,27 +382,6 @@ collections {
                         inherit: "default" 0.0;
                         color: 255 255 255 255;
                      }
-                     part { name: "username_underline";
-                        type: IMAGE;
-                        description { state: "default" 0.0;
-                           color: 255 255 255 0;
-                           rel1 {
-                              relative: 0.0 1.0;
-                              offset: 12 -12;
-                           }
-                           rel2 {
-                              relative: 1.0 1.0;
-                              offset: -12 -12;
-                           }
-                           image {
-                              normal: "underline.png";
-                           }
-                        }
-                        description { state: "focused" 0.0;
-                           inherit: "default" 0.0;
-                           color: 255 255 255 255;
-                        }
-                     }
                   }
                }
                part { name: "user.face"; type: IMAGE; /* TODO: API */
@@ -427,20 +406,9 @@ collections {
                   }
                }
             }
-            part { name: "userslist"; type: SPACER;
+            part { name: "userslist"; type: BOX;
                description { state: "default" 0.0;
-                  rel1  {
-                     to: "user";
-                     relative: 1.0 0.0;
-                     offset: 24 0;
-                  }
-                  rel2 {
-                     to: "user";
-                     relative: 2.0 (1.0 - 1.0);
-                     offset: 0 -24;
-                  }
-               }
-               description { state: "visible" 0.0;
+               color: 255 255 255 0;
                   rel1  {
                      to: "user";
                      relative: 1.0 0.0;
@@ -451,6 +419,10 @@ collections {
                      relative: 2.0 1.0;
                      offset: 0 -24;
                   }
+               }
+               description { state: "visible" 0.0;
+                  inherit: "default" 0.0;
+                  color: 255 255 255 255;
                }
                part { name: "userslist.box"; /* API */
                   type: BOX;
@@ -465,84 +437,47 @@ collections {
                      }
                   }
                }
-               part { name: "prompt.entry"; type: EXTERNAL;  /* API */
-                  source: "elm/entry";
-                  //clip_to: "prompt_clip";
-                  description { state: "default" 0.0;
-                     rel1.to: "username.entry";
-                     rel2.to: "username.entry";
-                     params {
-                        bool: "single line" 1;
-                        bool: "scrollable" 0;
-                     }
+            }
+            part { name: "prompt.entry"; type: EXTERNAL;  /* API */
+               source: "elm/entry";
+               description { state: "default" 0.0;
+                  params {
+                     bool: "single line" 1;
+                     bool: "scrollable" 0;
                   }
-                  description { state: "visible" 0.0;
-                     inherit: "default" 0.0;
+                  rel1 {
+                     to: "username.entry";
+                     relative: 0.0 1.0;
+                     offset: 0 48;
+                  }
+                  rel2 {
+                     to: "username.entry";
+                     relative: 1.0 2.0;
+                  }
+               }
+               part { name: "prompt_focused"; type: IMAGE;
+                  description { state: "default" 0.0;
+                     color: 255 255 255 0;
                      rel1 {
-                        to: "username.entry";
-                        relative: 0.0 1.0;
-                        offset: 0 48;
+                        relative: 0.0 0.0;
+                        offset: -12 -12;
                      }
                      rel2 {
-                        to: "username.entry";
-                        relative: 1.0 2.0;
+                        relative: 1.0 1.0;
+                        offset: 12 12;
+                     }
+                     image {
+                        border: 13 13 13 13;
+                        normal: "corner.png";
                      }
                   }
-                  part { name: "prompt_focused"; type: IMAGE;
-                     description { state: "default" 0.0;
-                        color: 255 255 255 0;
-                        rel1 {
-                           relative: 0.0 0.0;
-                           offset: -12 -12;
-                        }
-                        rel2 {
-                           relative: 1.0 1.0;
-                           offset: 12 12;
-                        }
-                        image {
-                           border: 13 13 13 13;
-                           normal: "corner.png";
-                        }
-                     }
-                     description { state: "hover" 0.0;
-                        inherit: "default" 0.0;
-                        color: 255 255 255 255;
-                     }
-                     part { name: "promt_underline";
-                        type: IMAGE;
-                        description { state: "default" 0.0;
-                           color: 255 255 255 10;
-                           rel1 {
-                              relative: 0.0 1.0;
-                              offset: 12 -12;
-                           }
-                           rel2 {
-                              relative: 1.0 1.0;
-                              offset: -12 -12;
-                           }
-                           image {
-                              normal: "underline.png";
-                           }
-                        }
-                        description { state: "focused" 0.0;
-                           inherit: "default" 0.0;
-                           color: 255 255 255 255;
-                        }
-                     }
+                  description { state: "hover" 0.0;
+                     inherit: "default" 0.0;
+                     color: 255 255 255 255;
                   }
                }
             }
-            part { name: "prompt_clip"; type: RECT;
-               description { state: "default" 0.0;
-                  rel1.to_y: "prompt.entry";
-                  rel2.to_y: "session.text";
-                  color: 255 255 255 0;
-               }
-               description { state: "visible" 0.0;
-                  inherit: "default" 0.0;
-                  color: 255 255 255 255;
-               }
-            }
+
             part { name: "debug.text"; type: TEXT;  /* API */
                description { state: "default" 0.0;
                   color: 200 0 0 255;
@@ -636,34 +571,21 @@ collections {
             transition: DECELERATE 0.4;
             target: "userslist";
          }
-
-         program { name: "username_underline_focused";
-            signal: "mouse,in"; source: "username_underline";
+         // Corner
+         program { name: "username_focused";
+            signal: "mouse,in"; source: "username_focused";
             action: STATE_SET "focused" 0.0;
             transition: LINEAR 0.8;
-            target: "username_underline";
-         }
-         program { name: "username_underline_default";
-            signal: "mouse,out"; source: "username_underline";
-            action: STATE_SET "default" 0.0;
-            transition: LINEAR 0.8;
-            target: "username_underline";
+            target: "username_focused";
          }
 
          program { name: "prompt_show";  /* API */
             signal: "prompt,show"; source: "";
-            action: STATE_SET "visible" 0.0;
-            transition: LINEAR 0.2;
-            target: "prompt.entry";
-            target: "prompt_clip";
-         }
-         program { name: "prompt_hide";  /* API */
-            signal: "prompt,hide"; source: "";
             action: STATE_SET "default" 0.0;
             transition: LINEAR 0.2;
             target: "prompt.entry";
-            target: "prompt_clip";
          }
+
          program { name: "sessions_show";  /* API */
             signal: "mouse,up,1"; source: "session.*";
             action: SIGNAL_EMIT "sessions,show" "";
@@ -684,7 +606,7 @@ collections {
             signal: "ui,hide"; source: "";
             action: STATE_SET "default" 0.0;
             transition: ACCELERATE 0.4;
-            target: "userslist";
+            target: "main";
             after: "ui_hide_done";
          }
          program { name: "ui_hide_done";
