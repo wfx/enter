@@ -20,7 +20,7 @@ images {
    image: "underline.png" COMP;
    image: "default_face.png" COMP;
    image: "power_icon.png" COMP;
-   image: "globe.png" COMP;
+   image: "lang_icon.png" COMP;
    image: "session_unknown.png" COMP;
    image: "session_epamc.png" COMP;
 }
