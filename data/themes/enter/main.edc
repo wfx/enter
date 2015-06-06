@@ -244,12 +244,12 @@ collections {
                description { state: "default" 0.0;
                   color: 255 255 255 255;
                   min: 224 72;
-                  max: 440 376;
+                  max: 400 376;
                   rel1 {
-                     relative: 0.152 0.1;
+                     relative: 0.152 0.2;
                   }
                   rel2 {
-                     relative: 0.452 0.34;
+                     relative: 0.452 0.40;
                   }
                   image {
                      border: 13 13 2 2;
@@ -271,8 +271,7 @@ collections {
                      text {
                         size:16;
                         align: 0.0 0.0;
-                        //text: "";
-                        text: "Choose youre username.";
+                        text: "";
                      }
                   }
                }
@@ -334,14 +333,14 @@ collections {
                description { state: "default" 0.0;
                   color: 0 0 0 0;
                   min: 224 72;
-                  max: 440 376;
+                  max: 400 376;
                   rel1 {
                      to: "session";
-                     relative: 0.0 2.0;
+                     relative: 0.0 1.2;
                   }
                   rel2 {
                      to: "session";
-                     relative: 1.0 3.0;
+                     relative: 1.0 2.2;
                   }
                }
                part { name: "username.entry"; type: EXTERNAL;  /* API */
@@ -363,6 +362,48 @@ collections {
                      }
                   }
                   part { name: "username_focused"; type: IMAGE;
+                     description { state: "default" 0.0;
+                        color: 255 255 255 0;
+                        rel1 {
+                           relative: 0.0 0.0;
+                           offset: -12 -12;
+                        }
+                        rel2 {
+                           relative: 1.0 1.0;
+                           offset: 12 12;
+                        }
+                        image {
+                           border: 13 13 13 13;
+                           normal: "corner.png";
+                        }
+                     }
+                     description { state: "hover" 0.0;
+                        inherit: "default" 0.0;
+                        color: 255 255 255 255;
+                     }
+                  }
+               }
+               part { name: "prompt.entry"; type: EXTERNAL;  /* API */
+                  source: "elm/entry";
+                  description { state: "default" 0.0;
+                     params {
+                        bool: "single line" 1;
+                        bool: "scrollable" 0;
+                     }
+                     rel1 {
+                        //to: "username.entry";
+                        relative: 0.0 1.0;
+                        offset: 12 0;
+                     }
+                     rel2 {
+                        to_x: "user.face";
+                        relative: 0.0 0.5;
+                        offset: -24 0;
+                        //to: "username.entry";
+                        //relative: 1.0 2.0;
+                     }
+                  }
+                  part { name: "prompt_focused"; type: IMAGE;
                      description { state: "default" 0.0;
                         color: 255 255 255 0;
                         rel1 {
@@ -438,45 +479,7 @@ collections {
                   }
                }
             }
-            part { name: "prompt.entry"; type: EXTERNAL;  /* API */
-               source: "elm/entry";
-               description { state: "default" 0.0;
-                  params {
-                     bool: "single line" 1;
-                     bool: "scrollable" 0;
-                  }
-                  rel1 {
-                     to: "username.entry";
-                     relative: 0.0 1.0;
-                     offset: 0 48;
-                  }
-                  rel2 {
-                     to: "username.entry";
-                     relative: 1.0 2.0;
-                  }
-               }
-               part { name: "prompt_focused"; type: IMAGE;
-                  description { state: "default" 0.0;
-                     color: 255 255 255 0;
-                     rel1 {
-                        relative: 0.0 0.0;
-                        offset: -12 -12;
-                     }
-                     rel2 {
-                        relative: 1.0 1.0;
-                        offset: 12 12;
-                     }
-                     image {
-                        border: 13 13 13 13;
-                        normal: "corner.png";
-                     }
-                  }
-                  description { state: "hover" 0.0;
-                     inherit: "default" 0.0;
-                     color: 255 255 255 255;
-                  }
-               }
-            }
+
 
             part { name: "debug.text"; type: TEXT;  /* API */
                description { state: "default" 0.0;
@@ -488,15 +491,12 @@ collections {
                   }
                }
             }
-            /*
-            SHOW("session");
-            SHOW("session.icon");
-            SHOW("session.text");
-            SHOW("session.info");
-            SHOW("user");
-            SHOW("userslist");
-            SHOW("user.face");
-            */
+
+            #SHOW("session");
+            #SHOW("user");
+            #SHOW("userslist");
+            #SHOW("user.face");
+
          }
          part { name: "footer"; type: IMAGE;
             description { state: "default" 0.0;
