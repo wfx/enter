@@ -642,7 +642,7 @@ collections {
                   aspect: 1 1; aspect_preference: BOTH;
                   align: 0.04 0.5;
                   max: 24 24;
-                  image.normal: "globe.png";
+                  image.normal: "lang_icon.png";
                }
             }
             part { name: "lang.text"; type: TEXT; /* API */
