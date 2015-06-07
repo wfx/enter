@@ -50,8 +50,7 @@ install_prefix = os.path.dirname(os.path.dirname(__file__))
 # locale_dir = os.path.join(install_prefix, 'share', 'locale')
 # gettext.install('enter', names='ngettext', localedir=locale_dir)
 
-#theme = 'default.edj'
-theme = 'enter.edj'
+theme = 'default.edj'
 theme_file = os.path.join(install_prefix, 'share', 'lightdm-efl-greeter', 'themes', theme)
 
 
