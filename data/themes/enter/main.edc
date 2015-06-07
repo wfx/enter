@@ -242,7 +242,7 @@ collections {
             part { name: "session";
                type: IMAGE;
                description { state: "default" 0.0;
-                  color: 255 255 255 255;
+                  color: 0 0 0 0;
                   min: 224 72;
                   max: 400 376;
                   rel1 {
@@ -255,6 +255,10 @@ collections {
                      border: 13 13 2 2;
                      normal: "brackets.png";
                   }
+               }
+               description { state: "show" 0.0;
+                  inherit: "default";
+                  color: 255 255 255 255;
                }
                part { name: "session.text"; /* API */
                   type: TEXT;
@@ -310,22 +314,22 @@ collections {
                   inherit: "default";
                   color: 255 255 255 255;
                }
-            }
-            part { name: "sessionlist.box"; type: BOX;
-               description { state: "default" 0.0;
-                  rel1 {
-                     to: "session";
-                     relative: 1.0 0.0;
-                     offset: 12 0;
-                  }
-                  rel2 {
-                     to_y: "session";
-                     relative: 1.0 1.0;
-                  }
-                  box {
-                     layout: "horizontal";
-                     align: 0.0 1.0;
-                     padding: 8 8;
+               part { name: "sessionlist.box"; type: BOX;
+                  description { state: "default" 0.0;
+                     rel1 {
+                        to: "session";
+                        relative: 1.0 0.0;
+                        offset: 12 0;
+                     }
+                     rel2 {
+                        to_y: "session";
+                        relative: 1.0 1.0;
+                     }
+                     box {
+                        layout: "horizontal";
+                        align: 0.0 1.0;
+                        padding: 8 8;
+                     }
                   }
                }
             }
