@@ -19,6 +19,10 @@ A lightdm elm greeter for e
 
  `python setup.py install --prefix=/MY_PREFIX`
 
+* Setup lightdm:
+ `open /etc/lightdm/lightdm.conf and add:
+ `greeter-session=lightdm-efl-greeter
+
 ## Uninstall ##
 
 * For system.wide deinstallation (need administrator privileges):
