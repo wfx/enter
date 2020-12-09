@@ -15,7 +15,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-from __future__ import absolute_import, print_function, unicode_literals
+
 
 import os
 import sys
@@ -218,7 +218,7 @@ class MainWin(StandardWindow):
     def _sig_sessions_show(self, ly, signal, source):
         """ Signal from the theme to show the sessions menu """
         m = Menu(self)
-        for key, session in app.sessions.items():
+        for key, session in list(app.sessions.items()):
             m.item_add(None, session.props.name, None,
                        self._session_clicked_cb, session)
 
@@ -288,7 +288,7 @@ class MainWin(StandardWindow):
     def _sig_langs_show(self, ly, signal, source):
         """ Signal from the theme to show the languages menu """
         m = Menu(self)
-        for code, lang in app.languages.items():
+        for code, lang in list(app.languages.items()):
             txt = '{} - {}'.format(lang.props.name, lang.props.territory)
             icon = 'arrow-right' if lang == self.app.selected_lang else None
             m.item_add(None, txt, icon, self._lang_clicked_cb, lang)
