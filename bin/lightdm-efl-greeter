@@ -42,7 +42,8 @@ from efl.elementary.icon import Icon
 from efl.elementary.window import StandardWindow
 from efl.elementary.check import Check
 from efl.evas import EXPAND_BOTH
-
+import gi
+gi.require_version('LightDM','1')
 from gi.repository import LightDM
 
 # install the _() and ngettext() functions in the main namespace
@@ -157,7 +158,7 @@ class MainWin(StandardWindow):
                     else:
                         pass
                         # TODO: Default background?
-                        #im = Image(ul, file=(theme_file, 'enter/default_background'))
+                        #im = Image(ul, file=(theme_file, 'default/default_background'))
                     ul.part_content_set('user.opt.background.swallow', im)
 
                 if edj.part_exists('user.opt.display_name.text'):
@@ -336,7 +337,7 @@ class EnterApplication(object):
                              self.greeter_authentication_complete_cb)
         self.greeter.connect('show-message', self.greeter_show_message_cb)
         self.greeter.connect('show-prompt', self.greeter_show_prompt_cb)
-        self.greeter.connect_sync()
+        self.greeter.connect_to_daemon_sync()
 
         # get sessions from the greeter
         self.sessions = dict() # key: session_key  data: Session instance
