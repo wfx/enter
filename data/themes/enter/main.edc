@@ -578,7 +578,7 @@ collections {
          // Corner
          program { name: "username_focused";
             signal: "mouse,in"; source: "username_focused";
-            action: STATE_SET "focused" 0.0;
+            action: STATE_SET "default" 0.0;
             transition: LINEAR 0.8;
             target: "username_focused";
          }

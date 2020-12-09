@@ -5,8 +5,10 @@ A lightdm elm greeter for e
 
 ## Requirements ##
 
-* Python 2.7 or higher
+* Python 3
 * Python-EFL 1.14 or higher
+* PyGObject
+* accountsservice
 * a running lightdm installation
 
 ## Installation ##
