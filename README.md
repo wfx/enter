@@ -1,3 +1,8 @@
+# ⚠️ **ARCHIVED**
+This project is **no longer actively maintained**.
+
+---
+
 Enter
 ===
 A lightdm elm greeter for e
